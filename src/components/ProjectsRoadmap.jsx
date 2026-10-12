@@ -15,7 +15,7 @@ export default function ProjectsRoadmap() {
         'An intelligent study assistant for BSc CSIT students to query semester PDF notes, summarize complex topics, and generate practice exam questions using Python and modern NLP.',
       stack: ['Python', 'Streamlit', 'pypdf', 'Google Gemini / Groq'],
       architecture: 'Document chunking -> Context grounding -> Academic exam & Q&A generation.',
-      demoUrl: 'https://csit-study-assistant.streamlit.app',
+      demoUrl: 'https://ai-csit-study-assistant.streamlit.app/',
       repoUrl: 'https://github.com/hola-mundo999/ai-csit-study-assistant',
     },
     {
