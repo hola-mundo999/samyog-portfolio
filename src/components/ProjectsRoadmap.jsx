@@ -43,7 +43,7 @@ export default function ProjectsRoadmap() {
         'Automated web scraping pipeline monitoring Tribhuvan University (IOST) notice boards, categorizing exam routines/results, and dispatching Telegram alerts.',
       stack: ['Python', 'BeautifulSoup4', 'SQLite', 'Telegram Bot API'],
       architecture: 'Target scraping -> MD5 deduplication -> SQLite storage -> Telegram alerts.',
-      demoUrl: 'https://tu-csit-notice-hub.streamlit.app',
+      demoUrl: 'https://tu-csit-notice-app.streamlit.app/',
       repoUrl: 'https://github.com/hola-mundo999/tu-csit-notice-hub',
     },
     {
@@ -57,7 +57,7 @@ export default function ProjectsRoadmap() {
         'Full-stack event registration and cryptographic digital QR ticket verification platform designed for Prime IT Club technical workshops, hackathons, and bootcamps.',
       stack: ['Python', 'FastAPI', 'Pydantic', 'qrcode / Pillow'],
       architecture: 'REST endpoints -> Token cryptography -> Base64 QR imaging -> Gate scanner.',
-      demoUrl: 'https://prime-event-manager.onrender.com',
+      demoUrl: 'https://prime-event-ticket-manager.onrender.com/',
       repoUrl: 'https://github.com/hola-mundo999/prime-event-ticket-manager',
     },
   ];
