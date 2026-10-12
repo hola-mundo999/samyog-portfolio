@@ -156,7 +156,7 @@ export default function ThreeBackground() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-90"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-65"
       aria-hidden="true"
     />
   );

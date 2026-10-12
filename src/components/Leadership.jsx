@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Users, Megaphone, CalendarCheck, Palette, HeartHandshake } from 'lucide-react';
+import { Award, Megaphone, CalendarCheck, Palette, HeartHandshake } from 'lucide-react';
 
 export default function Leadership() {
   const responsibilities = [
@@ -29,35 +29,35 @@ export default function Leadership() {
     <section id="leadership" className="py-20 px-4 max-w-5xl mx-auto">
       <div className="flex items-center gap-2 mb-3">
         <span className="w-8 h-[2px] bg-emerald-500"></span>
-        <span className="text-xs uppercase font-mono tracking-widest text-emerald-400">Leadership & Experience</span>
+        <span className="text-xs uppercase font-mono tracking-widest text-emerald-400 font-bold">Leadership & Experience</span>
       </div>
 
-      <div className="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-800 relative overflow-hidden">
+      <div className="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-700/80 relative overflow-hidden">
         {/* Ambient background glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-slate-800/80">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-slate-700/80">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-mono mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 text-xs font-mono font-bold mb-3">
               <Award className="w-3.5 h-3.5" />
               <span>Executive Committee</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               PR Director — Prime IT Club
             </h2>
-            <p className="text-sm text-slate-300 mt-1">
+            <p className="text-sm text-slate-200 mt-1 font-medium">
               Prime College · Kathmandu, Nepal
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 text-left">
-              <span className="text-[10px] font-mono text-slate-400 block">ROLE TENURE</span>
-              <span className="text-xs font-semibold text-white">Active Executive Member</span>
+            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-700 text-left">
+              <span className="text-[10px] font-mono font-bold text-slate-400 block">ROLE TENURE</span>
+              <span className="text-xs font-bold text-white">Active Executive Member</span>
             </div>
-            <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 text-left">
-              <span className="text-[10px] font-mono text-slate-400 block">COMMUNITY REACH</span>
-              <span className="text-xs font-semibold text-indigo-400">Prime College CSIT</span>
+            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-700 text-left">
+              <span className="text-[10px] font-mono font-bold text-slate-400 block">COMMUNITY REACH</span>
+              <span className="text-xs font-bold text-indigo-300">Prime College CSIT</span>
             </div>
           </div>
         </div>
@@ -69,14 +69,14 @@ export default function Leadership() {
             return (
               <div
                 key={idx}
-                className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/60 hover:border-slate-700 transition-all flex items-start gap-4"
+                className="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/80 hover:border-slate-600 transition-all flex items-start gap-4"
               >
-                <div className="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shrink-0">
+                <div className="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shrink-0">
                   <Icon className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-1">{item.title}</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                  <h4 className="text-sm font-bold text-white mb-1">{item.title}</h4>
+                  <p className="text-xs text-slate-200 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             );
