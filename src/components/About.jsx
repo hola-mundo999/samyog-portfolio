@@ -6,19 +6,19 @@ export default function About() {
     <section id="about" className="py-24 px-4 max-w-5xl mx-auto">
       {/* Section Header */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[1px] bg-cyan-400" />
-        <span className="text-[11px] uppercase font-mono tracking-widest text-cyan-400 font-bold">
-          01 // Background & Ethos
+        <span className="w-8 h-[2px] bg-cyan-400" />
+        <span className="text-xs uppercase font-mono tracking-widest text-cyan-400 font-bold">
+          About Me
         </span>
       </div>
 
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Engineering Systems From Principles to Production
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Passionate Learner & Software Engineer
           </h2>
           <p className="text-slate-300 text-sm mt-2 max-w-xl leading-relaxed">
-            Where mathematical foundations, systems architecture, and intelligent applied algorithms meet student community leadership.
+            Building software with strong computer science foundations, practical machine learning, and clean engineering.
           </p>
         </div>
       </div>

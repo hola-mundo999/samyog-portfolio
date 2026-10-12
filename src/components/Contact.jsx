@@ -27,17 +27,17 @@ export default function Contact() {
     <section id="contact" className="py-24 px-4 max-w-5xl mx-auto">
       {/* Section Header */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[1px] bg-cyan-400" />
-        <span className="text-[11px] uppercase font-mono tracking-widest text-cyan-400 font-bold">
-          06 // Inquiries & Communication
+        <span className="w-8 h-[2px] bg-cyan-400" />
+        <span className="text-xs uppercase font-mono tracking-widest text-cyan-400 font-bold">
+          Contact
         </span>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 items-start">
         {/* Left Column: Direct Inquiries & Links */}
         <div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white mb-4 tracking-tight">
-            Let's Build Something Exceptional
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
+            Let's Connect & Collaborate
           </h2>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
             Whether you want to discuss Python backend architectures, explore computer vision projects, coordinate an event with Prime IT Club, or discuss engineering internships—my inbox is always open.

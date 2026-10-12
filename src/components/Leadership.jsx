@@ -29,9 +29,9 @@ export default function Leadership() {
     <section id="leadership" className="py-24 px-4 max-w-5xl mx-auto">
       {/* Section Header */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[1px] bg-cyan-400" />
-        <span className="text-[11px] uppercase font-mono tracking-widest text-cyan-400 font-bold">
-          04 // Leadership & Community Impact
+        <span className="w-8 h-[2px] bg-cyan-400" />
+        <span className="text-xs uppercase font-mono tracking-widest text-cyan-400 font-bold">
+          Leadership & Community
         </span>
       </div>
 

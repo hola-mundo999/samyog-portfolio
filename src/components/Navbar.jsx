@@ -16,9 +16,8 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'About', href: '#about' },
+    { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
-    { label: 'Systems', href: '#projects' },
-    { label: 'Console', href: '#terminal' },
     { label: 'Leadership', href: '#leadership' },
     { label: 'Education', href: '#education' },
     { label: 'Contact', href: '#contact' },
@@ -29,35 +28,27 @@ export default function Navbar() {
       <nav
         className={`w-full max-w-5xl rounded-2xl px-5 py-3 transition-all duration-300 flex items-center justify-between ${
           scrolled
-            ? 'surface-card-interactive border-slate-800/80 shadow-2xl shadow-black/80'
+            ? 'bg-slate-950/80 backdrop-blur-xl border border-slate-800 shadow-2xl shadow-black/60'
             : 'bg-transparent border border-transparent'
         }`}
       >
         {/* Brand */}
-        <a href="#" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400/50 group-hover:text-cyan-300 transition-all shadow-sm">
-            <Terminal className="w-4 h-4" />
+        <a href="#" className="flex items-center gap-2.5 group">
+          <div className="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400/50 transition-colors">
+            <Terminal className="w-3.5 h-3.5" />
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-sm tracking-wider text-white group-hover:text-cyan-300 transition-colors">
-                SAMYOG
-              </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-            </div>
-            <span className="text-[10px] text-slate-400 font-mono tracking-tight">
-              BSc CSIT · 2027
-            </span>
-          </div>
+          <span className="font-bold text-sm tracking-tight text-white group-hover:text-cyan-300 transition-colors">
+            Samyog
+          </span>
         </a>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-xs uppercase tracking-widest font-mono text-slate-300 hover:text-cyan-300 transition-colors relative py-1 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.4)]"
+              className="text-xs font-medium text-slate-300 hover:text-white transition-colors py-1"
             >
               {link.label}
             </a>
@@ -88,7 +79,7 @@ export default function Navbar() {
           </a>
           <a
             href="#contact"
-            className="text-xs font-semibold px-4 py-2 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40 text-cyan-200 hover:text-white shadow-sm transition-all hover:scale-[1.02] active:scale-95"
+            className="text-xs font-semibold px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white transition-all hover:scale-[1.02] active:scale-95"
           >
             Get in Touch
           </a>
@@ -106,13 +97,13 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-20 inset-x-4 surface-card-interactive rounded-2xl p-5 flex flex-col gap-4 shadow-2xl border border-slate-700/80 animate-fade-in">
+        <div className="md:hidden absolute top-20 inset-x-4 bg-slate-950/95 backdrop-blur-xl rounded-2xl p-5 flex flex-col gap-3 shadow-2xl border border-slate-800 animate-fade-in">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-xs uppercase tracking-wider font-mono text-slate-200 hover:text-cyan-300 py-1.5 transition-colors"
+              className="text-sm font-medium text-slate-200 hover:text-cyan-300 py-1.5 transition-colors"
             >
               {link.label}
             </a>
@@ -141,7 +132,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-xs font-semibold px-4 py-2 rounded-xl bg-cyan-500/20 text-cyan-200 border border-cyan-400/40"
+              className="text-xs font-semibold px-4 py-2 rounded-xl bg-cyan-500 text-slate-950"
             >
               Contact Me
             </a>

@@ -7,16 +7,11 @@ import {
   ExternalLink,
   ArrowUpRight,
   GitBranch,
-  Layers,
-  Copy,
-  Check,
-  Filter,
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 
 export default function ProjectsRoadmap() {
   const [activeFilter, setActiveFilter] = useState('ALL');
-  const [copiedId, setCopiedId] = useState(null);
 
   const projects = [
     {
@@ -24,14 +19,12 @@ export default function ProjectsRoadmap() {
       index: '01',
       title: 'AI CSIT Study & Lecture Notes Assistant',
       filterCategory: 'AI',
-      category: 'Applied AI / NLP & LLMs',
-      status: 'VERIFIED LIVE',
-      latency: '< 1.2s NLP inference',
+      category: 'Applied AI & NLP',
       icon: Brain,
       description:
-        'An intelligent academic assistant tailored for BSc CSIT semester courses. Ingests dense lecture PDFs, performs context-aware document chunking, and generates topic summaries along with rigorous practice exam questions via Google Gemini and Groq.',
-      stack: ['Python 3.11', 'Streamlit', 'pypdf', 'Google Gemini / Groq'],
-      architecture: 'PDF Extraction → Chunk Indexing → Semantic Context Retrieval → Exam Question Synthesizer',
+        'An intelligent academic assistant tailored for BSc CSIT students. Ingests semester PDF lecture notes, extracts topics, and generates clear summaries along with practice exam questions using Google Gemini and Groq.',
+      stack: ['Python', 'Streamlit', 'pypdf', 'Gemini / Groq LLMs'],
+      architecture: 'PDF Ingestion → Semantic Chunking → Context Retrieval → Exam Question Synthesis',
       demoUrl: 'https://ai-csit-studyassistant.streamlit.app/',
       repoUrl: 'https://github.com/hola-mundo999/ai-csit-study-assistant',
     },
@@ -41,12 +34,10 @@ export default function ProjectsRoadmap() {
       title: 'AI Virtual Hand Gesture Controller',
       filterCategory: 'VISION',
       category: 'Computer Vision & HCI',
-      status: 'VERIFIED LIVE',
-      latency: '30+ FPS Real-time tracking',
       icon: Hand,
       description:
-        'A real-time, touchless Human-Computer Interaction interface. Leverages MediaPipe to track 21 three-dimensional hand landmarks at high frame rates, computing Euclidean vector angles to dispatch virtual slide transitions, system volume scaling, and media controls.',
-      stack: ['Python 3.11', 'OpenCV', 'MediaPipe', 'Streamlit'],
+        'A touchless computer vision control system mapping 21 spatial hand landmarks to system actions. Enables real-time slide deck navigation, volume control, and media toggling directly through a webcam.',
+      stack: ['Python', 'OpenCV', 'MediaPipe', 'Streamlit'],
       architecture: 'Webcam Stream → 21-Landmark Cartesian Vectorization → Angle Thresholding → System Event Dispatcher',
       demoUrl: 'https://ai-gesture-controller.streamlit.app',
       repoUrl: 'https://github.com/hola-mundo999/ai-gesture-controller-',
@@ -56,13 +47,11 @@ export default function ProjectsRoadmap() {
       index: '03',
       title: 'TU CSIT Notice & Routine Alert Hub',
       filterCategory: 'BACKEND',
-      category: 'Backend Automation & Web Scraping',
-      status: 'ACTIVE PIPELINE',
-      latency: 'Instant Telegram webhooks',
+      category: 'Backend Automation & Scraping',
       icon: Bell,
       description:
-        'Automated background scraper tracking Tribhuvan University (IOST) notice boards. Filters and categorizes upcoming exam schedules and published results, utilizing cryptographic MD5 hashing for deduplication, persisting to SQLite, and dispatching real-time Telegram alerts.',
-      stack: ['Python 3.11', 'BeautifulSoup4', 'SQLite3', 'Telegram Bot API'],
+        'Automated scraper monitoring Tribhuvan University (IOST) notice boards. Automatically parses exam schedules and results, deduplicates notices via MD5 hashing, stores to SQLite, and dispatches real-time Telegram alerts.',
+      stack: ['Python', 'BeautifulSoup4', 'SQLite3', 'Telegram Bot API'],
       architecture: 'IOST Notice Poller → MD5 Content Hashing → SQLite Database → Telegram Bot Markdown Formatter',
       demoUrl: 'https://tu-csit-notice-app.streamlit.app/',
       repoUrl: 'https://github.com/hola-mundo999/tu-csit-notice-hub',
@@ -72,13 +61,11 @@ export default function ProjectsRoadmap() {
       index: '04',
       title: 'Prime Event & QR Ticket Management System',
       filterCategory: 'BACKEND',
-      category: 'Backend REST API & Event Tool',
-      status: 'VERIFIED LIVE',
-      latency: '< 45ms REST latency',
+      category: 'REST API & Event Tools',
       icon: Ticket,
       description:
-        'A production event RSVP and gate ticketing solution built for Prime IT Club hackathons and workshops. Issues cryptographically hashed attendance tokens rendered as base64 dynamic QR passes, featuring a dedicated real-time gate terminal for check-in verification.',
-      stack: ['FastAPI', 'Pydantic', 'qrcode / Pillow', 'Uvicorn ASGI'],
+        'Full-stack event RSVP and gate ticketing solution designed for Prime IT Club hackathons. Generates cryptographic attendance tokens as base64 QR passes, paired with a real-time gate scanner terminal.',
+      stack: ['FastAPI', 'Pydantic', 'qrcode / Pillow', 'Tailwind CSS'],
       architecture: 'FastAPI REST Endpoints → Cryptographic Token Generation → Base64 QR Image → Live Gate Scanner Terminal',
       demoUrl: 'https://prime-event-ticket-manager.onrender.com/',
       repoUrl: 'https://github.com/hola-mundo999/prime-event-ticket-manager',
@@ -90,29 +77,23 @@ export default function ProjectsRoadmap() {
       ? projects
       : projects.filter((p) => p.filterCategory === activeFilter);
 
-  const handleCopyClone = (id, repoUrl) => {
-    navigator.clipboard.writeText(`git clone ${repoUrl}.git`);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
-
   return (
     <section id="projects" className="py-24 px-4 max-w-5xl mx-auto">
       {/* Section Header */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[1px] bg-cyan-400" />
-        <span className="text-[11px] uppercase font-mono tracking-widest text-cyan-400 font-bold">
-          02 // Production Software & Systems
+        <span className="w-8 h-[2px] bg-cyan-400" />
+        <span className="text-xs uppercase font-mono tracking-widest text-cyan-400 font-bold">
+          Featured Projects
         </span>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
         <div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Engineered Systems & Live Deployments
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Featured Projects & Systems
           </h2>
           <p className="text-slate-300 text-sm mt-2 max-w-xl leading-relaxed">
-            Real software systems engineered in Python across Computer Vision, Applied AI, Web Automation, and High-Performance APIs.
+            Hands-on systems engineered across Computer Vision, Applied AI, Web Automation, and REST APIs.
           </p>
         </div>
 
@@ -120,33 +101,29 @@ export default function ProjectsRoadmap() {
           href="https://github.com/hola-mundo999"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs font-mono text-slate-200 hover:text-white transition-all hover:scale-[1.02]"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 hover:text-white transition-all"
         >
           <GithubIcon className="w-4 h-4 text-cyan-400" />
-          <span>github.com/hola-mundo999</span>
+          <span>Follow on GitHub</span>
           <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
         </a>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-slate-900">
-        <div className="flex items-center gap-1.5 text-slate-400 text-xs font-mono mr-2">
-          <Filter className="w-3.5 h-3.5 text-cyan-400" />
-          <span>SYSTEM FILTER:</span>
-        </div>
+      <div className="flex flex-wrap items-center gap-2 mb-8">
         {[
-          { key: 'ALL', label: 'All Systems (4)' },
+          { key: 'ALL', label: 'All Projects' },
           { key: 'AI', label: 'Applied AI & NLP' },
           { key: 'VISION', label: 'Computer Vision' },
-          { key: 'BACKEND', label: 'APIs & Automation' },
+          { key: 'BACKEND', label: 'APIs & Backend' },
         ].map((f) => (
           <button
             key={f.key}
             onClick={() => setActiveFilter(f.key)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
               activeFilter === f.key
-                ? 'bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-bold shadow-sm shadow-cyan-500/20'
-                : 'bg-slate-900/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
+                : 'bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
             }`}
           >
             {f.label}
@@ -155,41 +132,26 @@ export default function ProjectsRoadmap() {
       </div>
 
       {/* 2x2 Large Architectural Cards Grid */}
-      <div className="grid md:grid-cols-2 gap-7 mb-12">
+      <div className="grid md:grid-cols-2 gap-6 mb-12">
         {filteredProjects.map((proj) => {
           const Icon = proj.icon;
           return (
             <div
               key={proj.id}
-              className="surface-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between border-slate-800/80 group"
+              className="bg-slate-950/80 rounded-3xl p-6 sm:p-7 border border-slate-800/90 hover:border-slate-700 flex flex-col justify-between transition-all duration-300 shadow-xl shadow-black/40 group"
             >
               <div>
-                {/* Card Header */}
+                {/* Header */}
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-extrabold text-cyan-400">
-                      {proj.index}
-                    </span>
-                    <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-cyan-300">
-                      <Icon className="w-4 h-4" />
-                    </div>
+                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400">
+                    <Icon className="w-5 h-5" />
                   </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">
-                      {proj.latency}
-                    </span>
-                    <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 inline-block mr-1.5 animate-pulse" />
-                      {proj.status}
-                    </span>
-                  </div>
+                  <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900 text-slate-300 border border-slate-800">
+                    {proj.category}
+                  </span>
                 </div>
 
-                <div className="text-[11px] font-mono text-cyan-400 font-semibold mb-1">
-                  {proj.category}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-200 transition-colors">
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
                   {proj.title}
                 </h3>
                 <p className="text-sm text-slate-300 leading-relaxed mb-5">
@@ -198,36 +160,35 @@ export default function ProjectsRoadmap() {
               </div>
 
               <div>
-                {/* System Architecture Blueprint */}
-                <div className="p-3.5 rounded-2xl bg-[#030611] border border-slate-800/90 mb-4">
-                  <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold text-cyan-400 mb-1">
-                    <Layers className="w-3 h-3" />
-                    <span>SYSTEM ARCHITECTURE:</span>
-                  </div>
-                  <span className="text-xs text-slate-300 font-mono leading-relaxed block">
+                {/* Architecture Note */}
+                <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/80 mb-4">
+                  <span className="text-[10px] font-mono font-bold text-cyan-400 block mb-1">
+                    SYSTEM ARCHITECTURE
+                  </span>
+                  <span className="text-xs text-slate-300 leading-relaxed block">
                     {proj.architecture}
                   </span>
                 </div>
 
-                {/* Stack Badges */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80 mb-4">
+                {/* Tech Stack Tags */}
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80 mb-5">
                   {proj.stack.map((t, idx) => (
                     <span
                       key={idx}
-                      className="text-[10px] font-mono px-2.5 py-1 rounded-lg bg-slate-900/90 text-slate-200 border border-slate-800"
+                      className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-800"
                     >
                       {t}
                     </span>
                   ))}
                 </div>
 
-                {/* Dual Action Buttons + Clone Shortcut */}
-                <div className="grid grid-cols-2 gap-2 pt-1 mb-2">
+                {/* Action Buttons */}
+                <div className="grid grid-cols-2 gap-2.5">
                   <a
                     href={proj.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-400/20 hover:scale-[1.02] active:scale-95 cursor-pointer"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                     <span>Live Web Demo</span>
@@ -237,47 +198,30 @@ export default function ProjectsRoadmap() {
                     href={proj.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-slate-200 hover:text-white text-xs font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
                   >
                     <GithubIcon className="w-3.5 h-3.5" />
                     <span>View Code</span>
                   </a>
                 </div>
-
-                <button
-                  onClick={() => handleCopyClone(proj.id, proj.repoUrl)}
-                  className="w-full py-1.5 px-2 rounded-lg bg-slate-950/60 hover:bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-400 hover:text-cyan-300 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  {copiedId === proj.id ? (
-                    <>
-                      <Check className="w-3 h-3 text-emerald-400" />
-                      <span className="text-emerald-400 font-semibold">git clone command copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3 text-slate-500" />
-                      <span>Copy git clone command</span>
-                    </>
-                  )}
-                </button>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* GitHub Callout Banner */}
-      <div className="surface-card rounded-3xl p-6 sm:p-8 border-slate-800/90 flex flex-col sm:flex-row items-center justify-between gap-6">
+      {/* GitHub Banner */}
+      <div className="rounded-3xl p-6 sm:p-8 border border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+          <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 text-cyan-400">
             <GitBranch className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-lg font-bold text-white mb-1">
+            <h4 className="text-base font-bold text-white mb-1">
               Building Open Source in Public
             </h4>
-            <p className="text-sm text-slate-300 max-w-lg leading-relaxed">
-              Explore full Git commit histories, technical issue trackers, and software design benchmarks on GitHub.
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Explore source code, commit history, and system design on GitHub.
             </p>
           </div>
         </div>
@@ -286,7 +230,7 @@ export default function ProjectsRoadmap() {
           href="https://github.com/hola-mundo999"
           target="_blank"
           rel="noopener noreferrer"
-          className="whitespace-nowrap px-6 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all hover:scale-105 active:scale-95 shadow-xl shadow-white/10 cursor-pointer"
+          className="whitespace-nowrap px-5 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs transition-all hover:scale-105 active:scale-95 shadow-lg shadow-white/10 cursor-pointer"
         >
           Visit github.com/hola-mundo999
         </a>

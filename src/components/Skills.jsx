@@ -54,25 +54,20 @@ export default function Skills() {
     <section id="skills" className="py-24 px-4 max-w-5xl mx-auto">
       {/* Section Header */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[1px] bg-cyan-400" />
-        <span className="text-[11px] uppercase font-mono tracking-widest text-cyan-400 font-bold">
-          02 // Technical Capabilities
+        <span className="w-8 h-[2px] bg-cyan-400" />
+        <span className="text-xs uppercase font-mono tracking-widest text-cyan-400 font-bold">
+          Technical Skills
         </span>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Curated Stack & Engineering Toolkit
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Core Technologies & Stack
           </h2>
           <p className="text-slate-300 text-sm mt-2 max-w-xl leading-relaxed">
-            Deliberately selected tools for systems engineering, machine learning pipelines, and production-grade applications.
+            The programming languages, frameworks, and developer tools I build with regularly.
           </p>
-        </div>
-
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-          <span>Active Learning & Daily Commits</span>
         </div>
       </div>
 
