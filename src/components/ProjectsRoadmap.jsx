@@ -1,13 +1,13 @@
 import React from 'react';
-import { Sparkles, Hammer, GitPullRequest, ArrowUpRight, Brain, Calendar, Layers } from 'lucide-react';
+import { Brain, Hand, Bell, Ticket, ArrowUpRight, GitPullRequest } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 
 export default function ProjectsRoadmap() {
   const projects = [
     {
       id: 1,
-      title: 'AI Lecture & Document Study Companion',
-      category: 'AI / Machine Learning',
+      title: 'AI CSIT Study & Lecture Notes Assistant',
+      category: 'Applied AI / NLP & LLMs',
       status: 'LIVE ON GITHUB',
       badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-sm shadow-emerald-500/20',
       icon: Brain,
@@ -20,29 +20,45 @@ export default function ProjectsRoadmap() {
     },
     {
       id: 2,
-      title: 'Prime IT Club Community & Event Portal',
-      category: 'Full-Stack Web App',
-      status: 'Target Build #2',
-      badgeClass: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-      icon: Calendar,
+      title: 'AI Virtual Hand Gesture Controller',
+      category: 'Computer Vision & HCI',
+      status: 'LIVE ON GITHUB',
+      badgeClass: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40 shadow-sm shadow-indigo-500/20',
+      icon: Hand,
       description:
-        'A dedicated web platform designed for Prime College tech community to handle workshop registrations, speaker spotlights, hackathon announcements, and resources.',
-      stack: ['React / PHP', 'Tailwind CSS', 'PostgreSQL / MySQL', 'Figma Prototyping'],
-      architecture: 'Event ticketing, member directory, announcement feeds, and admin panel.',
-      phase: 'Design & Wireframing',
+        'Real-time gesture recognition mapping 21 spatial hand landmarks to system commands (virtual slide deck navigation, volume adjustment, and media toggling).',
+      stack: ['Python', 'OpenCV', 'MediaPipe', 'Streamlit'],
+      architecture: '21 Landmark tracking -> Euclidean distance metrics -> Action dispatcher.',
+      phase: 'Completed & Running',
+      repoUrl: 'https://github.com/hola-mundo999/ai-gesture-controller',
     },
     {
       id: 3,
-      title: 'Interactive Algorithm & DS Sandbox',
-      category: 'CS Fundamentals & Interactive Web',
-      status: 'Target Build #3',
-      badgeClass: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-      icon: Layers,
+      title: 'TU CSIT Notice & Routine Alert Hub',
+      category: 'Backend Automation & Web Scraping',
+      status: 'LIVE ON GITHUB',
+      badgeClass: 'bg-sky-500/20 text-sky-300 border-sky-500/40 shadow-sm shadow-sky-500/20',
+      icon: Bell,
       description:
-        'An educational visualizer bridging C++ data structure logic with dynamic browser animations, explaining sorting algorithms, linked lists, trees, and pathfinding.',
-      stack: ['C++', 'JavaScript Canvas', 'Algorithms', 'Tailwind CSS'],
-      architecture: 'Step-by-step memory pointer animation and time-complexity comparisons.',
-      phase: 'Core Logic Planning',
+        'Automated web scraping pipeline monitoring Tribhuvan University (IOST) notice boards, categorizing exam routines/results, and dispatching Telegram alerts.',
+      stack: ['Python', 'BeautifulSoup4', 'SQLite', 'Telegram Bot API'],
+      architecture: 'Target scraping -> MD5 deduplication -> SQLite storage -> Telegram alerts.',
+      phase: 'Completed & Running',
+      repoUrl: 'https://github.com/hola-mundo999/tu-csit-notice-hub',
+    },
+    {
+      id: 4,
+      title: 'Prime Event & QR Ticket Management System',
+      category: 'Backend REST API & Event Tool',
+      status: 'LIVE ON GITHUB',
+      badgeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40 shadow-sm shadow-purple-500/20',
+      icon: Ticket,
+      description:
+        'Full-stack event registration and cryptographic digital QR ticket verification platform designed for Prime IT Club technical workshops, hackathons, and bootcamps.',
+      stack: ['Python', 'FastAPI', 'Pydantic', 'qrcode / Pillow'],
+      architecture: 'REST endpoints -> Token cryptography -> Base64 QR imaging -> Gate scanner.',
+      phase: 'Completed & Running',
+      repoUrl: 'https://github.com/hola-mundo999/prime-event-ticket-manager',
     },
   ];
 
@@ -56,10 +72,10 @@ export default function ProjectsRoadmap() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Projects & Development Roadmap
+            Featured Projects & Systems
           </h2>
           <p className="text-slate-400 text-sm mt-1 max-w-xl">
-            Currently moving from foundational learning into building public, open-source projects. Here is the active pipeline of applications being developed.
+            Real software systems engineered in Python across Computer Vision, Applied AI, Web Scraping, and High-Performance APIs.
           </p>
         </div>
 
@@ -75,8 +91,8 @@ export default function ProjectsRoadmap() {
         </a>
       </div>
 
-      {/* Projects Grid */}
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
+      {/* 2x2 Projects Grid */}
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
         {projects.map((proj) => {
           const Icon = proj.icon;
           return (
@@ -135,7 +151,7 @@ export default function ProjectsRoadmap() {
                     href={proj.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 hover:text-white text-xs font-medium transition-all"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 hover:text-white text-xs font-medium transition-all"
                   >
                     <GithubIcon className="w-3.5 h-3.5" />
                     <span>View Repository on GitHub &rarr;</span>
@@ -155,10 +171,10 @@ export default function ProjectsRoadmap() {
           </div>
           <div>
             <h4 className="text-base font-bold text-white mb-1">
-              Building in Public on GitHub
+              Building Open Source in Public
             </h4>
             <p className="text-xs text-slate-300 max-w-lg">
-              Starting from scratch as a 2nd year CSIT student. Every repository, commit history, and pull request will be documented transparently.
+              Explore source code, commit history, and technical architecture on GitHub. Open to peer code reviews and collaboration.
             </p>
           </div>
         </div>
