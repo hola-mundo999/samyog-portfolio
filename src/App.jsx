@@ -9,16 +9,23 @@ import Leadership from './components/Leadership';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ChatAssistant from './components/ChatAssistant';
 
 export default function App() {
   return (
-    <div className="relative min-h-screen bg-[#090a0f] text-slate-100 overflow-x-hidden selection:bg-indigo-500 selection:text-white">
-      {/* Silent 3D Interactive Canvas in background */}
+    <div className="relative min-h-screen bg-[#04060f] text-slate-100 overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+      {/* Cinematic 3D Kinetic Canvas in Background */}
       <ThreeBackground />
-      {/* Ambient contrast backdrop to ensure text readability */}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#07080c]/70 via-[#07080c]/80 to-[#07080c]/90 pointer-events-none z-[1]" />
 
-      {/* Main page content */}
+      {/* Atmospheric lighting overlay with radial vignette for cinematic contrast */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-[1]"
+        style={{
+          background: 'radial-gradient(circle at 50% 15%, rgba(6, 182, 212, 0.04) 0%, rgba(4, 6, 15, 0.75) 60%, rgba(4, 6, 15, 0.95) 100%)'
+        }}
+      />
+
+      {/* Main Page Layout */}
       <div className="relative z-10">
         <Navbar />
         <main>
@@ -32,6 +39,9 @@ export default function App() {
         </main>
         <Footer />
       </div>
+
+      {/* Floating Personal AI Chat Assistant Widget */}
+      <ChatAssistant />
     </div>
   );
 }

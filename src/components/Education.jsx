@@ -7,33 +7,36 @@ export default function Education() {
     'Object-Oriented Programming (C++)',
     'C Programming & Systems Fundamentals',
     'Database Management Systems (DBMS)',
-    'Discrete Mathematics & Logic',
-    'Computer Architecture & Assembly',
+    'Discrete Mathematics & Computational Logic',
+    'Computer Architecture & Assembly Language',
   ];
 
   return (
-    <section id="education" className="py-16 px-4 max-w-5xl mx-auto">
+    <section id="education" className="py-20 px-4 max-w-5xl mx-auto">
+      {/* Section Header */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[2px] bg-sky-500"></span>
-        <span className="text-xs uppercase font-mono tracking-widest text-sky-400 font-bold">Education</span>
+        <span className="w-8 h-[1px] bg-cyan-400" />
+        <span className="text-[11px] uppercase font-mono tracking-widest text-cyan-400 font-bold">
+          05 // Academic Foundation
+        </span>
       </div>
 
-      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-700/80">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-700/80">
+      <div className="surface-card rounded-3xl p-6 sm:p-8 border-slate-800/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800/80">
           <div className="flex items-start gap-4">
-            <div className="p-3 rounded-2xl bg-sky-500/20 text-sky-300 border border-sky-500/40 shrink-0">
+            <div className="p-3 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shrink-0">
               <GraduationCap className="w-6 h-6" />
             </div>
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-white">
                 BSc in Computer Science and Information Technology (BSc CSIT)
               </h3>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-slate-200 mt-1">
-                <span className="text-indigo-300 font-semibold">Prime College</span>
+              <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300 mt-1">
+                <span className="text-cyan-400 font-semibold">Prime College</span>
                 <span>·</span>
                 <span>Tribhuvan University</span>
                 <span>·</span>
-                <span className="flex items-center gap-1 text-slate-300">
+                <span className="flex items-center gap-1 text-slate-400">
                   <MapPin className="w-3.5 h-3.5 text-slate-400" />
                   Kathmandu, Nepal
                 </span>
@@ -41,21 +44,21 @@ export default function Education() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-xs font-mono font-semibold text-slate-200 self-start sm:self-auto">
-            <Calendar className="w-3.5 h-3.5 text-indigo-400" />
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono font-semibold text-slate-200 self-start sm:self-auto">
+            <Calendar className="w-3.5 h-3.5 text-cyan-400" />
             <span>Graduating 2027</span>
           </div>
         </div>
 
         <div>
-          <h4 className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold mb-3">
-            Core Academic Coursework & Focus Areas:
+          <h4 className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold mb-3.5">
+            Core Academic Coursework & Applied Competencies:
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {coursework.map((course, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs font-medium text-slate-100"
+                className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-medium text-slate-200"
               >
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>{course}</span>

@@ -1,27 +1,29 @@
 import React from 'react';
-import { Terminal, Heart } from 'lucide-react';
+import { Terminal } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-900/80 py-10 px-4 text-center text-xs text-slate-500">
-      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-indigo-400" />
-          <span className="font-semibold text-slate-400">Samyog Sapkota</span>
-          <span>·</span>
-          <span>BSc CSIT, Prime College</span>
+    <footer className="border-t border-slate-900 py-12 px-4 text-xs text-slate-400">
+      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-2.5">
+          <div className="w-6 h-6 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400">
+            <Terminal className="w-3.5 h-3.5" />
+          </div>
+          <span className="font-semibold text-slate-300">Samyog</span>
+          <span className="text-slate-600">·</span>
+          <span>BSc CSIT, Prime College (TU '27)</span>
         </div>
 
-        <div>
-          Designed & built with clean 3D interaction. No noisy game controls.
+        <div className="text-slate-400 text-center sm:text-left">
+          Crafted with 3D interaction & engineering focus. No clunky audio or generic templates.
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5 font-mono text-slate-400">
           <a
             href="https://github.com/hola-mundo999"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-slate-300 transition-colors"
+            className="hover:text-cyan-300 transition-colors"
           >
             GitHub
           </a>
@@ -29,13 +31,13 @@ export default function Footer() {
             href="https://www.linkedin.com/in/samyogsapkota/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-sky-400 transition-colors"
+            className="hover:text-cyan-300 transition-colors"
           >
             LinkedIn
           </a>
           <a
             href="mailto:samyog.sapkota1@gmail.com"
-            className="hover:text-indigo-400 transition-colors"
+            className="hover:text-cyan-300 transition-colors"
           >
             Email
           </a>
