@@ -8,14 +8,15 @@ export default function ProjectsRoadmap() {
       id: 1,
       title: 'AI Lecture & Document Study Companion',
       category: 'AI / Machine Learning',
-      status: 'Target Build #1',
-      badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+      status: 'LIVE ON GITHUB',
+      badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-sm shadow-emerald-500/20',
       icon: Brain,
       description:
         'An intelligent study assistant for BSc CSIT students to query semester PDF notes, summarize complex topics, and generate practice exam questions using Python and modern NLP.',
-      stack: ['Python', 'Streamlit / FastAPI', 'RAG / Vector DB', 'OpenAI / HuggingFace'],
-      architecture: 'Document chunking -> Vector embeddings -> Semantic search & Q&A interface.',
-      phase: 'Next in Pipeline',
+      stack: ['Python', 'Streamlit', 'pypdf', 'Google Gemini / Groq'],
+      architecture: 'Document chunking -> Context grounding -> Academic exam & Q&A generation.',
+      phase: 'Completed & Running',
+      repoUrl: 'https://github.com/hola-mundo999/ai-csit-study-assistant',
     },
     {
       id: 2,
@@ -118,7 +119,7 @@ export default function ProjectsRoadmap() {
                 </div>
 
                 {/* Tech badges */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80">
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80 mb-3">
                   {proj.stack.map((t, idx) => (
                     <span
                       key={idx}
@@ -128,6 +129,18 @@ export default function ProjectsRoadmap() {
                     </span>
                   ))}
                 </div>
+
+                {proj.repoUrl && (
+                  <a
+                    href={proj.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 hover:text-white text-xs font-medium transition-all"
+                  >
+                    <GithubIcon className="w-3.5 h-3.5" />
+                    <span>View Repository on GitHub &rarr;</span>
+                  </a>
+                )}
               </div>
             </div>
           );
