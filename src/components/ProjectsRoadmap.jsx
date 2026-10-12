@@ -30,7 +30,7 @@ export default function ProjectsRoadmap() {
       stack: ['Python', 'OpenCV', 'MediaPipe', 'Streamlit'],
       architecture: '21 Landmark tracking -> Euclidean distance metrics -> Action dispatcher.',
       demoUrl: 'https://ai-gesture-controller.streamlit.app',
-      repoUrl: 'https://github.com/hola-mundo999/ai-gesture-controller',
+      repoUrl: 'https://github.com/hola-mundo999/ai-gesture-controller-',
     },
     {
       id: 3,
