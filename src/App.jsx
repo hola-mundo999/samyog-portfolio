@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import ProjectsRoadmap from './components/ProjectsRoadmap';
+import TerminalConsole from './components/TerminalConsole';
 import Leadership from './components/Leadership';
 import Education from './components/Education';
 import Contact from './components/Contact';
@@ -21,7 +22,7 @@ export default function App() {
       <div 
         className="fixed inset-0 pointer-events-none z-[1]"
         style={{
-          background: 'radial-gradient(circle at 50% 15%, rgba(6, 182, 212, 0.04) 0%, rgba(4, 6, 15, 0.75) 60%, rgba(4, 6, 15, 0.95) 100%)'
+          background: 'radial-gradient(circle at 50% 15%, rgba(6, 182, 212, 0.05) 0%, rgba(4, 6, 15, 0.75) 60%, rgba(4, 6, 15, 0.95) 100%)'
         }}
       />
 
@@ -33,6 +34,7 @@ export default function App() {
           <About />
           <Skills />
           <ProjectsRoadmap />
+          <TerminalConsole />
           <Leadership />
           <Education />
           <Contact />

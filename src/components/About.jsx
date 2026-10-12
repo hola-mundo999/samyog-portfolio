@@ -35,7 +35,7 @@ export default function About() {
               Today, I channel that foundational rigour into building modern, intelligent software in <strong className="text-white font-semibold">Python</strong>. Whether implementing real-time computer vision pipelines with OpenCV, architecting document chunking for LLM retrieval, or building low-latency REST endpoints in FastAPI, I build software that is robust, fast, and maintainable.
             </p>
             <p>
-              Technology is most impactful when shared. As <strong className="text-cyan-300 font-semibold">PR Director of Prime IT Club</strong>, I bridge student talent with industry professionals—organizing campus hackathons, technical bootcamps, and creative design workshops.
+              Technology is most impactful when shared. Alongside individual software engineering, I actively participate in student developer initiatives—organizing campus hackathons, technical bootcamps, and collaborative open-source sessions.
             </p>
           </div>
 
@@ -91,7 +91,7 @@ export default function About() {
                 <Users className="w-4 h-4" />
               </div>
               <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">
-                Club Leadership & PR
+                Community & Mentorship
               </h3>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">

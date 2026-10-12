@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Brain,
   Hand,
@@ -8,22 +8,29 @@ import {
   ArrowUpRight,
   GitBranch,
   Layers,
+  Copy,
+  Check,
+  Filter,
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 
 export default function ProjectsRoadmap() {
+  const [activeFilter, setActiveFilter] = useState('ALL');
+  const [copiedId, setCopiedId] = useState(null);
+
   const projects = [
     {
       id: 1,
       index: '01',
       title: 'AI CSIT Study & Lecture Notes Assistant',
+      filterCategory: 'AI',
       category: 'Applied AI / NLP & LLMs',
       status: 'VERIFIED LIVE',
-      accent: 'cyan',
+      latency: '< 1.2s NLP inference',
       icon: Brain,
       description:
         'An intelligent academic assistant tailored for BSc CSIT semester courses. Ingests dense lecture PDFs, performs context-aware document chunking, and generates topic summaries along with rigorous practice exam questions via Google Gemini and Groq.',
-      stack: ['Python', 'Streamlit', 'pypdf', 'Google Gemini / Groq'],
+      stack: ['Python 3.11', 'Streamlit', 'pypdf', 'Google Gemini / Groq'],
       architecture: 'PDF Extraction → Chunk Indexing → Semantic Context Retrieval → Exam Question Synthesizer',
       demoUrl: 'https://ai-csit-studyassistant.streamlit.app/',
       repoUrl: 'https://github.com/hola-mundo999/ai-csit-study-assistant',
@@ -32,13 +39,14 @@ export default function ProjectsRoadmap() {
       id: 2,
       index: '02',
       title: 'AI Virtual Hand Gesture Controller',
+      filterCategory: 'VISION',
       category: 'Computer Vision & HCI',
       status: 'VERIFIED LIVE',
-      accent: 'blue',
+      latency: '30+ FPS Real-time tracking',
       icon: Hand,
       description:
         'A real-time, touchless Human-Computer Interaction interface. Leverages MediaPipe to track 21 three-dimensional hand landmarks at high frame rates, computing Euclidean vector angles to dispatch virtual slide transitions, system volume scaling, and media controls.',
-      stack: ['Python', 'OpenCV', 'MediaPipe', 'Streamlit'],
+      stack: ['Python 3.11', 'OpenCV', 'MediaPipe', 'Streamlit'],
       architecture: 'Webcam Stream → 21-Landmark Cartesian Vectorization → Angle Thresholding → System Event Dispatcher',
       demoUrl: 'https://ai-gesture-controller.streamlit.app',
       repoUrl: 'https://github.com/hola-mundo999/ai-gesture-controller-',
@@ -47,13 +55,14 @@ export default function ProjectsRoadmap() {
       id: 3,
       index: '03',
       title: 'TU CSIT Notice & Routine Alert Hub',
+      filterCategory: 'BACKEND',
       category: 'Backend Automation & Web Scraping',
       status: 'ACTIVE PIPELINE',
-      accent: 'indigo',
+      latency: 'Instant Telegram webhooks',
       icon: Bell,
       description:
         'Automated background scraper tracking Tribhuvan University (IOST) notice boards. Filters and categorizes upcoming exam schedules and published results, utilizing cryptographic MD5 hashing for deduplication, persisting to SQLite, and dispatching real-time Telegram alerts.',
-      stack: ['Python', 'BeautifulSoup4', 'SQLite', 'Telegram Bot API'],
+      stack: ['Python 3.11', 'BeautifulSoup4', 'SQLite3', 'Telegram Bot API'],
       architecture: 'IOST Notice Poller → MD5 Content Hashing → SQLite Database → Telegram Bot Markdown Formatter',
       demoUrl: 'https://tu-csit-notice-app.streamlit.app/',
       repoUrl: 'https://github.com/hola-mundo999/tu-csit-notice-hub',
@@ -62,18 +71,30 @@ export default function ProjectsRoadmap() {
       id: 4,
       index: '04',
       title: 'Prime Event & QR Ticket Management System',
+      filterCategory: 'BACKEND',
       category: 'Backend REST API & Event Tool',
       status: 'VERIFIED LIVE',
-      accent: 'emerald',
+      latency: '< 45ms REST latency',
       icon: Ticket,
       description:
         'A production event RSVP and gate ticketing solution built for Prime IT Club hackathons and workshops. Issues cryptographically hashed attendance tokens rendered as base64 dynamic QR passes, featuring a dedicated real-time gate terminal for check-in verification.',
-      stack: ['Python', 'FastAPI', 'Pydantic', 'qrcode / Pillow'],
+      stack: ['FastAPI', 'Pydantic', 'qrcode / Pillow', 'Uvicorn ASGI'],
       architecture: 'FastAPI REST Endpoints → Cryptographic Token Generation → Base64 QR Image → Live Gate Scanner Terminal',
       demoUrl: 'https://prime-event-ticket-manager.onrender.com/',
       repoUrl: 'https://github.com/hola-mundo999/prime-event-ticket-manager',
     },
   ];
+
+  const filteredProjects =
+    activeFilter === 'ALL'
+      ? projects
+      : projects.filter((p) => p.filterCategory === activeFilter);
+
+  const handleCopyClone = (id, repoUrl) => {
+    navigator.clipboard.writeText(`git clone ${repoUrl}.git`);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   return (
     <section id="projects" className="py-24 px-4 max-w-5xl mx-auto">
@@ -81,11 +102,11 @@ export default function ProjectsRoadmap() {
       <div className="flex items-center gap-2 mb-3">
         <span className="w-8 h-[1px] bg-cyan-400" />
         <span className="text-[11px] uppercase font-mono tracking-widest text-cyan-400 font-bold">
-          03 // Featured Systems & Production Builds
+          02 // Production Software & Systems
         </span>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
         <div>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
             Engineered Systems & Live Deployments
@@ -107,9 +128,35 @@ export default function ProjectsRoadmap() {
         </a>
       </div>
 
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-slate-900">
+        <div className="flex items-center gap-1.5 text-slate-400 text-xs font-mono mr-2">
+          <Filter className="w-3.5 h-3.5 text-cyan-400" />
+          <span>SYSTEM FILTER:</span>
+        </div>
+        {[
+          { key: 'ALL', label: 'All Systems (4)' },
+          { key: 'AI', label: 'Applied AI & NLP' },
+          { key: 'VISION', label: 'Computer Vision' },
+          { key: 'BACKEND', label: 'APIs & Automation' },
+        ].map((f) => (
+          <button
+            key={f.key}
+            onClick={() => setActiveFilter(f.key)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
+              activeFilter === f.key
+                ? 'bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-bold shadow-sm shadow-cyan-500/20'
+                : 'bg-slate-900/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+            }`}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
       {/* 2x2 Large Architectural Cards Grid */}
       <div className="grid md:grid-cols-2 gap-7 mb-12">
-        {projects.map((proj) => {
+        {filteredProjects.map((proj) => {
           const Icon = proj.icon;
           return (
             <div
@@ -118,7 +165,7 @@ export default function ProjectsRoadmap() {
             >
               <div>
                 {/* Card Header */}
-                <div className="flex items-center justify-between gap-2 mb-5">
+                <div className="flex items-center justify-between gap-2 mb-4">
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-xs font-extrabold text-cyan-400">
                       {proj.index}
@@ -128,10 +175,15 @@ export default function ProjectsRoadmap() {
                     </div>
                   </div>
 
-                  <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 inline-block mr-1.5 animate-pulse" />
-                    {proj.status}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">
+                      {proj.latency}
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 inline-block mr-1.5 animate-pulse" />
+                      {proj.status}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="text-[11px] font-mono text-cyan-400 font-semibold mb-1">
@@ -147,7 +199,7 @@ export default function ProjectsRoadmap() {
 
               <div>
                 {/* System Architecture Blueprint */}
-                <div className="p-3.5 rounded-2xl bg-[#030611] border border-slate-800/90 mb-5">
+                <div className="p-3.5 rounded-2xl bg-[#030611] border border-slate-800/90 mb-4">
                   <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold text-cyan-400 mb-1">
                     <Layers className="w-3 h-3" />
                     <span>SYSTEM ARCHITECTURE:</span>
@@ -158,7 +210,7 @@ export default function ProjectsRoadmap() {
                 </div>
 
                 {/* Stack Badges */}
-                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800/80 mb-5">
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80 mb-4">
                   {proj.stack.map((t, idx) => (
                     <span
                       key={idx}
@@ -169,13 +221,13 @@ export default function ProjectsRoadmap() {
                   ))}
                 </div>
 
-                {/* Dual Action Buttons: Live Web Demo & View Code */}
-                <div className="grid grid-cols-2 gap-2.5 pt-1">
+                {/* Dual Action Buttons + Clone Shortcut */}
+                <div className="grid grid-cols-2 gap-2 pt-1 mb-2">
                   <a
                     href={proj.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-400/20 hover:scale-[1.02] active:scale-95 cursor-pointer"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                     <span>Live Web Demo</span>
@@ -191,6 +243,23 @@ export default function ProjectsRoadmap() {
                     <span>View Code</span>
                   </a>
                 </div>
+
+                <button
+                  onClick={() => handleCopyClone(proj.id, proj.repoUrl)}
+                  className="w-full py-1.5 px-2 rounded-lg bg-slate-950/60 hover:bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-400 hover:text-cyan-300 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  {copiedId === proj.id ? (
+                    <>
+                      <Check className="w-3 h-3 text-emerald-400" />
+                      <span className="text-emerald-400 font-semibold">git clone command copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3 text-slate-500" />
+                      <span>Copy git clone command</span>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           );
