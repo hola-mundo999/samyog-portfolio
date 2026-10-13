@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
-import { soundEffects, speakMaleGreeting, stopSpeech } from '../services/soundService';
+import { soundEffects, playAiVoiceGreeting, stopSpeech } from '../services/soundService';
 
 const SoundContext = createContext();
 
@@ -27,7 +27,7 @@ export function SoundProvider({ children }) {
   const playGreeting = useCallback(() => {
     if (!isSoundEnabled) return;
     setIsPlayingVoice(true);
-    speakMaleGreeting(
+    playAiVoiceGreeting(
       () => setIsPlayingVoice(true),
       () => setIsPlayingVoice(false)
     );
@@ -38,42 +38,47 @@ export function SoundProvider({ children }) {
 
   // Play greeting once on page load (or upon first interaction if browser autoplay blocks)
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !isSoundEnabled) return;
+
+    let cleanup = () => {};
 
     const attemptPlay = () => {
       if (hasPlayedThisLoad.current) return;
-      hasPlayedThisLoad.current = true;
-      cleanup();
-      playGreeting();
+
+      playAiVoiceGreeting(
+        () => setIsPlayingVoice(true),
+        () => setIsPlayingVoice(false)
+      ).then((started) => {
+        if (started) {
+          hasPlayedThisLoad.current = true;
+          cleanup();
+        }
+      });
     };
 
-    const cleanup = () => {
+    cleanup = () => {
       window.removeEventListener('pointerdown', attemptPlay);
+      window.removeEventListener('click', attemptPlay);
       window.removeEventListener('keydown', attemptPlay);
       window.removeEventListener('scroll', attemptPlay);
-      window.removeEventListener('click', attemptPlay);
+      window.removeEventListener('touchstart', attemptPlay);
     };
 
-    // Attempt immediately shortly after mount
-    const timer = setTimeout(() => {
-      try {
-        attemptPlay();
-      } catch {
-        // Handled via user interaction listeners
-      }
-    }, 500);
+    // Attempt shortly after mount (works if tab allows autoplay or on reload)
+    const timer = setTimeout(attemptPlay, 350);
 
-    // Listeners in case browser autoplay blocks unprompted audio
-    window.addEventListener('pointerdown', attemptPlay, { once: true, passive: true });
-    window.addEventListener('keydown', attemptPlay, { once: true, passive: true });
-    window.addEventListener('scroll', attemptPlay, { once: true, passive: true });
-    window.addEventListener('click', attemptPlay, { once: true, passive: true });
+    // If browser autoplay policy blocks unprompted audio, listen for first user action
+    window.addEventListener('pointerdown', attemptPlay, { passive: true });
+    window.addEventListener('click', attemptPlay, { passive: true });
+    window.addEventListener('keydown', attemptPlay, { passive: true });
+    window.addEventListener('scroll', attemptPlay, { passive: true });
+    window.addEventListener('touchstart', attemptPlay, { passive: true });
 
     return () => {
       clearTimeout(timer);
       cleanup();
     };
-  }, [playGreeting]);
+  }, [isSoundEnabled]);
 
   const toggleSound = useCallback(() => {
     setIsSoundEnabled((prev) => {

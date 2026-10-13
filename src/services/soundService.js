@@ -79,91 +79,153 @@ export const soundEffects = {
   },
 };
 
+let currentAudio = null;
+
 /**
- * Plays the welcome greeting using Web Speech API AI voice.
- * Text: "Hello, I am Samyog Sapkota."
+ * Plays the neural AI voice greeting.
+ * Tries /greeting.mp3 first, falls back to Web Speech API if necessary.
+ * Returns a Promise that resolves to `true` if playback actually succeeded,
+ * or `false` if autoplay was blocked by the browser.
  */
-export function speakMaleGreeting(onStart, onEnd) {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+export function playAiVoiceGreeting(onStart, onEnd) {
+  if (typeof window === 'undefined') {
     if (onEnd) onEnd();
-    return;
+    return Promise.resolve(false);
   }
 
-  try {
-    window.speechSynthesis.cancel();
-
-    const text = 'Hello, I am Samyog Sapkota.';
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    const pickAndSpeak = () => {
-      const voices = window.speechSynthesis.getVoices();
-
-      // Look for clear natural English male voice
-      const preferredVoice =
-        voices.find(
-          (v) =>
-            v.lang.startsWith('en') &&
-            (v.name.includes('David') ||
-              v.name.includes('Guy') ||
-              v.name.includes('George') ||
-              v.name.includes('Daniel') ||
-              v.name.includes('Male') ||
-              v.name.includes('Natural') ||
-              v.name.includes('Google US English'))
-        ) ||
-        voices.find(
-          (v) =>
-            v.lang.startsWith('en') &&
-            !v.name.includes('Zira') &&
-            !v.name.includes('Jenny') &&
-            !v.name.includes('Female')
-        ) ||
-        voices.find((v) => v.lang.startsWith('en')) ||
-        voices[0];
-
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
+  return new Promise((resolve) => {
+    try {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
       }
 
-      utterance.pitch = 0.95;
-      utterance.rate = 0.95;
-      utterance.volume = 1.0;
+      const audio = new Audio('/greeting.mp3');
+      audio.volume = 1.0;
+      currentAudio = audio;
 
-      utterance.onstart = () => {
+      let started = false;
+
+      audio.onplay = () => {
+        started = true;
         if (onStart) onStart();
+        resolve(true);
       };
 
-      utterance.onend = () => {
+      audio.onended = () => {
         if (onEnd) onEnd();
       };
 
-      utterance.onerror = () => {
-        if (onEnd) onEnd();
+      audio.onerror = () => {
+        fallbackSpeechSynthesis(onStart, onEnd).then((success) => resolve(success));
       };
 
-      window.speechSynthesis.speak(utterance);
-    };
-
-    const voices = window.speechSynthesis.getVoices();
-    if (voices && voices.length > 0) {
-      pickAndSpeak();
-    } else {
-      window.speechSynthesis.onvoiceschanged = () => {
-        pickAndSpeak();
-      };
-      setTimeout(pickAndSpeak, 120);
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            if (!started) {
+              started = true;
+              if (onStart) onStart();
+            }
+            resolve(true);
+          })
+          .catch(() => {
+            // Browser autoplay policy prevented unprompted audio
+            resolve(false);
+          });
+      } else {
+        if (onStart) onStart();
+        resolve(true);
+      }
+    } catch {
+      resolve(false);
     }
-  } catch {
-    if (onEnd) onEnd();
-  }
+  });
+}
+
+function fallbackSpeechSynthesis(onStart, onEnd) {
+  return new Promise((resolve) => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      if (onEnd) onEnd();
+      resolve(false);
+      return;
+    }
+
+    try {
+      window.speechSynthesis.cancel();
+      const text = 'Hello, I am Samyog Sapkota.';
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      const pickVoice = () => {
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice =
+          voices.find(
+            (v) =>
+              v.lang.startsWith('en') &&
+              (v.name.includes('David') ||
+                v.name.includes('Guy') ||
+                v.name.includes('George') ||
+                v.name.includes('Daniel') ||
+                v.name.includes('Male') ||
+                v.name.includes('Natural'))
+          ) ||
+          voices.find((v) => v.lang.startsWith('en')) ||
+          voices[0];
+
+        if (preferredVoice) {
+          utterance.voice = preferredVoice;
+        }
+
+        utterance.pitch = 0.95;
+        utterance.rate = 0.95;
+        utterance.volume = 1.0;
+
+        utterance.onstart = () => {
+          if (onStart) onStart();
+          resolve(true);
+        };
+        utterance.onend = () => {
+          if (onEnd) onEnd();
+        };
+        utterance.onerror = () => {
+          if (onEnd) onEnd();
+          resolve(false);
+        };
+
+        window.speechSynthesis.speak(utterance);
+      };
+
+      const voices = window.speechSynthesis.getVoices();
+      if (voices && voices.length > 0) {
+        pickVoice();
+      } else {
+        window.speechSynthesis.onvoiceschanged = () => pickVoice();
+        setTimeout(pickVoice, 100);
+      }
+    } catch {
+      if (onEnd) onEnd();
+      resolve(false);
+    }
+  });
 }
 
 export function stopSpeech() {
-  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    try {
-      window.speechSynthesis.cancel();
-    } catch {
-      // Audio cancel handled safely
+  if (typeof window !== 'undefined') {
+    if (currentAudio) {
+      try {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      } catch {
+        // audio stop handled safely
+      }
+    }
+    if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch {
+        // synthesis stop handled safely
+      }
     }
   }
 }

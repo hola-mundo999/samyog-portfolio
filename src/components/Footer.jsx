@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -12,12 +12,16 @@ export default function Footer() {
     <footer className="border-t border-slate-200 dark:border-slate-800/80 py-12 px-4 text-xs text-slate-500 dark:text-slate-400">
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-2.5">
-          <div className="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
-            <Terminal className="w-3.5 h-3.5" />
+          <div className="w-6 h-6 rounded-full overflow-hidden border border-slate-300 dark:border-slate-700 shadow-xs shrink-0 bg-slate-200 dark:bg-slate-800">
+            <img
+              src="/samyog.jpg"
+              alt="Samyog Sapkota"
+              className="w-full h-full object-cover object-[center_18%]"
+            />
           </div>
           <span className="font-semibold text-slate-800 dark:text-slate-200">Samyog Sapkota</span>
           <span className="text-slate-400 dark:text-slate-600">·</span>
-          <span>BSc CSIT, Prime College (TU '27)</span>
+          <span>Prime College (TU '27)</span>
         </div>
 
         <div className="text-slate-500 dark:text-slate-400 text-center sm:text-left text-[11px] leading-relaxed">

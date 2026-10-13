@@ -50,10 +50,14 @@ export default function Navbar() {
       <header className="fixed top-0 left-0 right-0 z-40 flex justify-center px-4 py-4 transition-all duration-300">
         <nav
           aria-label="Main Navigation"
+          style={{
+            backdropFilter: scrolled ? 'blur(30px)' : 'blur(16px)',
+            WebkitBackdropFilter: scrolled ? 'blur(30px)' : 'blur(16px)',
+          }}
           className={`w-full max-w-5xl rounded-2xl px-5 py-3 transition-all duration-300 flex items-center justify-between ${
             scrolled
-              ? 'bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-900/5 dark:shadow-black/60'
-              : 'bg-white/40 dark:bg-slate-950/40 backdrop-blur-md border border-slate-200/50 dark:border-slate-800/40'
+              ? 'bg-white/94 dark:bg-[#070a14]/94 border border-slate-200/90 dark:border-slate-800/90 shadow-2xl shadow-slate-900/10 dark:shadow-black/80'
+              : 'bg-white/65 dark:bg-slate-950/65 border border-slate-200/60 dark:border-slate-800/50 shadow-xs'
           }`}
         >
           {/* Brand */}
