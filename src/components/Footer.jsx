@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
+import { motion } from 'motion/react';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -34,7 +35,7 @@ export default function Footer() {
               href="https://github.com/hola-mundo999"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors"
+              className="hover:text-sky-600 dark:hover:text-cyan-300 transition-colors"
             >
               GitHub
             </a>
@@ -42,26 +43,28 @@ export default function Footer() {
               href="https://www.linkedin.com/in/samyogsapkota/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors"
+              className="hover:text-sky-600 dark:hover:text-cyan-300 transition-colors"
             >
               LinkedIn
             </a>
             <a
               href="mailto:samyog.sapkota1@gmail.com"
-              className="hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors"
+              className="hover:text-sky-600 dark:hover:text-cyan-300 transition-colors"
             >
               Email
             </a>
           </div>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1, y: -2 }}
+            whileTap={{ scale: 0.92 }}
             onClick={scrollToTop}
             aria-label="Back to top"
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-all cursor-pointer"
+            className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer shadow-xs min-h-[44px] min-w-[44px] flex items-center justify-center"
             title="Scroll to top"
           >
             <ArrowUp className="w-3.5 h-3.5" />
-          </button>
+          </motion.button>
         </div>
       </div>
 

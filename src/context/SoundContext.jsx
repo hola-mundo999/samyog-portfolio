@@ -5,26 +5,47 @@ const SoundContext = createContext();
 
 export function SoundProvider({ children }) {
   const [isPlayingVoice, setIsPlayingVoice] = useState(false);
-  const isSoundEnabled = true;
+  const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    try {
+      const saved = localStorage.getItem('portfolio-sound');
+      return saved === null ? true : saved === 'true';
+    } catch {
+      return true;
+    }
+  });
 
-  // In-memory ref so greeting plays once per page load and replays upon page refresh
   const hasPlayedThisLoad = useRef(false);
   const audioInstance = useRef(null);
+  const isSoundEnabledRef = useRef(isSoundEnabled);
 
-  // Clear any legacy muted preference so it never silences the portfolio
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    isSoundEnabledRef.current = isSoundEnabled;
+  }, [isSoundEnabled]);
+
+  const toggleSound = useCallback(() => {
+    setIsSoundEnabled((prev) => {
+      const next = !prev;
       try {
-        localStorage.removeItem('portfolio-sound');
-        sessionStorage.removeItem('portfolio-welcomed');
+        localStorage.setItem('portfolio-sound', String(next));
       } catch {
-        // Storage clean-up safe
+        // Storage safe
       }
-    }
+      if (next) {
+        soundEffects.playClick();
+      } else {
+        if (audioInstance.current) {
+          audioInstance.current.pause();
+          audioInstance.current.currentTime = 0;
+        }
+        setIsPlayingVoice(false);
+      }
+      return next;
+    });
   }, []);
 
   const playGreeting = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !isSoundEnabledRef.current) return;
     setIsPlayingVoice(true);
     playAiVoiceGreeting(
       () => setIsPlayingVoice(true),
@@ -32,30 +53,38 @@ export function SoundProvider({ children }) {
     );
   }, []);
 
-  // Play greeting on page load (or upon first touch/click/key if browser autoplay blocks)
+  // Play greeting on page load (if sound enabled)
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !isSoundEnabledRef.current) return;
 
-    // Single preloaded Audio instance with max volume
-    const audio = new Audio('/greeting.mp3');
-    audio.preload = 'auto';
-    audio.volume = 1.0;
-    audioInstance.current = audio;
+    let audio;
+    try {
+      audio = new Audio('/greeting.mp3');
+      audio.preload = 'auto';
+      audio.volume = 0.9;
+      audioInstance.current = audio;
+    } catch {
+      return;
+    }
 
     const startAudio = () => {
-      if (hasPlayedThisLoad.current) return;
+      if (hasPlayedThisLoad.current || !isSoundEnabledRef.current || !audio) return;
 
-      const promise = audio.play();
-      if (promise !== undefined) {
-        promise
-          .then(() => {
-            hasPlayedThisLoad.current = true;
-            setIsPlayingVoice(true);
-            cleanup();
-          })
-          .catch(() => {
-            // Autoplay blocked by browser policy; capture listeners remain active
-          });
+      try {
+        const promise = audio.play();
+        if (promise !== undefined) {
+          promise
+            .then(() => {
+              hasPlayedThisLoad.current = true;
+              setIsPlayingVoice(true);
+              cleanup();
+            })
+            .catch(() => {
+              // Browser policy safely prevented autoplay; listener waits for first user gesture
+            });
+        }
+      } catch {
+        // Safe fallback
       }
     };
 
@@ -64,12 +93,16 @@ export function SoundProvider({ children }) {
     };
 
     audio.onerror = () => {
-      if (!hasPlayedThisLoad.current) {
+      if (!hasPlayedThisLoad.current && isSoundEnabledRef.current) {
         hasPlayedThisLoad.current = true;
-        fallbackSpeechSynthesis(
-          () => setIsPlayingVoice(true),
-          () => setIsPlayingVoice(false)
-        );
+        try {
+          fallbackSpeechSynthesis(
+            () => setIsPlayingVoice(true),
+            () => setIsPlayingVoice(false)
+          );
+        } catch {
+          // Ignore
+        }
         cleanup();
       }
     };
@@ -84,12 +117,9 @@ export function SoundProvider({ children }) {
       document.removeEventListener('click', startAudio, true);
     };
 
-    // 1. Immediate attempt on page load
+    // Attempt subtle playback if already permitted by user gesture
     startAudio();
-    const t1 = setTimeout(startAudio, 200);
-    const t2 = setTimeout(startAudio, 600);
 
-    // 2. Global capture listeners for the very first interaction (click, touch, key)
     window.addEventListener('pointerdown', startAudio, { capture: true, passive: true });
     window.addEventListener('click', startAudio, { capture: true, passive: true });
     window.addEventListener('keydown', startAudio, { capture: true, passive: true });
@@ -99,27 +129,26 @@ export function SoundProvider({ children }) {
     document.addEventListener('click', startAudio, { capture: true, passive: true });
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
       cleanup();
     };
   }, []);
 
-  const toggleSound = useCallback(() => {
-    // Kept for backward compatibility
-    playGreeting();
-  }, [playGreeting]);
-
   const playClick = useCallback(() => {
-    soundEffects.playClick();
+    if (isSoundEnabledRef.current) {
+      soundEffects.playClick();
+    }
   }, []);
 
   const playChime = useCallback(() => {
-    soundEffects.playChime();
+    if (isSoundEnabledRef.current) {
+      soundEffects.playChime();
+    }
   }, []);
 
   const playSuccess = useCallback(() => {
-    soundEffects.playSuccess();
+    if (isSoundEnabledRef.current) {
+      soundEffects.playSuccess();
+    }
   }, []);
 
   return (

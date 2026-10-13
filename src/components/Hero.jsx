@@ -1,6 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Mail, MapPin, Clock } from 'lucide-react';
+import { motion } from 'motion/react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import ShimmerButton from './ui/ShimmerButton';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
 
 export default function Hero() {
   const [localTime, setLocalTime] = useState('');
@@ -28,104 +53,153 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[80vh] flex flex-col justify-center items-center pt-28 pb-16 px-4 max-w-4xl mx-auto text-center">
-      {/* Top Lively Pills: Status + Kathmandu Local Time */}
-      <div className="flex flex-wrap items-center justify-center gap-2.5 mb-7">
-        {/* Availability Beacon: Open for internships only */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium backdrop-blur-md shadow-xs">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Open for internships</span>
-        </div>
-
-        {/* Live Kathmandu Location & Time */}
-        {localTime && (
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-mono font-medium backdrop-blur-md shadow-xs">
-            <MapPin className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
-            <span>Kathmandu</span>
-            <span className="text-slate-400 dark:text-slate-600">·</span>
-            <Clock className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
-            <span>{localTime} NPT</span>
+    <section id="hero" className="relative min-h-[85vh] flex flex-col justify-center items-center pt-28 sm:pt-32 pb-16 px-4 max-w-4xl mx-auto text-center">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full flex flex-col items-center"
+      >
+        {/* Profile Avatar Badge */}
+        <motion.div variants={itemVariants} className="relative mb-5 group">
+          <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-[3px] bg-gradient-to-tr from-sky-500 via-indigo-500 to-cyan-400 dark:from-cyan-400 dark:via-sky-400 dark:to-indigo-500 shadow-xl shadow-sky-500/10 dark:shadow-cyan-500/20">
+            <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-900 border-2 border-white dark:border-[#060813]">
+              <img
+                src="/samyog.jpg"
+                alt="Samyog Sapkota"
+                className="w-full h-full object-cover object-[center_18%] group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            {/* Live active status indicator dot on avatar */}
+            <span
+              className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#060813] flex items-center justify-center shadow-xs"
+              title="Available for internships"
+            >
+              <span className="w-2 h-2 rounded-full bg-white dark:bg-slate-950" />
+            </span>
           </div>
-        )}
-      </div>
+        </motion.div>
 
-      {/* Main Headline */}
-      <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6 leading-[1.2] sm:leading-[1.15]">
-        Hi, I'm{' '}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-indigo-600 to-cyan-500 dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-300">
-          Samyog Sapkota
-        </span>
-        .<br />
-        <span className="text-xl sm:text-3xl md:text-4xl font-semibold text-slate-700 dark:text-slate-200 block mt-1.5 sm:mt-2 tracking-tight">
-          Software Developer & CS Student
-        </span>
-      </h1>
+        {/* Top Lively Pills: Status + Kathmandu Local Time */}
+        <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-2.5 mb-6 sm:mb-7">
+          {/* Availability Beacon: Open for internships only */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-medium shadow-xs">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span>Open for internships</span>
+          </div>
 
-      {/* Clear, Natural Subtitle */}
-      <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal">
-        Developer based in Kathmandu, Nepal, and Public Relations Advisor at Prime IT Club. I build practical software with Python, explore computer vision with OpenCV, and engineer clean web backends with strong fundamentals in C and C++.
-      </p>
+          {/* Live Kathmandu Location & Time */}
+          {localTime && (
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-medium shadow-xs">
+              <MapPin className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
+              <span>Kathmandu</span>
+              <span className="text-slate-300 dark:text-slate-700">·</span>
+              <Clock className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
+              <span>{localTime} NPT</span>
+            </div>
+          )}
+        </motion.div>
 
-      {/* Primary Calls to Action */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-xs sm:max-w-none mx-auto mb-5 sm:mb-6">
-        <a
-          href="#projects"
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-cyan-400 dark:hover:bg-cyan-300 dark:text-slate-950 font-bold text-sm transition-all duration-200 hover:scale-105 active:scale-95 shadow-md shadow-slate-900/10 dark:shadow-cyan-400/20 cursor-pointer text-center"
+        {/* Main Headline */}
+        <motion.h1
+          variants={itemVariants}
+          className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6 leading-[1.18] sm:leading-[1.15]"
         >
-          <span>View Projects</span>
-          <ArrowRight className="w-4 h-4" />
-        </a>
+          Hi, I'm{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-indigo-600 to-cyan-500 dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-300">
+            Samyog Sapkota
+          </span>
+          .<br />
+          <span className="text-xl sm:text-3xl md:text-4xl font-semibold text-slate-700 dark:text-slate-200 block mt-2 sm:mt-2.5 tracking-tight">
+            Software Developer & CS Student
+          </span>
+        </motion.h1>
 
-        <a
-          href="#contact"
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-900 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-700/80 dark:text-white font-medium text-sm transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm cursor-pointer text-center"
+        {/* Clear, Natural Subtitle */}
+        <motion.p
+          variants={itemVariants}
+          className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal"
         >
-          <Mail className="w-4 h-4 text-sky-600 dark:text-cyan-400" />
-          <span>Contact Me</span>
-        </a>
-      </div>
+          Developer based in Kathmandu, Nepal, and Public Relations Advisor at Prime IT Club. I build practical software with Python, explore computer vision with OpenCV, and engineer clean web backends with strong fundamentals in C and C++.
+        </motion.p>
 
-      {/* Social Links Row */}
-      <div className="flex items-center justify-center gap-2.5 mb-10 sm:mb-14">
-        <a
-          href="https://github.com/hola-mundo999"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub Profile"
-          className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 hover:text-slate-950 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-white transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
-          title="GitHub (@hola-mundo999)"
+        {/* Primary Calls to Action featuring 21st.dev ShimmerButton */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full max-w-xs sm:max-w-none mx-auto mb-6 sm:mb-7"
         >
-          <GithubIcon className="w-4 h-4" />
-        </a>
+          <ShimmerButton href="#projects" className="w-full sm:w-auto min-h-[48px]">
+            <span>View Projects</span>
+            <ArrowRight className="w-4 h-4" />
+          </ShimmerButton>
 
-        <a
-          href="https://www.linkedin.com/in/samyogsapkota/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn Profile"
-          className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
-          title="LinkedIn Profile"
-        >
-          <LinkedinIcon className="w-4 h-4" />
-        </a>
+          <motion.a
+            whileHover={{ scale: 1.025 }}
+            whileTap={{ scale: 0.975 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            href="#contact"
+            className="w-full sm:w-auto min-h-[48px] flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-900 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-700/80 dark:text-white font-medium text-sm transition-colors shadow-sm cursor-pointer text-center"
+          >
+            <Mail className="w-4 h-4 text-sky-600 dark:text-cyan-400" />
+            <span>Contact Me</span>
+          </motion.a>
+        </motion.div>
 
-        <a
-          href="mailto:samyog.sapkota1@gmail.com"
-          aria-label="Direct Email"
-          className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
-          title="Email (samyog.sapkota1@gmail.com)"
-        >
-          <Mail className="w-4 h-4" />
-        </a>
-      </div>
+        {/* Social Links Row */}
+        <motion.div variants={itemVariants} className="flex items-center justify-center gap-2.5 mb-12 sm:mb-16">
+          <motion.a
+            whileHover={{ scale: 1.08, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://github.com/hola-mundo999"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub Profile"
+            className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-950 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+            title="GitHub (@hola-mundo999)"
+          >
+            <GithubIcon className="w-4 h-4" />
+          </motion.a>
 
-      {/* Subtle Scroll Indicator */}
-      <div className="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 text-xs">
-        <span className="mb-2">Scroll to explore</span>
-        <div className="w-4 h-7 rounded-full border border-slate-300 dark:border-slate-800 flex items-start justify-center p-1">
-          <div className="w-1 h-2 rounded-full bg-sky-500 dark:bg-cyan-400 animate-bounce" />
-        </div>
-      </div>
+          <motion.a
+            whileHover={{ scale: 1.08, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://www.linkedin.com/in/samyogsapkota/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn Profile"
+            className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+            title="LinkedIn Profile"
+          >
+            <LinkedinIcon className="w-4 h-4" />
+          </motion.a>
+
+          <motion.a
+            whileHover={{ scale: 1.08, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            href="mailto:samyog.sapkota1@gmail.com"
+            aria-label="Direct Email"
+            className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+            title="Email (samyog.sapkota1@gmail.com)"
+          >
+            <Mail className="w-4 h-4" />
+          </motion.a>
+        </motion.div>
+
+        {/* Subtle Scroll Indicator */}
+        <motion.div variants={itemVariants} className="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 text-xs">
+          <span className="mb-2">Scroll to explore</span>
+          <div className="w-4 h-7 rounded-full border border-slate-300 dark:border-slate-800 flex items-start justify-center p-1">
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+              className="w-1 h-2 rounded-full bg-sky-500 dark:bg-cyan-400"
+            />
+          </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

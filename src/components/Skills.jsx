@@ -1,12 +1,14 @@
 import React from 'react';
 import { Code2, Cpu, Globe, Palette } from 'lucide-react';
+import { motion } from 'motion/react';
+import SpotlightCard from './ui/SpotlightCard';
 
 export default function Skills() {
   const categories = [
     {
       title: 'Programming Languages',
       icon: Code2,
-      accent: 'text-cyan-600 dark:text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
+      accent: 'text-sky-600 dark:text-cyan-400 border-sky-500/30 dark:border-cyan-500/30 bg-sky-500/10 dark:bg-cyan-500/10',
       items: [
         { name: 'Python', role: 'Primary Language', focus: 'AI, Vision & APIs', highlight: true },
         { name: 'C', role: 'Systems Foundation', focus: 'Pointers & Memory Architecture' },
@@ -53,14 +55,26 @@ export default function Skills() {
   return (
     <section id="skills" className="py-24 px-4 max-w-5xl mx-auto scroll-mt-20">
       {/* Section Header */}
-      <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[2px] bg-cyan-500 dark:bg-cyan-400" />
-        <span className="text-xs uppercase font-mono tracking-widest text-cyan-600 dark:text-cyan-400 font-bold">
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.4 }}
+        className="flex items-center gap-2 mb-3"
+      >
+        <span className="w-8 h-[2px] bg-sky-500 dark:bg-cyan-400" />
+        <span className="text-xs uppercase font-mono tracking-widest text-sky-600 dark:text-cyan-400 font-bold">
           Technical Skills
         </span>
-      </div>
+      </motion.div>
 
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.4, delay: 0.08 }}
+        className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4"
+      >
         <div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Core Technologies & Stack
@@ -69,63 +83,68 @@ export default function Skills() {
             The programming languages, frameworks, and developer tools I build with regularly.
           </p>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Grid of 4 Categories */}
+      {/* Grid of 4 Bento Categories with 21st.dev SpotlightCards */}
       <div className="grid md:grid-cols-2 gap-6">
         {categories.map((cat, idx) => {
           const Icon = cat.icon;
           return (
-            <div
+            <motion.div
               key={idx}
-              className="surface-card rounded-2xl sm:rounded-3xl p-5 sm:p-7 flex flex-col justify-between"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.4, delay: idx * 0.08 }}
             >
-              <div>
-                <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-4 border-b border-slate-200 dark:border-slate-800/80">
-                  <div className={`p-2 sm:p-2.5 rounded-xl border ${cat.accent}`}>
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white tracking-tight">
-                      {cat.title}
-                    </h3>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                      Module {idx + 1}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-2 sm:space-y-2.5">
-                  {cat.items.map((item, iIdx) => (
-                    <div
-                      key={iIdx}
-                      className={`p-3 rounded-xl border transition-all ${
-                        item.highlight
-                          ? 'bg-cyan-500/10 dark:bg-cyan-950/20 border-cyan-500/30 dark:border-cyan-500/40 shadow-sm'
-                          : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                      }`}
-                    >
-                      <div className="flex flex-wrap items-center justify-between gap-1 sm:gap-2">
-                        <span className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                          {item.name}
-                          {item.highlight && (
-                            <span className="text-[9px] font-mono uppercase font-extrabold px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
-                              Core
-                            </span>
-                          )}
-                        </span>
-                        <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 font-semibold">
-                          {item.role}
-                        </span>
-                      </div>
-                      <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">
-                        {item.focus}
-                      </div>
+              <SpotlightCard className="rounded-2xl sm:rounded-3xl p-6 sm:p-7 flex flex-col justify-between h-full group">
+                <div>
+                  <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-4 border-b border-slate-200 dark:border-slate-800/80">
+                    <div className={`p-2 sm:p-2.5 rounded-xl border ${cat.accent}`}>
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
-                  ))}
+                    <div>
+                      <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white tracking-tight">
+                        {cat.title}
+                      </h3>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        Module 0{idx + 1}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 sm:space-y-2.5">
+                    {cat.items.map((item, iIdx) => (
+                      <div
+                        key={iIdx}
+                        className={`p-3 rounded-xl border transition-all ${
+                          item.highlight
+                            ? 'bg-sky-500/10 dark:bg-cyan-950/25 border-sky-500/30 dark:border-cyan-500/40 shadow-xs'
+                            : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                        }`}
+                      >
+                        <div className="flex flex-wrap items-center justify-between gap-1 sm:gap-2">
+                          <span className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                            {item.name}
+                            {item.highlight && (
+                              <span className="text-[9px] font-mono uppercase font-extrabold px-1.5 py-0.2 rounded bg-sky-500/20 dark:bg-cyan-500/20 text-sky-700 dark:text-cyan-300 border border-sky-500/30 dark:border-cyan-500/30">
+                                Core
+                              </span>
+                            )}
+                          </span>
+                          <span className="text-[10px] font-mono text-sky-600 dark:text-cyan-400 font-semibold">
+                            {item.role}
+                          </span>
+                        </div>
+                        <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">
+                          {item.focus}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </div>
+              </SpotlightCard>
+            </motion.div>
           );
         })}
       </div>

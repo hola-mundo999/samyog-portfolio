@@ -86,10 +86,20 @@ export default function ThreeBackground() {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
-    window.addEventListener('resize', handleResize);
+    if (!isDark) {
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('resize', handleResize);
+        if (container && renderer.domElement) {
+          container.removeChild(renderer.domElement);
+        }
+        geometry.dispose();
+        material.dispose();
+        renderer.dispose();
+      };
+    }
 
     let animationFrameId;
-    let clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
@@ -99,7 +109,7 @@ export default function ThreeBackground() {
         return;
       }
 
-      const time = clock.getElapsedTime();
+      const time = performance.now() * 0.001;
       targetX += (mouseX * 0.3 - targetX) * 0.03;
       targetY += (mouseY * 0.3 - targetY) * 0.03;
 
@@ -129,7 +139,9 @@ export default function ThreeBackground() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40 transition-opacity duration-500"
+      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden ${
+        theme === 'dark' ? 'opacity-70' : 'opacity-0'
+      } transition-opacity duration-500`}
       aria-hidden="true"
     />
   );

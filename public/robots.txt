@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://samyog-sapkota.com.np/sitemap.xml

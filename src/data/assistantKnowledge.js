@@ -115,6 +115,7 @@ export const assistantKnowledge = {
 
   contact: {
     email: "samyog.sapkota1@gmail.com",
+    website: "https://samyog-sapkota.com.np",
     github: "https://github.com/hola-mundo999",
     linkedin: "https://www.linkedin.com/in/samyogsapkota/",
     roleInClub: "Public Relations Advisor @ Prime IT Club (Prime College, Kathmandu)",
