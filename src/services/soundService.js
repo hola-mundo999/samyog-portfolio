@@ -81,7 +81,8 @@ export const soundEffects = {
 };
 
 /**
- * Plays a welcome greeting. Checks for custom audio file first, then falls back to SpeechSynthesis.
+ * Plays a welcome greeting. Checks for custom audio recording (/welcome.m4a or /welcome.mp3)
+ * recorded by Samyog, then falls back to SpeechSynthesis if not available.
  */
 export function speakMaleGreeting(onStart, onEnd) {
   if (typeof window === 'undefined') {
@@ -89,22 +90,46 @@ export function speakMaleGreeting(onStart, onEnd) {
     return;
   }
 
-  // 1. Check if user provided custom audio recording (welcome.mp3)
-  const audio = new Audio('/welcome.mp3');
+  // 1. Try playing Samyog's genuine voice recording (/welcome.m4a)
+  const audio = new Audio('/welcome.m4a');
   currentAudioElement = audio;
 
-  audio.play()
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        if (onStart) onStart();
+        audio.onended = () => {
+          if (onEnd) onEnd();
+        };
+        audio.onerror = () => {
+          tryMp3Fallback(onStart, onEnd);
+        };
+      })
+      .catch(() => {
+        tryMp3Fallback(onStart, onEnd);
+      });
+  } else {
+    audio.onended = () => {
+      if (onEnd) onEnd();
+    };
+  }
+}
+
+function tryMp3Fallback(onStart, onEnd) {
+  const mp3 = new Audio('/welcome.mp3');
+  currentAudioElement = mp3;
+  mp3.play()
     .then(() => {
       if (onStart) onStart();
-      audio.onended = () => {
+      mp3.onended = () => {
         if (onEnd) onEnd();
       };
-      audio.onerror = () => {
+      mp3.onerror = () => {
         fallbackToSpeechSynthesis(onStart, onEnd);
       };
     })
     .catch(() => {
-      // Custom audio file not found or autoplay restricted; fall back to Web Speech API
       fallbackToSpeechSynthesis(onStart, onEnd);
     });
 }

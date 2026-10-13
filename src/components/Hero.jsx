@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Mail, MapPin, Clock } from 'lucide-react';
+import { ArrowRight, Mail, MapPin, Clock, Volume2 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { useSound } from '../context/SoundContext';
 
 export default function Hero() {
+  const { playGreeting } = useSound();
   const [localTime, setLocalTime] = useState('');
 
   // Live Kathmandu Local Time
@@ -52,8 +54,19 @@ export default function Hero() {
       {/* Main Headline */}
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.15]">
         Hi, I'm{' '}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-indigo-600 to-cyan-500 dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-300">
-          Samyog Sapkota
+        <span className="inline-flex items-center gap-2">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-indigo-600 to-cyan-500 dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-300">
+            Samyog Sapkota
+          </span>
+          <button
+            type="button"
+            onClick={playGreeting}
+            aria-label="Listen to pronunciation of Samyog Sapkota"
+            title="Listen to pronunciation (Samyog's voice)"
+            className="p-1 rounded-full text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:scale-110 active:scale-95 transition-all inline-flex items-center justify-center cursor-pointer"
+          >
+            <Volume2 className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
         </span>
         .<br />
         <span className="text-2xl sm:text-3xl md:text-4xl font-semibold text-slate-700 dark:text-slate-200 block mt-2 tracking-tight">
