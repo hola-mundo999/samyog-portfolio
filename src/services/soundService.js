@@ -1,13 +1,15 @@
 /**
  * Sound & Voice Synthesis Engine
  * 
- * Provides:
- * 1. Deep male voice welcome greeting using Web Speech API (window.speechSynthesis).
- * 2. Lightweight Web Audio API micro-interaction sound effects (tactile clicks,
- *    theme switch chimes, success chords) generated mathematically with zero audio file downloads.
+ * Supports:
+ * 1. Custom human voice greeting (if /welcome.mp3 exists in public directory).
+ * 2. Fallback Web Speech API (window.speechSynthesis) with adjusted phonetic clarity:
+ *    "Welcome to the portfolio of Samyog Sapkota."
+ * 3. Pure Web Audio API tone synthesis for tactile micro-interactions (clicks, chimes, chords).
  */
 
 let audioCtx = null;
+let currentAudioElement = null;
 
 function getAudioContext() {
   if (typeof window === 'undefined') return null;
@@ -79,26 +81,50 @@ export const soundEffects = {
 };
 
 /**
- * Speaks a welcome message in a calibrated, deep male voice.
+ * Plays a welcome greeting. Checks for custom audio file first, then falls back to SpeechSynthesis.
  */
 export function speakMaleGreeting(onStart, onEnd) {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+  if (typeof window === 'undefined') {
     if (onEnd) onEnd();
     return;
   }
 
-  // Cancel any ongoing speech
+  // 1. Check if user provided custom audio recording (welcome.mp3)
+  const audio = new Audio('/welcome.mp3');
+  currentAudioElement = audio;
+
+  audio.play()
+    .then(() => {
+      if (onStart) onStart();
+      audio.onended = () => {
+        if (onEnd) onEnd();
+      };
+      audio.onerror = () => {
+        fallbackToSpeechSynthesis(onStart, onEnd);
+      };
+    })
+    .catch(() => {
+      // Custom audio file not found or autoplay restricted; fall back to Web Speech API
+      fallbackToSpeechSynthesis(onStart, onEnd);
+    });
+}
+
+function fallbackToSpeechSynthesis(onStart, onEnd) {
+  if (!('speechSynthesis' in window)) {
+    if (onEnd) onEnd();
+    return;
+  }
+
   window.speechSynthesis.cancel();
 
-  const text =
-    "Welcome to the portfolio of Samyog Sapkota — BSc CSIT student and software developer.";
+  // Concise text without repetitive academic jargon
+  const text = "Welcome to the portfolio of Samyog Sapkota.";
 
   const utterance = new SpeechSynthesisUtterance(text);
 
   const setVoiceAndSpeak = () => {
     const voices = window.speechSynthesis.getVoices();
 
-    // Look for deep, clear English male voices
     const maleVoice =
       voices.find(
         (v) =>
@@ -110,7 +136,13 @@ export function speakMaleGreeting(onStart, onEnd) {
             v.name.includes('Male') ||
             v.name.includes('Natural'))
       ) ||
-      voices.find((v) => v.lang.startsWith('en') && !v.name.includes('Zira') && !v.name.includes('Jenny') && !v.name.includes('Female')) ||
+      voices.find(
+        (v) =>
+          v.lang.startsWith('en') &&
+          !v.name.includes('Zira') &&
+          !v.name.includes('Jenny') &&
+          !v.name.includes('Female')
+      ) ||
       voices.find((v) => v.lang.startsWith('en')) ||
       voices[0];
 
@@ -118,9 +150,8 @@ export function speakMaleGreeting(onStart, onEnd) {
       utterance.voice = maleVoice;
     }
 
-    // Calibrate for a deep, confident, and professional male voice
-    utterance.pitch = 0.88; // Lower pitch for warm resonant tone
-    utterance.rate = 0.94;  // Measured, articulate speaking rate
+    utterance.pitch = 0.92;
+    utterance.rate = 0.95;
     utterance.volume = 1.0;
 
     utterance.onstart = () => {
@@ -142,17 +173,21 @@ export function speakMaleGreeting(onStart, onEnd) {
   if (voices.length > 0) {
     setVoiceAndSpeak();
   } else {
-    // Voices might load asynchronously in some browsers
     window.speechSynthesis.onvoiceschanged = () => {
       setVoiceAndSpeak();
     };
-    // Fallback if event doesn't fire
     setTimeout(setVoiceAndSpeak, 100);
   }
 }
 
 export function stopSpeech() {
-  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
+  if (typeof window !== 'undefined') {
+    if (currentAudioElement) {
+      currentAudioElement.pause();
+      currentAudioElement.currentTime = 0;
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
   }
 }

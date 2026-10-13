@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Mail, Volume2, Sparkles, MapPin, Clock } from 'lucide-react';
-import { useSound } from '../context/SoundContext';
+import { ArrowRight, Mail, MapPin, Clock } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 
 export default function Hero() {
-  const { isPlayingVoice, playGreeting } = useSound();
   const [localTime, setLocalTime] = useState('');
 
   // Live Kathmandu Local Time
@@ -30,13 +28,13 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[85vh] flex flex-col justify-center items-center pt-28 pb-16 px-4 max-w-4xl mx-auto text-center">
+    <section className="relative min-h-[80vh] flex flex-col justify-center items-center pt-28 pb-16 px-4 max-w-4xl mx-auto text-center">
       {/* Top Lively Pills: Status + Kathmandu Local Time */}
       <div className="flex flex-wrap items-center justify-center gap-2.5 mb-7">
-        {/* Availability Beacon */}
+        {/* Availability Beacon: Open for internships only */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium backdrop-blur-md shadow-xs">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Open for software engineering internships</span>
+          <span>Open for internships</span>
         </div>
 
         {/* Live Kathmandu Location & Time */}
@@ -59,39 +57,14 @@ export default function Hero() {
         </span>
         .<br />
         <span className="text-2xl sm:text-3xl md:text-4xl font-semibold text-slate-700 dark:text-slate-200 block mt-2 tracking-tight">
-          CS Student & Software Developer
+          Software Developer & CS Student
         </span>
       </h1>
 
       {/* Clear, Natural Subtitle */}
-      <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
-        BSc CSIT student at Prime College, Kathmandu (TU Class of '27) and Public Relations Advisor at Prime IT Club. I build practical software with Python, develop computer vision tools with OpenCV, and create clean web backends with strong fundamentals in C and C++.
+      <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+        Developer based in Kathmandu, Nepal, and Public Relations Advisor at Prime IT Club. I build practical software with Python, explore computer vision with OpenCV, and engineer clean web backends with strong fundamentals in C and C++.
       </p>
-
-      {/* Lively Interactive Voice Introduction Trigger Button */}
-      <div className="mb-10">
-        <button
-          type="button"
-          onClick={playGreeting}
-          aria-label="Play spoken portfolio voice introduction"
-          className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-700 dark:text-cyan-300 text-xs font-mono font-bold transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer group"
-        >
-          {isPlayingVoice ? (
-            <div className="flex items-end gap-[2px] h-3.5 px-0.5">
-              <span className="w-[2.5px] bg-cyan-600 dark:bg-cyan-400 rounded-full animate-eq-1" />
-              <span className="w-[2.5px] bg-cyan-600 dark:bg-cyan-400 rounded-full animate-eq-2" />
-              <span className="w-[2.5px] bg-cyan-600 dark:bg-cyan-400 rounded-full animate-eq-3" />
-              <span className="w-[2.5px] bg-cyan-600 dark:bg-cyan-400 rounded-full animate-eq-4" />
-            </div>
-          ) : (
-            <Volume2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform" />
-          )}
-          <span>
-            {isPlayingVoice ? 'Playing Voice Intro...' : 'Hear Voice Introduction (Man Voice)'}
-          </span>
-          <Sparkles className="w-3.5 h-3.5 text-cyan-500 group-hover:rotate-12 transition-transform" />
-        </button>
-      </div>
 
       {/* Calls to Action */}
       <div className="flex flex-wrap items-center justify-center gap-3.5 mb-14">

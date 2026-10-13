@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { soundEffects, speakMaleGreeting, stopSpeech } from '../services/soundService';
 
 const SoundContext = createContext();
@@ -6,12 +6,15 @@ const SoundContext = createContext();
 export function SoundProvider({ children }) {
   const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('portfolio-sound') === 'true';
+      const stored = localStorage.getItem('portfolio-sound');
+      if (stored !== null) return stored === 'true';
+      return true; // Enabled by default on startup
     }
-    return false;
+    return true;
   });
 
   const [isPlayingVoice, setIsPlayingVoice] = useState(false);
+  const startupAttempted = useRef(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -23,19 +26,63 @@ export function SoundProvider({ children }) {
   }, [isSoundEnabled]);
 
   const playGreeting = useCallback(() => {
+    if (!isSoundEnabled) return;
     setIsPlayingVoice(true);
     speakMaleGreeting(
       () => setIsPlayingVoice(true),
       () => setIsPlayingVoice(false)
     );
-  }, []);
+  }, [isSoundEnabled]);
+
+  // Startup voice playback on page open / first interaction
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (startupAttempted.current) return;
+    startupAttempted.current = true;
+
+    const alreadyWelcomed = sessionStorage.getItem('portfolio-welcomed');
+    if (alreadyWelcomed || !isSoundEnabled) return;
+
+    let played = false;
+
+    const handleFirstPlay = () => {
+      if (played) return;
+      played = true;
+      sessionStorage.setItem('portfolio-welcomed', 'true');
+      playGreeting();
+      cleanupListeners();
+    };
+
+    const cleanupListeners = () => {
+      window.removeEventListener('pointerdown', handleFirstPlay);
+      window.removeEventListener('keydown', handleFirstPlay);
+      window.removeEventListener('scroll', handleFirstPlay);
+    };
+
+    // Try playing on page mount after slight delay
+    const initialTimer = setTimeout(() => {
+      try {
+        handleFirstPlay();
+      } catch {
+        // Handled via event listeners if autoplay policy blocks
+      }
+    }, 600);
+
+    window.addEventListener('pointerdown', handleFirstPlay, { once: true, passive: true });
+    window.addEventListener('keydown', handleFirstPlay, { once: true, passive: true });
+    window.addEventListener('scroll', handleFirstPlay, { once: true, passive: true });
+
+    return () => {
+      clearTimeout(initialTimer);
+      cleanupListeners();
+    };
+  }, [isSoundEnabled, playGreeting]);
 
   const toggleSound = useCallback(() => {
     setIsSoundEnabled((prev) => {
       const next = !prev;
       if (next) {
         soundEffects.playChime();
-        // Trigger voice introduction
         playGreeting();
       } else {
         stopSpeech();

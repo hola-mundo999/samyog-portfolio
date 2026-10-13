@@ -29,7 +29,7 @@ export default function About() {
         <div className="md:col-span-7 surface-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
           <div className="space-y-4 text-slate-700 dark:text-slate-200 text-sm sm:text-base leading-relaxed">
             <p>
-              I am a third-year <strong className="text-slate-950 dark:text-white font-semibold">BSc CSIT student at Prime College</strong> (Tribhuvan University, Class of 2027) in Kathmandu, Nepal.
+              I am a third-year <strong className="text-slate-950 dark:text-white font-semibold">computer science student at Prime College</strong> (Tribhuvan University, Class of 2027) in Kathmandu, Nepal.
             </p>
             <p>
               My programming foundation began close to the metal with <span className="text-sky-700 dark:text-cyan-300 font-mono font-semibold">C</span> and <span className="text-sky-700 dark:text-cyan-300 font-mono font-semibold">C++</span>. Working through manual memory pointers, algorithmic complexity, and operating system basics taught me to respect hardware and write deliberate, maintainable code.
