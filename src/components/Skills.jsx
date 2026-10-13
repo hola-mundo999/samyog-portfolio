@@ -6,7 +6,7 @@ export default function Skills() {
     {
       title: 'Programming Languages',
       icon: Code2,
-      accent: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
+      accent: 'text-cyan-600 dark:text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
       items: [
         { name: 'Python', role: 'Primary Language', focus: 'AI, Vision & APIs', highlight: true },
         { name: 'C', role: 'Systems Foundation', focus: 'Pointers & Memory Architecture' },
@@ -18,7 +18,7 @@ export default function Skills() {
     {
       title: 'Applied AI & Computer Vision',
       icon: Cpu,
-      accent: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
+      accent: 'text-blue-600 dark:text-blue-400 border-blue-500/30 bg-blue-500/10',
       items: [
         { name: 'OpenCV & MediaPipe', role: 'Computer Vision', focus: '21-Point Landmark Tracking', highlight: true },
         { name: 'Applied LLMs & NLP', role: 'Intelligent Tools', focus: 'Document Chunking & Prompt Tuning', highlight: true },
@@ -29,7 +29,7 @@ export default function Skills() {
     {
       title: 'Web Systems & Automation',
       icon: Globe,
-      accent: 'text-indigo-400 border-indigo-500/30 bg-indigo-500/10',
+      accent: 'text-indigo-600 dark:text-indigo-400 border-indigo-500/30 bg-indigo-500/10',
       items: [
         { name: 'Streamlit Framework', role: 'Rapid AI Deployment', focus: 'Interactive Scientific Web Apps' },
         { name: 'React 19 & Vite', role: 'Frontend Architecture', focus: 'Modular Components & State' },
@@ -40,7 +40,7 @@ export default function Skills() {
     {
       title: 'Design & Developer Tooling',
       icon: Palette,
-      accent: 'text-violet-400 border-violet-500/30 bg-violet-500/10',
+      accent: 'text-violet-600 dark:text-violet-400 border-violet-500/30 bg-violet-500/10',
       items: [
         { name: 'Figma', role: 'UI/UX Design', focus: 'Interactive Prototypes & Wireframing' },
         { name: 'Adobe Photoshop', role: 'Digital Branding', focus: 'Event Visuals & Club Creatives' },
@@ -51,21 +51,21 @@ export default function Skills() {
   ];
 
   return (
-    <section id="skills" className="py-24 px-4 max-w-5xl mx-auto">
+    <section id="skills" className="py-24 px-4 max-w-5xl mx-auto scroll-mt-20">
       {/* Section Header */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[2px] bg-cyan-400" />
-        <span className="text-xs uppercase font-mono tracking-widest text-cyan-400 font-bold">
+        <span className="w-8 h-[2px] bg-cyan-500 dark:bg-cyan-400" />
+        <span className="text-xs uppercase font-mono tracking-widest text-cyan-600 dark:text-cyan-400 font-bold">
           Technical Skills
         </span>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Core Technologies & Stack
           </h2>
-          <p className="text-slate-300 text-sm mt-2 max-w-xl leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-300 text-sm mt-2 max-w-xl leading-relaxed">
             The programming languages, frameworks, and developer tools I build with regularly.
           </p>
         </div>
@@ -78,18 +78,18 @@ export default function Skills() {
           return (
             <div
               key={idx}
-              className="surface-card rounded-3xl p-6 sm:p-7 border-slate-800/80 flex flex-col justify-between"
+              className="surface-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800/80">
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-200 dark:border-slate-800/80">
                   <div className={`p-2.5 rounded-xl border ${cat.accent}`}>
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white tracking-tight">
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
                       {cat.title}
                     </h3>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Module {idx + 1}
                     </span>
                   </div>
@@ -101,24 +101,24 @@ export default function Skills() {
                       key={iIdx}
                       className={`p-3 rounded-xl border transition-all ${
                         item.highlight
-                          ? 'bg-cyan-950/20 border-cyan-500/40 text-slate-100 shadow-sm'
-                          : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-200'
+                          ? 'bg-cyan-500/10 dark:bg-cyan-950/20 border-cyan-500/30 dark:border-cyan-500/40 shadow-sm'
+                          : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                        <span className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                           {item.name}
                           {item.highlight && (
-                            <span className="text-[9px] font-mono uppercase font-extrabold px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 border border-cyan-400/30">
+                            <span className="text-[9px] font-mono uppercase font-extrabold px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
                               Core
                             </span>
                           )}
                         </span>
-                        <span className="text-[10px] font-mono text-cyan-400 font-semibold">
+                        <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 font-semibold">
                           {item.role}
                         </span>
                       </div>
-                      <div className="text-[11px] text-slate-400 mt-0.5">
+                      <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">
                         {item.focus}
                       </div>
                     </div>

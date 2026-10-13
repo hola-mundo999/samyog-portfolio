@@ -3,14 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Samyog | Software & Applied AI Engineer · BSc CSIT</title>
-    <meta name="description" content="Portfolio of Samyog - BSc CSIT student at Prime College, PR Director of Prime IT Club, Software & Applied AI Engineer." />
-    <meta name="keywords" content="Samyog, BSc CSIT, Prime College, Prime IT Club, Software Engineering, Applied AI, Python, C++" />
+    <title>Samyog Sapkota | Software Developer & BSc CSIT Student</title>
+    <meta name="description" content="Portfolio of Samyog Sapkota - BSc CSIT student at Prime College (TU '27) and Public Relations Advisor at Prime IT Club. Practical software development in Python, computer vision, and web backends." />
+    <meta name="keywords" content="Samyog Sapkota, BSc CSIT, Prime College, Prime IT Club, Software Engineering, Python, OpenCV, FastAPI, Nepal" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+      (function() {
+        const saved = localStorage.getItem('portfolio-theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (saved === 'light' || (!saved && prefersLight)) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
-  <body class="bg-[#04060f] text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+  <body class="antialiased selection:bg-cyan-500/30 selection:text-cyan-600 dark:selection:text-cyan-200">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

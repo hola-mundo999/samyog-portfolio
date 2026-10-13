@@ -34,6 +34,7 @@ export const SUGGESTED_QUESTIONS = [
   'What does he work on?',
   'What technologies does he use?',
   'Show me his projects',
+  'What is his role in Prime IT Club?',
   'How can I contact him?',
 ];
 
@@ -52,8 +53,8 @@ export async function getAssistantResponse(userMessage, _conversationHistory = [
     text === 'who is samyog?'
   ) {
     return (
-      `**Samyog** is a BSc CSIT student at **Prime College** (Tribhuvan University, Kathmandu, Class of 2027) ` +
-      `and the **PR Director of Prime IT Club**.\n\n` +
+      `**Samyog** is a third-year BSc CSIT student at **Prime College** (Tribhuvan University, Kathmandu, Class of 2027) ` +
+      `and the **Public Relations Advisor of Prime IT Club** (previously PR Director & PR Officer).\n\n` +
       `He specializes in **Applied AI**, **Computer Vision**, and high-performance **Python backends**, ` +
       `with strong roots in low-level systems programming (C/C++) and data structures.`
     );
@@ -140,12 +141,15 @@ export async function getAssistantResponse(userMessage, _conversationHistory = [
     text.includes('club') ||
     text.includes('prime it club') ||
     text.includes('director') ||
-    text.includes('leadership')
+    text.includes('advisor') ||
+    text.includes('leadership') ||
+    text.includes('experience')
   ) {
     return (
-      `Samyog serves as the **PR Director of Prime IT Club** at Prime College.\n\n` +
-      `In this role, he leads outreach with tech industry speakers, coordinates hackathons and workshops, ` +
-      `designs visual branding assets, and mentors fellow CSIT students in collaborative software development.`
+      `Samyog has an extensive 3-year leadership progression with **Prime IT Club** at Prime College:\n\n` +
+      `• **Public Relations Advisor** (September 2026 – Present, Current Role): Strategic mentorship and executive guidance.\n` +
+      `• **Public Relations Director** (September 2025 – September 2026): Department leadership, industry speaker outreach, and major hackathon promotions.\n` +
+      `• **Public Relations Officer** (July 2024 – September 2025): Community engagement and digital branding in Figma/Photoshop.`
     );
   }
 

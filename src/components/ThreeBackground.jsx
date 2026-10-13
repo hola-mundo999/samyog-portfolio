@@ -1,19 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { useTheme } from '../context/ThemeContext';
 
 export default function ThreeBackground() {
   const containerRef = useRef(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Check for prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDark = theme === 'dark';
 
     // Scene & Camera
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x070913, 0.002);
+    scene.fog = new THREE.FogExp2(isDark ? 0x060813 : 0xf8fafc, 0.002);
 
     const camera = new THREE.PerspectiveCamera(
       60,
@@ -28,15 +30,15 @@ export default function ThreeBackground() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Subtle, Elegant Floating Star Constellation (No loud wireframe blobs)
+    // Subtle floating star constellation
     const particleCount = 280;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    const cyanColor = new THREE.Color('#38bdf8');
-    const indigoColor = new THREE.Color('#818cf8');
-    const whiteColor = new THREE.Color('#f8fafc');
+    const primaryColor = new THREE.Color(isDark ? '#38bdf8' : '#0284c7');
+    const secondaryColor = new THREE.Color(isDark ? '#818cf8' : '#6366f1');
+    const neutralColor = new THREE.Color(isDark ? '#f8fafc' : '#64748b');
 
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 180;
@@ -44,7 +46,7 @@ export default function ThreeBackground() {
       positions[i * 3 + 2] = (Math.random() - 0.5) * 100;
 
       const rand = Math.random();
-      const col = rand < 0.4 ? cyanColor : rand < 0.7 ? indigoColor : whiteColor;
+      const col = rand < 0.4 ? primaryColor : rand < 0.7 ? secondaryColor : neutralColor;
       colors[i * 3] = col.r;
       colors[i * 3 + 1] = col.g;
       colors[i * 3 + 2] = col.b;
@@ -54,17 +56,16 @@ export default function ThreeBackground() {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 1.6,
+      size: isDark ? 1.6 : 1.4,
       vertexColors: true,
       transparent: true,
-      opacity: 0.55,
-      blending: THREE.AdditiveBlending,
+      opacity: isDark ? 0.5 : 0.4,
+      blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
     });
 
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // Mouse coordinates & Smooth Inertia
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
@@ -79,7 +80,6 @@ export default function ThreeBackground() {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // Window Resize Handling
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -88,7 +88,6 @@ export default function ThreeBackground() {
 
     window.addEventListener('resize', handleResize);
 
-    // Animation Loop
     let animationFrameId;
     let clock = new THREE.Clock();
 
@@ -101,21 +100,17 @@ export default function ThreeBackground() {
       }
 
       const time = clock.getElapsedTime();
-
-      // Smooth inertia
       targetX += (mouseX * 0.3 - targetX) * 0.03;
       targetY += (mouseY * 0.3 - targetY) * 0.03;
 
-      // Slow, peaceful, cinematic drift
-      particles.rotation.y = time * 0.015 + targetX * 0.15;
-      particles.rotation.x = time * 0.008 + targetY * 0.15;
+      particles.rotation.y = time * 0.012 + targetX * 0.12;
+      particles.rotation.x = time * 0.007 + targetY * 0.12;
 
       renderer.render(scene, camera);
     };
 
     animate();
 
-    // Cleanup
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
@@ -129,12 +124,12 @@ export default function ThreeBackground() {
       material.dispose();
       renderer.dispose();
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40 transition-opacity duration-500"
       aria-hidden="true"
     />
   );

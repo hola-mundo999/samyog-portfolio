@@ -18,9 +18,29 @@ export const assistantKnowledge = {
     location: "Kathmandu, Nepal",
     graduationYear: "2027",
     summary:
-      "Samyog is a BSc CSIT student at Prime College (Class of 2027) focused on software engineering, applied AI, and high-performance Python backends. He pairs strong computer science fundamentals (C/C++, DSA) with modern applied machine learning, computer vision, and web technologies.",
+      "Samyog is a third-year BSc CSIT student at Prime College (Class of 2027) focused on software engineering, applied AI, and high-performance Python backends. He pairs strong computer science fundamentals (C/C++, DSA) with modern applied machine learning, computer vision, and web technologies.",
     leadership:
-      "PR Director at Prime IT Club, where he coordinates tech events, speaker sessions, hackathons, and creative design campaigns for student developers.",
+      "Public Relations Advisor (Current, Sep 2026 – Present) and former Public Relations Director (Sep 2025 – Sep 2026) and Public Relations Officer (Jul 2024 – Sep 2025) at Prime IT Club.",
+    timeline: [
+      {
+        role: "Public Relations Advisor",
+        period: "September 2026 – Present",
+        status: "Current Role",
+        details: "Advises executive committee on tech initiatives, partnerships, and event strategy."
+      },
+      {
+        role: "Public Relations Director",
+        period: "September 2025 – September 2026",
+        status: "Full-time",
+        details: "Led the PR department, speaker outreach, and major hackathon promotions."
+      },
+      {
+        role: "Public Relations Officer",
+        period: "July 2024 – September 2025",
+        status: "Full-time",
+        details: "Coordinated student outreach, designed digital creative assets in Figma/Photoshop."
+      }
+    ],
     technicalInterests: [
       "Applied AI & Natural Language Processing",
       "Computer Vision & Human-Computer Interaction",
@@ -97,6 +117,6 @@ export const assistantKnowledge = {
     email: "samyog.sapkota1@gmail.com",
     github: "https://github.com/hola-mundo999",
     linkedin: "https://www.linkedin.com/in/samyogsapkota/",
-    roleInClub: "PR Director @ Prime IT Club (Prime College, Kathmandu)",
+    roleInClub: "Public Relations Advisor @ Prime IT Club (Prime College, Kathmandu)",
   },
 };

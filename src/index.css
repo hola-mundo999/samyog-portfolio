@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
+
+:root {
+  --bg-canvas: #f8fafc;
+  --text-main: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(226, 232, 240, 0.95);
+  --card-border-hover: rgba(2, 132, 199, 0.45);
+  --card-shadow: 0 10px 28px -8px rgba(15, 23, 42, 0.06);
+  --accent-cyan: #0284c7;
+  --accent-cyan-bg: rgba(2, 132, 199, 0.08);
+}
+
+.dark, [data-theme="dark"] {
+  --bg-canvas: #060813;
+  --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --card-bg: rgba(10, 14, 28, 0.78);
+  --card-border: rgba(148, 163, 184, 0.12);
+  --card-border-hover: rgba(56, 189, 248, 0.3);
+  --card-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.6);
+  --accent-cyan: #38bdf8;
+  --accent-cyan-bg: rgba(56, 189, 248, 0.12);
+}
+
 @layer base {
   *,
   *::before,
@@ -14,11 +42,12 @@
   body {
     margin: 0;
     min-width: 320px;
-    background-color: #060813;
-    color: #f8fafc;
+    background-color: var(--bg-canvas);
+    color: var(--text-main);
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
     overflow-wrap: break-word;
+    transition: background-color 0.25s ease, color 0.25s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -66,38 +95,43 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #060813;
+  background: var(--bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #cbd5e1;
   border-radius: 9999px;
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: #1e293b;
+}
 ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
   background: #334155;
 }
 
-/* Cinematic Atmospheric Surfaces */
+/* Surfaces */
 .surface-card {
-  background: rgba(10, 14, 28, 0.78);
+  background: var(--card-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.6);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   min-width: 0;
 }
 
 .surface-card:hover {
-  border-color: rgba(56, 189, 248, 0.3);
-  box-shadow: 0 16px 40px -12px rgba(6, 182, 212, 0.15);
+  border-color: var(--card-border-hover);
   transform: translateY(-2px);
 }
 
 .surface-card-interactive {
-  background: rgba(12, 17, 36, 0.85);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(148, 163, 184, 0.15);
+  border: 1px solid var(--card-border);
   min-width: 0;
 }
 

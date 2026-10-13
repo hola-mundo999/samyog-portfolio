@@ -78,21 +78,21 @@ export default function ProjectsRoadmap() {
       : projects.filter((p) => p.filterCategory === activeFilter);
 
   return (
-    <section id="projects" className="py-24 px-4 max-w-5xl mx-auto">
+    <section id="projects" className="py-24 px-4 max-w-5xl mx-auto scroll-mt-20">
       {/* Section Header */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-8 h-[2px] bg-cyan-400" />
-        <span className="text-xs uppercase font-mono tracking-widest text-cyan-400 font-bold">
+        <span className="w-8 h-[2px] bg-cyan-500 dark:bg-cyan-400" />
+        <span className="text-xs uppercase font-mono tracking-widest text-cyan-600 dark:text-cyan-400 font-bold">
           Featured Projects
         </span>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
         <div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Featured Projects & Systems
           </h2>
-          <p className="text-slate-300 text-sm mt-2 max-w-xl leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-300 text-sm mt-2 max-w-xl leading-relaxed">
             Hands-on systems engineered across Computer Vision, Applied AI, Web Automation, and REST APIs.
           </p>
         </div>
@@ -101,11 +101,11 @@ export default function ProjectsRoadmap() {
           href="https://github.com/hola-mundo999"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 hover:text-white transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all"
         >
-          <GithubIcon className="w-4 h-4 text-cyan-400" />
+          <GithubIcon className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
           <span>Follow on GitHub</span>
-          <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
+          <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
         </a>
       </div>
 
@@ -124,7 +124,7 @@ export default function ProjectsRoadmap() {
             className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
               activeFilter === f.key
                 ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
-                : 'bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                : 'bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700'
             }`}
           >
             {f.label}
@@ -139,44 +139,44 @@ export default function ProjectsRoadmap() {
           return (
             <div
               key={proj.id}
-              className="bg-slate-950/80 rounded-3xl p-6 sm:p-7 border border-slate-800/90 hover:border-slate-700 flex flex-col justify-between transition-all duration-300 shadow-xl shadow-black/40 group min-w-0"
+              className="surface-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 group min-w-0"
             >
               <div>
                 {/* Header */}
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 shrink-0">
+                  <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-cyan-600 dark:text-cyan-400 shrink-0">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900 text-slate-300 border border-slate-800 shrink-0">
+                  <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 shrink-0">
                     {proj.category}
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
                   {proj.title}
                 </h3>
-                <p className="text-sm text-slate-300 leading-relaxed mb-5">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
                   {proj.description}
                 </p>
               </div>
 
               <div>
                 {/* Architecture Note */}
-                <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/80 mb-4 min-w-0">
-                  <span className="text-[10px] font-mono font-bold text-cyan-400 block mb-1">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 mb-4 min-w-0">
+                  <span className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400 block mb-1">
                     SYSTEM ARCHITECTURE
                   </span>
-                  <span className="text-xs text-slate-300 leading-relaxed block break-words">
+                  <span className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed block break-words">
                     {proj.architecture}
                   </span>
                 </div>
 
                 {/* Tech Stack Tags */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80 mb-5">
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-200 dark:border-slate-800/80 mb-5">
                   {proj.stack.map((t, idx) => (
                     <span
                       key={idx}
-                      className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-slate-900 text-slate-300 border border-slate-800"
+                      className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800"
                     >
                       {t}
                     </span>
@@ -199,7 +199,7 @@ export default function ProjectsRoadmap() {
                     href={proj.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white text-xs font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
                   >
                     <GithubIcon className="w-3.5 h-3.5 shrink-0" />
                     <span>View Code</span>
@@ -212,16 +212,16 @@ export default function ProjectsRoadmap() {
       </div>
 
       {/* GitHub Banner */}
-      <div className="rounded-3xl p-6 sm:p-8 border border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-none">
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 text-cyan-400 shrink-0">
+          <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-cyan-600 dark:text-cyan-400 shrink-0">
             <GitBranch className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-base font-bold text-white mb-1">
+            <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">
               Building Open Source in Public
             </h4>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Explore source code, commit history, and system design on GitHub.
             </p>
           </div>
@@ -231,7 +231,7 @@ export default function ProjectsRoadmap() {
           href="https://github.com/hola-mundo999"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full sm:w-auto text-center px-5 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs transition-all hover:scale-105 active:scale-95 shadow-lg shadow-white/10 cursor-pointer"
+          className="w-full sm:w-auto text-center px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:hover:bg-slate-100 dark:text-slate-950 font-bold text-xs transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
         >
           Visit github.com/hola-mundo999
         </a>
