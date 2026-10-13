@@ -144,7 +144,7 @@ export function playAiVoiceGreeting(onStart, onEnd) {
   });
 }
 
-function fallbackSpeechSynthesis(onStart, onEnd) {
+export function fallbackSpeechSynthesis(onStart, onEnd) {
   return new Promise((resolve) => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
       if (onEnd) onEnd();
