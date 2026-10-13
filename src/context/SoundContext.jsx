@@ -14,7 +14,6 @@ export function SoundProvider({ children }) {
   });
 
   const [isPlayingVoice, setIsPlayingVoice] = useState(false);
-  const startupAttempted = useRef(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -34,49 +33,47 @@ export function SoundProvider({ children }) {
     );
   }, [isSoundEnabled]);
 
-  // Startup voice playback on page open / first interaction
+  // In-memory ref so greeting plays once per page load and plays again on page refresh
+  const hasPlayedThisLoad = useRef(false);
+
+  // Play greeting once on page load (or upon first interaction if browser autoplay blocks)
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (startupAttempted.current) return;
-    startupAttempted.current = true;
 
-    const alreadyWelcomed = sessionStorage.getItem('portfolio-welcomed');
-    if (alreadyWelcomed || !isSoundEnabled) return;
-
-    let played = false;
-
-    const handleFirstPlay = () => {
-      if (played) return;
-      played = true;
-      sessionStorage.setItem('portfolio-welcomed', 'true');
+    const attemptPlay = () => {
+      if (hasPlayedThisLoad.current) return;
+      hasPlayedThisLoad.current = true;
+      cleanup();
       playGreeting();
-      cleanupListeners();
     };
 
-    const cleanupListeners = () => {
-      window.removeEventListener('pointerdown', handleFirstPlay);
-      window.removeEventListener('keydown', handleFirstPlay);
-      window.removeEventListener('scroll', handleFirstPlay);
+    const cleanup = () => {
+      window.removeEventListener('pointerdown', attemptPlay);
+      window.removeEventListener('keydown', attemptPlay);
+      window.removeEventListener('scroll', attemptPlay);
+      window.removeEventListener('click', attemptPlay);
     };
 
-    // Try playing on page mount after slight delay
-    const initialTimer = setTimeout(() => {
+    // Attempt immediately shortly after mount
+    const timer = setTimeout(() => {
       try {
-        handleFirstPlay();
+        attemptPlay();
       } catch {
-        // Handled via event listeners if autoplay policy blocks
+        // Handled via user interaction listeners
       }
-    }, 600);
+    }, 500);
 
-    window.addEventListener('pointerdown', handleFirstPlay, { once: true, passive: true });
-    window.addEventListener('keydown', handleFirstPlay, { once: true, passive: true });
-    window.addEventListener('scroll', handleFirstPlay, { once: true, passive: true });
+    // Listeners in case browser autoplay blocks unprompted audio
+    window.addEventListener('pointerdown', attemptPlay, { once: true, passive: true });
+    window.addEventListener('keydown', attemptPlay, { once: true, passive: true });
+    window.addEventListener('scroll', attemptPlay, { once: true, passive: true });
+    window.addEventListener('click', attemptPlay, { once: true, passive: true });
 
     return () => {
-      clearTimeout(initialTimer);
-      cleanupListeners();
+      clearTimeout(timer);
+      cleanup();
     };
-  }, [isSoundEnabled, playGreeting]);
+  }, [playGreeting]);
 
   const toggleSound = useCallback(() => {
     setIsSoundEnabled((prev) => {

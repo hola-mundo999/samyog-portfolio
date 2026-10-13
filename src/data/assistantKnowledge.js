@@ -13,12 +13,12 @@ export const assistantKnowledge = {
   about: {
     name: "Samyog Sapkota",
     preferredName: "Samyog",
-    role: "BSc CSIT Student & Software / AI Developer",
+    role: "Software Developer & Computer Science Student",
     college: "Prime College (Affiliated with Tribhuvan University)",
     location: "Kathmandu, Nepal",
     graduationYear: "2027",
     summary:
-      "Samyog is a third-year BSc CSIT student at Prime College (Class of 2027) focused on software engineering, applied AI, and high-performance Python backends. He pairs strong computer science fundamentals (C/C++, DSA) with modern applied machine learning, computer vision, and web technologies.",
+      "Samyog is a third-year computer science student at Prime College (Class of 2027) focused on software engineering and Python development. He pairs strong computer science fundamentals (C/C++, DSA) with practical web and backend technologies.",
     leadership:
       "Public Relations Advisor (Current, Sep 2026 – Present) and former Public Relations Director (Sep 2025 – Sep 2026) and Public Relations Officer (Jul 2024 – Sep 2025) at Prime IT Club.",
     timeline: [

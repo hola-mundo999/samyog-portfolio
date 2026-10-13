@@ -35,7 +35,7 @@ export default function About() {
               My programming foundation began close to the metal with <span className="text-sky-700 dark:text-cyan-300 font-mono font-semibold">C</span> and <span className="text-sky-700 dark:text-cyan-300 font-mono font-semibold">C++</span>. Working through manual memory pointers, algorithmic complexity, and operating system basics taught me to respect hardware and write deliberate, maintainable code.
             </p>
             <p>
-              Today, I build most of my projects in <strong className="text-slate-950 dark:text-white font-semibold">Python</strong>. I focus on creating tools that solve practical problems—whether that is real-time hand gesture tracking with OpenCV, document summarization with LLM APIs, or low-latency REST endpoints with FastAPI.
+              Today, I build most of my projects in <strong className="text-slate-950 dark:text-white font-semibold">Python</strong>. I focus on creating tools that solve practical problems—from interactive applications and utilities to computer vision experiments and web backends.
             </p>
             <p>
               Alongside engineering, I have been an active member of <strong className="text-slate-950 dark:text-white font-semibold">Prime IT Club</strong> for over two years, currently serving as <strong className="text-sky-600 dark:text-cyan-400 font-semibold">Public Relations Advisor</strong> after completing tenures as Director and Officer.
@@ -80,11 +80,11 @@ export default function About() {
                 <Cpu className="w-4 h-4" />
               </div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider font-mono">
-                Practical Python & Vision
+                Practical Python Development
               </h3>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Developing functional applications: real-time 21-point hand tracking with OpenCV & MediaPipe, document parsing tools, and FastAPI backend services.
+              Building functional applications, automation scripts, and interactive tools using Python, computer vision libraries, and modern APIs.
             </p>
           </div>
 
