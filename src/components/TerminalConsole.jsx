@@ -113,12 +113,12 @@ export default function TerminalConsole() {
           </div>
 
           {/* Quick Clickable Chips */}
-          <div className="hidden sm:flex items-center gap-1.5">
+          <div className="flex overflow-x-auto no-scrollbar items-center gap-1.5 py-0.5 max-w-[55%] sm:max-w-none">
             {['whoami', 'projects', 'skills', 'contact', 'clear'].map((c) => (
               <button
                 key={c}
                 onClick={() => handleCommand(c)}
-                className="px-2 py-0.5 rounded bg-slate-900 hover:bg-cyan-950/60 border border-slate-800 hover:border-cyan-500/40 text-[10px] text-slate-300 hover:text-cyan-300 transition-all cursor-pointer"
+                className="whitespace-nowrap px-2 py-0.5 rounded bg-slate-900 hover:bg-cyan-950/60 border border-slate-800 hover:border-cyan-500/40 text-[10px] text-slate-300 hover:text-cyan-300 transition-all cursor-pointer shrink-0"
               >
                 {c}
               </button>
@@ -129,10 +129,10 @@ export default function TerminalConsole() {
         {/* Terminal Body */}
         <div
           onClick={() => inputRef.current?.focus()}
-          className="p-4 sm:p-6 bg-[#030510]/95 min-h-[260px] max-h-[380px] overflow-y-auto space-y-4 cursor-text"
+          className="p-4 sm:p-6 bg-[#030510]/95 min-h-[240px] sm:min-h-[260px] max-h-[380px] overflow-y-auto space-y-4 cursor-text"
         >
           <div className="text-slate-400 text-[11px] leading-relaxed">
-            Welcome to Samyog's interactive environment. Type <span className="text-cyan-400 font-bold">help</span> or click the buttons above to query systems.
+            Welcome to Samyog's interactive environment. Type <span className="text-cyan-400 font-bold">help</span> or tap the command chips above.
           </div>
 
           {history.map((item, idx) => (
@@ -141,7 +141,7 @@ export default function TerminalConsole() {
                 <span className="text-slate-400">samyog@prime:~$</span>
                 <span>{item.cmd}</span>
               </div>
-              <pre className="text-slate-300 whitespace-pre-wrap leading-relaxed pl-4 border-l border-slate-800 text-[11px]">
+              <pre className="text-slate-300 whitespace-pre-wrap leading-relaxed pl-3 sm:pl-4 border-l border-slate-800 text-[11px]">
                 {item.output}
               </pre>
             </div>
@@ -149,7 +149,7 @@ export default function TerminalConsole() {
 
           {/* Input Line */}
           <div className="flex items-center gap-2 text-cyan-400 pt-1">
-            <span className="text-slate-400">samyog@prime:~$</span>
+            <span className="text-slate-400 shrink-0">samyog@prime:~$</span>
             <input
               ref={inputRef}
               type="text"
@@ -157,7 +157,7 @@ export default function TerminalConsole() {
               onChange={(e) => setInputVal(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="type whoami, projects, skills..."
-              className="flex-1 bg-transparent border-none outline-none text-white text-xs font-mono placeholder-slate-400"
+              className="flex-1 bg-transparent border-none outline-none text-white text-base sm:text-xs font-mono placeholder-slate-400 min-w-0"
             />
             <button
               onClick={() => handleCommand(inputVal)}

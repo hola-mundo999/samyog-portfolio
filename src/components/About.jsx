@@ -26,7 +26,7 @@ export default function About() {
       {/* Grid Layout: Editorial Narrative + 3 Core Pillars */}
       <div className="grid md:grid-cols-12 gap-6 items-stretch">
         {/* Main Narrative Card (7 cols) */}
-        <div className="md:col-span-7 surface-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+        <div className="md:col-span-7 surface-card rounded-2xl sm:rounded-3xl p-5 sm:p-8 flex flex-col justify-between">
           <div className="space-y-4 text-slate-700 dark:text-slate-200 text-sm sm:text-base leading-relaxed">
             <p>
               I am a third-year <strong className="text-slate-950 dark:text-white font-semibold">computer science student at Prime College</strong> (Tribhuvan University, Class of 2027) in Kathmandu, Nepal.

@@ -86,11 +86,11 @@ export default function Leadership() {
       </div>
 
       {/* Main Single Organization Card */}
-      <div className="surface-card rounded-3xl p-6 sm:p-10 relative overflow-hidden mb-8">
+      <div className="surface-card rounded-2xl sm:rounded-3xl p-5 sm:p-10 relative overflow-hidden mb-8">
         {/* Header Block: Prime IT Club Branding */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-slate-200 dark:border-slate-800/80">
-          <div className="flex items-start gap-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-slate-200 dark:border-slate-800/80">
+          <div className="flex items-start gap-3 sm:gap-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
               <img
                 src="/prime-it-club.png"
                 alt="Prime IT Club Official Logo"
@@ -102,26 +102,26 @@ export default function Leadership() {
             </div>
 
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-700 dark:text-cyan-300 text-xs font-mono font-bold mb-2">
+              <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-700 dark:text-cyan-300 text-[11px] sm:text-xs font-mono font-bold mb-1.5 sm:mb-2">
                 <Award className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                <span>Prime IT Club · Executive Leadership</span>
+                <span>Prime IT Club · Leadership</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              <h3 className="text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 Prime IT Club
               </h3>
-              <div className="flex flex-wrap items-center gap-2.5 text-xs text-slate-600 dark:text-slate-400 mt-1.5 font-medium">
-                <span>Prime College (Affiliated with Tribhuvan University)</span>
+              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400 mt-1 font-medium">
+                <span>Prime College (TU)</span>
                 <span>·</span>
                 <span className="flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                  Khusibu, Kathmandu, Nepal
+                  Kathmandu, Nepal
                 </span>
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-left">
+            <div className="p-3 sm:p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-left">
               <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 block uppercase">
                 Active Status
               </span>
@@ -134,12 +134,12 @@ export default function Leadership() {
         </div>
 
         {/* 3-Position Chronological Vertical Timeline Progression */}
-        <div className="pt-8 pb-6">
+        <div className="pt-6 sm:pt-8 pb-6">
           <h4 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold mb-6">
             Connected Role Progression & Tenure:
           </h4>
 
-          <div className="relative pl-6 sm:pl-8 space-y-8 before:absolute before:left-[11px] sm:before:left-[15px] before:top-3 before:bottom-3 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800">
+          <div className="relative pl-6 sm:pl-8 space-y-6 sm:space-y-8 before:absolute before:left-[11px] sm:before:left-[15px] before:top-3 before:bottom-3 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800">
             {timelinePositions.map((item, idx) => (
               <div key={idx} className="relative group">
                 {/* Node icon / indicator */}
@@ -159,7 +159,7 @@ export default function Leadership() {
 
                 {/* Content Box */}
                 <div
-                  className={`p-5 sm:p-6 rounded-2xl border transition-all ${
+                  className={`p-4 sm:p-6 rounded-2xl border transition-all ${
                     item.isCurrent
                       ? 'bg-cyan-500/10 dark:bg-cyan-950/20 border-cyan-500/40 shadow-sm'
                       : 'bg-slate-50/70 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'

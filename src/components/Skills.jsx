@@ -78,15 +78,15 @@ export default function Skills() {
           return (
             <div
               key={idx}
-              className="surface-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between"
+              className="surface-card rounded-2xl sm:rounded-3xl p-5 sm:p-7 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-200 dark:border-slate-800/80">
-                  <div className={`p-2.5 rounded-xl border ${cat.accent}`}>
-                    <Icon className="w-5 h-5" />
+                <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-4 border-b border-slate-200 dark:border-slate-800/80">
+                  <div className={`p-2 sm:p-2.5 rounded-xl border ${cat.accent}`}>
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
+                    <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white tracking-tight">
                       {cat.title}
                     </h3>
                     <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -95,7 +95,7 @@ export default function Skills() {
                   </div>
                 </div>
 
-                <div className="space-y-2.5">
+                <div className="space-y-2 sm:space-y-2.5">
                   {cat.items.map((item, iIdx) => (
                     <div
                       key={iIdx}
@@ -105,7 +105,7 @@ export default function Skills() {
                           : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                       }`}
                     >
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="flex flex-wrap items-center justify-between gap-1 sm:gap-2">
                         <span className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                           {item.name}
                           {item.highlight && (

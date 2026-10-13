@@ -116,7 +116,7 @@ export default function Contact() {
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className="self-end sm:self-auto p-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-all shrink-0 flex items-center gap-1.5 text-xs font-mono font-semibold cursor-pointer"
+                className="self-stretch sm:self-auto justify-center py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-all shrink-0 flex items-center gap-1.5 text-xs font-mono font-semibold cursor-pointer active:scale-95"
                 title="Copy email to clipboard"
               >
                 {copied ? (
@@ -182,7 +182,7 @@ export default function Contact() {
         </div>
 
         {/* Right Column: Direct Dispatch Form */}
-        <div className="surface-card rounded-3xl p-6 sm:p-8">
+        <div className="surface-card rounded-2xl sm:rounded-3xl p-5 sm:p-8">
           <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
             Send a Message
           </h3>
@@ -206,7 +206,7 @@ export default function Contact() {
                     errors.name
                       ? 'border-red-500 focus:border-red-500'
                       : 'border-slate-300 dark:border-slate-800 focus:border-cyan-500'
-                  } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
+                  } focus:outline-none text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
                 />
                 {errors.name && (
                   <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
@@ -230,7 +230,7 @@ export default function Contact() {
                     errors.email
                       ? 'border-red-500 focus:border-red-500'
                       : 'border-slate-300 dark:border-slate-800 focus:border-cyan-500'
-                  } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
+                  } focus:outline-none text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
                 />
                 {errors.email && (
                   <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
@@ -255,7 +255,7 @@ export default function Contact() {
                   errors.subject
                     ? 'border-red-500 focus:border-red-500'
                     : 'border-slate-300 dark:border-slate-800 focus:border-cyan-500'
-                } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
+                } focus:outline-none text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
               />
               {errors.subject && (
                 <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
@@ -279,7 +279,7 @@ export default function Contact() {
                   errors.message
                     ? 'border-red-500 focus:border-red-500'
                     : 'border-slate-300 dark:border-slate-800 focus:border-cyan-500'
-                } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium resize-none transition-colors`}
+                } focus:outline-none text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium resize-none transition-colors`}
               />
               {errors.message && (
                 <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">

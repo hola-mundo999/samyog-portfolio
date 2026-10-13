@@ -192,7 +192,7 @@ export default function ChatAssistant() {
   };
 
   return (
-    <aside aria-label="Personal Portfolio Assistant" className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50">
+    <aside aria-label="Personal Portfolio Assistant" className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50">
       {/* Tooltip Greeting */}
       {!isOpen && showTooltip && (
         <div className="absolute bottom-16 right-0 mb-2 w-64 p-3 rounded-2xl bg-slate-950/95 border border-cyan-500/30 text-slate-100 text-xs shadow-2xl shadow-cyan-950/40 backdrop-blur-md animate-fade-in flex items-start justify-between gap-2">
@@ -219,13 +219,13 @@ export default function ChatAssistant() {
           type="button"
           onClick={handleOpen}
           aria-label="Open portfolio AI chat assistant"
-          className="relative group w-14 h-14 rounded-full bg-slate-950 border border-cyan-500/40 text-cyan-300 hover:text-white flex items-center justify-center shadow-xl shadow-cyan-500/20 hover:shadow-cyan-400/40 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+          className="relative group w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-950 border border-cyan-500/40 text-cyan-300 hover:text-white flex items-center justify-center shadow-xl shadow-cyan-500/20 hover:shadow-cyan-400/40 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
         >
           {/* Subtle breathing glow */}
           <div className="absolute inset-0 rounded-full bg-cyan-500/10 animate-ping opacity-30 pointer-events-none" />
 
           {/* Icon */}
-          <Sparkles className="w-6 h-6 transition-transform group-hover:rotate-12" />
+          <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:rotate-12" />
 
           {/* Ready Status indicator */}
           <span className="absolute top-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-slate-950" />
@@ -238,7 +238,7 @@ export default function ChatAssistant() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="chat-heading"
-          className="w-[calc(100vw-32px)] sm:w-[380px] h-[520px] max-h-[82vh] rounded-3xl bg-[#060a17]/95 border border-cyan-500/30 shadow-2xl shadow-black/80 backdrop-blur-2xl flex flex-col overflow-hidden animate-scale-up"
+          className="w-[calc(100vw-24px)] sm:w-[380px] h-[480px] sm:h-[520px] max-h-[78dvh] sm:max-h-[82vh] rounded-2xl sm:rounded-3xl bg-[#060a17]/95 border border-cyan-500/30 shadow-2xl shadow-black/80 backdrop-blur-2xl flex flex-col overflow-hidden animate-scale-up"
         >
           {/* Header */}
           <div className="px-5 py-4 border-b border-slate-800/80 bg-slate-950/70 flex items-center justify-between gap-3 shrink-0">
@@ -372,7 +372,7 @@ export default function ChatAssistant() {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask about Samyog..."
-                className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 focus:border-cyan-400 focus:outline-none text-xs text-white placeholder-slate-400 font-medium"
+                className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 focus:border-cyan-400 focus:outline-none text-base sm:text-xs text-white placeholder-slate-400 font-medium"
               />
               <button
                 type="button"

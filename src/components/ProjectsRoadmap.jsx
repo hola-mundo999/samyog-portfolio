@@ -19,6 +19,7 @@ function ProjectCard({ proj, playClick }) {
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
+    if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -30,7 +31,9 @@ function ProjectCard({ proj, playClick }) {
   };
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
+      setIsHovered(true);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -51,7 +54,7 @@ function ProjectCard({ proj, playClick }) {
         transition: isHovered ? 'transform 0.08s ease-out' : 'transform 0.4s ease-out',
         willChange: 'transform',
       }}
-      className="surface-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-shadow duration-300 group min-w-0 shadow-md hover:shadow-2xl hover:shadow-cyan-500/10"
+      className="surface-card rounded-2xl sm:rounded-3xl p-5 sm:p-7 flex flex-col justify-between transition-shadow duration-300 group min-w-0 shadow-md hover:shadow-2xl hover:shadow-cyan-500/10"
     >
       <div>
         {/* Header */}
@@ -231,7 +234,7 @@ export default function ProjectsRoadmap() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap items-center gap-2 mb-8">
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 sm:pb-0 sm:flex-wrap mb-8">
         {[
           { key: 'ALL', label: 'All Projects' },
           { key: 'AI', label: 'Applied AI & NLP' },
@@ -242,7 +245,7 @@ export default function ProjectsRoadmap() {
             type="button"
             key={f.key}
             onClick={() => handleFilterClick(f.key)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+            className={`whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer ${
               activeFilter === f.key
                 ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
                 : 'bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700'

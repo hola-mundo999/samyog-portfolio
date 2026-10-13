@@ -21,7 +21,7 @@ export default function Education() {
         </span>
       </div>
 
-      <div className="surface-card rounded-3xl p-6 sm:p-8">
+      <div className="surface-card rounded-2xl sm:rounded-3xl p-5 sm:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-200 dark:border-slate-800/80">
           <div className="flex items-start gap-4">
             <div className="p-3 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 shrink-0">
