@@ -53,6 +53,17 @@ export default function ChatAssistant() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Listen for Escape key to close dialog
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
   const handleOpen = () => {
     setIsOpen(true);
     setShowTooltip(false);
@@ -192,6 +203,7 @@ export default function ChatAssistant() {
             </p>
           </div>
           <button
+            type="button"
             onClick={() => setShowTooltip(false)}
             aria-label="Dismiss greeting tooltip"
             className="text-slate-400 hover:text-white transition-colors p-0.5 cursor-pointer"
@@ -204,6 +216,7 @@ export default function ChatAssistant() {
       {/* Floating Toggle Button */}
       {!isOpen && (
         <button
+          type="button"
           onClick={handleOpen}
           aria-label="Open portfolio AI chat assistant"
           className="relative group w-14 h-14 rounded-full bg-slate-950 border border-cyan-500/40 text-cyan-300 hover:text-white flex items-center justify-center shadow-xl shadow-cyan-500/20 hover:shadow-cyan-400/40 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
@@ -251,6 +264,7 @@ export default function ChatAssistant() {
 
             <div className="flex items-center gap-1">
               <button
+                type="button"
                 onClick={handleReset}
                 title="Reset conversation"
                 aria-label="Reset conversation"
@@ -259,6 +273,7 @@ export default function ChatAssistant() {
                 <RotateCcw className="w-4 h-4" />
               </button>
               <button
+                type="button"
                 onClick={handleClose}
                 title="Close assistant"
                 aria-label="Close assistant"
@@ -331,6 +346,7 @@ export default function ChatAssistant() {
                 <div className="flex flex-col gap-1.5">
                   {SUGGESTED_QUESTIONS.map((q, idx) => (
                     <button
+                      type="button"
                       key={idx}
                       onClick={() => sendMessage(q)}
                       className="text-left px-3 py-2 rounded-xl bg-slate-900/70 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/40 text-slate-200 hover:text-cyan-300 text-xs transition-all flex items-center justify-between group cursor-pointer"
@@ -359,6 +375,7 @@ export default function ChatAssistant() {
                 className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 focus:border-cyan-400 focus:outline-none text-xs text-white placeholder-slate-400 font-medium"
               />
               <button
+                type="button"
                 onClick={() => sendMessage()}
                 disabled={!inputMessage.trim() || isTyping}
                 aria-label="Send message"

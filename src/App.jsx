@@ -28,7 +28,7 @@ export default function App() {
       {/* Main Page Layout */}
       <div className="relative z-10">
         <Navbar />
-        <main>
+        <main id="main-content">
           <Hero />
           <About />
           <ProjectsRoadmap />

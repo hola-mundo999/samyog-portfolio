@@ -14,6 +14,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
@@ -24,23 +34,33 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 flex justify-center px-4 py-4 transition-all duration-300">
-      <nav
-        className={`w-full max-w-5xl rounded-2xl px-5 py-3 transition-all duration-300 flex items-center justify-between ${
-          scrolled
-            ? 'bg-slate-950/80 backdrop-blur-xl border border-slate-800 shadow-2xl shadow-black/60'
-            : 'bg-transparent border border-transparent'
-        }`}
+    <>
+      {/* Skip to Main Content Link for Keyboard Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-cyan-400 text-slate-950 font-bold rounded-xl shadow-xl transition-all"
       >
-        {/* Brand */}
-        <a href="#" className="flex items-center gap-2.5 group">
-          <div className="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400/50 transition-colors">
-            <Terminal className="w-3.5 h-3.5" />
-          </div>
-          <span className="font-bold text-sm tracking-tight text-white group-hover:text-cyan-300 transition-colors">
-            Samyog
-          </span>
-        </a>
+        Skip to main content
+      </a>
+
+      <header className="fixed top-0 left-0 right-0 z-40 flex justify-center px-4 py-4 transition-all duration-300">
+        <nav
+          aria-label="Main Navigation"
+          className={`w-full max-w-5xl rounded-2xl px-5 py-3 transition-all duration-300 flex items-center justify-between ${
+            scrolled
+              ? 'bg-slate-950/80 backdrop-blur-xl border border-slate-800 shadow-2xl shadow-black/60'
+              : 'bg-transparent border border-transparent'
+          }`}
+        >
+          {/* Brand */}
+          <a href="#" className="flex items-center gap-2.5 group" aria-label="Samyog Sapkota Home">
+            <div className="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400/50 transition-colors">
+              <Terminal className="w-3.5 h-3.5" />
+            </div>
+            <span className="font-bold text-sm tracking-tight text-white group-hover:text-cyan-300 transition-colors">
+              Samyog Sapkota
+            </span>
+          </a>
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-6">
@@ -90,6 +110,8 @@ export default function Navbar() {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none"
           aria-label="Toggle navigation menu"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -97,7 +119,10 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-20 inset-x-4 bg-slate-950/95 backdrop-blur-xl rounded-2xl p-5 flex flex-col gap-3 shadow-2xl border border-slate-800 animate-fade-in">
+        <div
+          id="mobile-nav"
+          className="md:hidden absolute top-20 inset-x-4 bg-slate-950/95 backdrop-blur-xl rounded-2xl p-5 flex flex-col gap-3 shadow-2xl border border-slate-800 animate-fade-in"
+        >
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -140,5 +165,6 @@ export default function Navbar() {
         </div>
       )}
     </header>
+  </>
   );
 }
