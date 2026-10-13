@@ -133,11 +133,13 @@ export default function TerminalConsole() {
   const [commandHistory, setCommandHistory] = useState(['samyog.whoami()']);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const bottomRef = useRef(null);
+  const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
   }, [history, isProcessing]);
 
   const evaluatePython = useCallback(
@@ -348,7 +350,7 @@ Try running 'help(samyog)' or inspect 'samyog.skills()'.`;
   const handleQuickCommand = (cmd) => {
     setInputVal(cmd);
     evaluatePython(cmd);
-    inputRef.current?.focus();
+    inputRef.current?.focus({ preventScroll: true });
   };
 
   return (
@@ -420,7 +422,8 @@ Try running 'help(samyog)' or inspect 'samyog.skills()'.`;
 
         {/* Terminal REPL Body */}
         <div
-          onClick={() => inputRef.current?.focus()}
+          ref={terminalBodyRef}
+          onClick={() => inputRef.current?.focus({ preventScroll: true })}
           className="p-4 sm:p-5 min-h-[380px] max-h-[520px] overflow-y-auto space-y-4 cursor-text selection:bg-cyan-500/30 selection:text-white bg-[#070b16]"
         >
           {/* Initial REPL Boot Banner */}
@@ -483,8 +486,6 @@ Try running 'help(samyog)' or inspect 'samyog.skills()'.`;
               spellCheck="false"
             />
           </div>
-
-          <div ref={bottomRef} />
         </div>
 
         {/* Status Footer */}
