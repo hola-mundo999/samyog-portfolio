@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Menu, X, Sun, Moon } from 'lucide-react';
+import { Terminal, Menu, X, Sun, Moon, VolumeX } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useSound } from '../context/SoundContext';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
+  const { isSoundEnabled, isPlayingVoice, toggleSound, playClick } = useSound();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -74,6 +76,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
+                onClick={playClick}
                 className="text-xs font-semibold text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white transition-colors py-1"
               >
                 {link.label}
@@ -83,6 +86,37 @@ export default function Navbar() {
 
           {/* Right Action Area */}
           <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Sound & Voice Equalizer Toggle */}
+            <button
+              type="button"
+              onClick={toggleSound}
+              aria-label={isSoundEnabled ? 'Mute portfolio sound and voice' : 'Enable portfolio sound and voice greeting'}
+              className={`px-2.5 py-1.5 rounded-xl border transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5 shadow-sm text-xs font-mono font-semibold ${
+                isSoundEnabled
+                  ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-700 dark:text-cyan-300'
+                  : 'bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400'
+              }`}
+              title={
+                isSoundEnabled
+                  ? 'Sound FX & Voice: ACTIVE (Click to mute)'
+                  : 'Sound FX & Voice: MUTED (Click to enable & listen)'
+              }
+            >
+              {isSoundEnabled ? (
+                <div className="flex items-end gap-[2px] h-3.5 px-0.5">
+                  <span className="w-[2.5px] bg-cyan-600 dark:bg-cyan-400 rounded-full animate-eq-1" />
+                  <span className="w-[2.5px] bg-cyan-600 dark:bg-cyan-400 rounded-full animate-eq-2" />
+                  <span className="w-[2.5px] bg-cyan-600 dark:bg-cyan-400 rounded-full animate-eq-3" />
+                  <span className="w-[2.5px] bg-cyan-600 dark:bg-cyan-400 rounded-full animate-eq-4" />
+                </div>
+              ) : (
+                <VolumeX className="w-3.5 h-3.5 text-slate-400" />
+              )}
+              <span className="text-[10px] hidden sm:inline uppercase">
+                {isSoundEnabled ? (isPlayingVoice ? 'Voice Active' : 'Sound ON') : 'Sound'}
+              </span>
+            </button>
+
             {/* Theme Toggle Button in Top-Right Corner */}
             <button
               type="button"
@@ -154,7 +188,10 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  playClick();
+                  setMobileMenuOpen(false);
+                }}
                 className="text-sm font-semibold text-slate-700 hover:text-sky-600 dark:text-slate-200 dark:hover:text-cyan-300 py-1.5 transition-colors"
               >
                 {link.label}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Brain,
   Hand,
@@ -9,9 +9,124 @@ import {
   GitBranch,
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
+import { useSound } from '../context/SoundContext';
+
+function ProjectCard({ proj, playClick }) {
+  const Icon = proj.icon;
+  const cardRef = useRef(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -4.5;
+    const rotateY = ((x - centerX) / centerX) * 4.5;
+    setTilt({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTilt({ x: 0, y: 0 });
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: isHovered
+          ? `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(-4px)`
+          : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
+        transition: isHovered ? 'transform 0.08s ease-out' : 'transform 0.4s ease-out',
+        willChange: 'transform',
+      }}
+      className="surface-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-shadow duration-300 group min-w-0 shadow-md hover:shadow-2xl hover:shadow-cyan-500/10"
+    >
+      <div>
+        {/* Header */}
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-cyan-600 dark:text-cyan-400 shrink-0 group-hover:scale-110 transition-transform">
+            <Icon className="w-5 h-5" />
+          </div>
+          <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 shrink-0">
+            {proj.category}
+          </span>
+        </div>
+
+        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
+          {proj.title}
+        </h3>
+        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
+          {proj.description}
+        </p>
+      </div>
+
+      <div>
+        {/* Architecture Note */}
+        <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 mb-4 min-w-0">
+          <span className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400 block mb-1">
+            SYSTEM ARCHITECTURE
+          </span>
+          <span className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed block break-words">
+            {proj.architecture}
+          </span>
+        </div>
+
+        {/* Tech Stack Tags */}
+        <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-200 dark:border-slate-800/80 mb-5">
+          {proj.stack.map((t, idx) => (
+            <span
+              key={idx}
+              className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <a
+            href={proj.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={playClick}
+            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
+          >
+            <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+            <span>Live Web Demo</span>
+          </a>
+
+          <a
+            href={proj.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={playClick}
+            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white text-xs font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
+          >
+            <GithubIcon className="w-3.5 h-3.5 shrink-0" />
+            <span>View Code</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ProjectsRoadmap() {
   const [activeFilter, setActiveFilter] = useState('ALL');
+  const { playClick } = useSound();
 
   const projects = [
     {
@@ -77,6 +192,11 @@ export default function ProjectsRoadmap() {
       ? projects
       : projects.filter((p) => p.filterCategory === activeFilter);
 
+  const handleFilterClick = (key) => {
+    setActiveFilter(key);
+    playClick();
+  };
+
   return (
     <section id="projects" className="py-24 px-4 max-w-5xl mx-auto scroll-mt-20">
       {/* Section Header */}
@@ -101,6 +221,7 @@ export default function ProjectsRoadmap() {
           href="https://github.com/hola-mundo999"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={playClick}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all"
         >
           <GithubIcon className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
@@ -120,7 +241,7 @@ export default function ProjectsRoadmap() {
           <button
             type="button"
             key={f.key}
-            onClick={() => setActiveFilter(f.key)}
+            onClick={() => handleFilterClick(f.key)}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
               activeFilter === f.key
                 ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
@@ -132,83 +253,11 @@ export default function ProjectsRoadmap() {
         ))}
       </div>
 
-      {/* 2x2 Large Architectural Cards Grid */}
+      {/* 2x2 Large Architectural Cards Grid with 3D Tilt */}
       <div className="grid md:grid-cols-2 gap-6 mb-12">
-        {filteredProjects.map((proj) => {
-          const Icon = proj.icon;
-          return (
-            <div
-              key={proj.id}
-              className="surface-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 group min-w-0"
-            >
-              <div>
-                {/* Header */}
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-cyan-600 dark:text-cyan-400 shrink-0">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 shrink-0">
-                    {proj.category}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
-                  {proj.title}
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
-                  {proj.description}
-                </p>
-              </div>
-
-              <div>
-                {/* Architecture Note */}
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 mb-4 min-w-0">
-                  <span className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400 block mb-1">
-                    SYSTEM ARCHITECTURE
-                  </span>
-                  <span className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed block break-words">
-                    {proj.architecture}
-                  </span>
-                </div>
-
-                {/* Tech Stack Tags */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-200 dark:border-slate-800/80 mb-5">
-                  {proj.stack.map((t, idx) => (
-                    <span
-                      key={idx}
-                      className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <a
-                    href={proj.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5 shrink-0" />
-                    <span>Live Web Demo</span>
-                  </a>
-
-                  <a
-                    href={proj.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white text-xs font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
-                  >
-                    <GithubIcon className="w-3.5 h-3.5 shrink-0" />
-                    <span>View Code</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {filteredProjects.map((proj) => (
+          <ProjectCard key={proj.id} proj={proj} playClick={playClick} />
+        ))}
       </div>
 
       {/* GitHub Banner */}
@@ -231,6 +280,7 @@ export default function ProjectsRoadmap() {
           href="https://github.com/hola-mundo999"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={playClick}
           className="w-full sm:w-auto text-center px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:hover:bg-slate-100 dark:text-slate-950 font-bold text-xs transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
         >
           Visit github.com/hola-mundo999

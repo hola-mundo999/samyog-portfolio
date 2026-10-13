@@ -1,8 +1,10 @@
 import React from 'react';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { SoundProvider } from './context/SoundContext';
 import ThreeBackground from './components/ThreeBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import TechMarquee from './components/TechMarquee';
 import About from './components/About';
 import ProjectsRoadmap from './components/ProjectsRoadmap';
 import Skills from './components/Skills';
@@ -36,6 +38,7 @@ function AppLayout() {
         <Navbar />
         <main id="main-content">
           <Hero />
+          <TechMarquee />
           <About />
           <ProjectsRoadmap />
           <Skills />
@@ -55,7 +58,9 @@ function AppLayout() {
 export default function App() {
   return (
     <ThemeProvider>
-      <AppLayout />
+      <SoundProvider>
+        <AppLayout />
+      </SoundProvider>
     </ThemeProvider>
   );
 }

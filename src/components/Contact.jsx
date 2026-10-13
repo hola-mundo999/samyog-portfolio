@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Mail, Copy, Check, Send, CheckCircle2, ArrowUpRight, AlertCircle } from 'lucide-react';
 import { LinkedinIcon, GithubIcon } from './SocialIcons';
+import { useSound } from '../context/SoundContext';
 
 export default function Contact() {
+  const { playChime, playSuccess } = useSound();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,6 +19,7 @@ export default function Contact() {
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(targetEmail);
     setCopied(true);
+    playChime();
     setTimeout(() => setCopied(false), 2500);
   };
 
@@ -66,6 +69,7 @@ export default function Contact() {
     } catch (err) {
       console.warn('Mail client launch error:', err);
     }
+    playSuccess();
     setFormSent(true);
   };
 
