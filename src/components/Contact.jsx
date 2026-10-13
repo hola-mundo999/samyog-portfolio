@@ -45,18 +45,18 @@ export default function Contact() {
 
           <div className="space-y-3.5">
             {/* Direct Email Card */}
-            <div className="surface-card rounded-2xl p-4 flex items-center justify-between gap-3 border-slate-800/80">
-              <div className="flex items-center gap-3 overflow-hidden">
+            <div className="surface-card rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-slate-800/80">
+              <div className="flex items-center gap-3 min-w-0">
                 <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
-                <div className="truncate">
+                <div className="min-w-0">
                   <span className="text-[10px] font-mono text-slate-400 font-bold block uppercase">
                     Direct Email
                   </span>
                   <a
                     href={`mailto:${email}`}
-                    className="text-sm font-bold text-white hover:text-cyan-300 transition-colors truncate block"
+                    className="text-xs sm:text-sm font-bold text-white hover:text-cyan-300 transition-colors block break-all"
                   >
                     {email}
                   </a>
@@ -64,8 +64,9 @@ export default function Contact() {
               </div>
 
               <button
+                type="button"
                 onClick={handleCopyEmail}
-                className="p-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white transition-all shrink-0 flex items-center gap-1.5 text-xs font-mono font-semibold cursor-pointer"
+                className="self-end sm:self-auto p-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white transition-all shrink-0 flex items-center gap-1.5 text-xs font-mono font-semibold cursor-pointer"
                 title="Copy email to clipboard"
               >
                 {copied ? (
@@ -87,22 +88,22 @@ export default function Contact() {
               href="https://www.linkedin.com/in/samyogsapkota/"
               target="_blank"
               rel="noopener noreferrer"
-              className="surface-card rounded-2xl p-4 flex items-center justify-between gap-3 border-slate-800/80 hover:border-cyan-500/40 transition-all group cursor-pointer"
+              className="surface-card rounded-2xl p-4 flex items-center justify-between gap-3 border-slate-800/80 hover:border-cyan-500/40 transition-all group cursor-pointer min-w-0"
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-slate-900 text-cyan-400 border border-slate-800 group-hover:scale-105 transition-transform">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="p-2.5 rounded-xl bg-slate-900 text-cyan-400 border border-slate-800 group-hover:scale-105 transition-transform shrink-0">
                   <LinkedinIcon className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <span className="text-[10px] font-mono text-slate-400 font-bold block uppercase">
                     Professional Network
                   </span>
-                  <span className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">
+                  <span className="text-xs sm:text-sm font-bold text-white group-hover:text-cyan-300 transition-colors block break-all">
                     linkedin.com/in/samyogsapkota
                   </span>
                 </div>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+              <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors shrink-0" />
             </a>
 
             {/* GitHub Card */}
@@ -110,22 +111,22 @@ export default function Contact() {
               href="https://github.com/hola-mundo999"
               target="_blank"
               rel="noopener noreferrer"
-              className="surface-card rounded-2xl p-4 flex items-center justify-between gap-3 border-slate-800/80 hover:border-slate-700 transition-all group cursor-pointer"
+              className="surface-card rounded-2xl p-4 flex items-center justify-between gap-3 border-slate-800/80 hover:border-slate-700 transition-all group cursor-pointer min-w-0"
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 group-hover:scale-105 transition-transform">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 group-hover:scale-105 transition-transform shrink-0">
                   <GithubIcon className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <span className="text-[10px] font-mono text-slate-400 font-bold block uppercase">
                     Code Repository
                   </span>
-                  <span className="text-sm font-bold text-white group-hover:text-slate-200 transition-colors">
+                  <span className="text-xs sm:text-sm font-bold text-white group-hover:text-slate-200 transition-colors block break-all">
                     github.com/hola-mundo999
                   </span>
                 </div>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+              <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors shrink-0" />
             </a>
           </div>
         </div>

@@ -118,6 +118,7 @@ export default function ProjectsRoadmap() {
           { key: 'BACKEND', label: 'APIs & Backend' },
         ].map((f) => (
           <button
+            type="button"
             key={f.key}
             onClick={() => setActiveFilter(f.key)}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
@@ -138,15 +139,15 @@ export default function ProjectsRoadmap() {
           return (
             <div
               key={proj.id}
-              className="bg-slate-950/80 rounded-3xl p-6 sm:p-7 border border-slate-800/90 hover:border-slate-700 flex flex-col justify-between transition-all duration-300 shadow-xl shadow-black/40 group"
+              className="bg-slate-950/80 rounded-3xl p-6 sm:p-7 border border-slate-800/90 hover:border-slate-700 flex flex-col justify-between transition-all duration-300 shadow-xl shadow-black/40 group min-w-0"
             >
               <div>
                 {/* Header */}
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400">
+                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 shrink-0">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900 text-slate-300 border border-slate-800">
+                  <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900 text-slate-300 border border-slate-800 shrink-0">
                     {proj.category}
                   </span>
                 </div>
@@ -161,11 +162,11 @@ export default function ProjectsRoadmap() {
 
               <div>
                 {/* Architecture Note */}
-                <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/80 mb-4">
+                <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/80 mb-4 min-w-0">
                   <span className="text-[10px] font-mono font-bold text-cyan-400 block mb-1">
                     SYSTEM ARCHITECTURE
                   </span>
-                  <span className="text-xs text-slate-300 leading-relaxed block">
+                  <span className="text-xs text-slate-300 leading-relaxed block break-words">
                     {proj.architecture}
                   </span>
                 </div>
@@ -183,14 +184,14 @@ export default function ProjectsRoadmap() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <a
                     href={proj.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
                   >
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                     <span>Live Web Demo</span>
                   </a>
 
@@ -198,9 +199,9 @@ export default function ProjectsRoadmap() {
                     href={proj.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
                   >
-                    <GithubIcon className="w-3.5 h-3.5" />
+                    <GithubIcon className="w-3.5 h-3.5 shrink-0" />
                     <span>View Code</span>
                   </a>
                 </div>
@@ -213,7 +214,7 @@ export default function ProjectsRoadmap() {
       {/* GitHub Banner */}
       <div className="rounded-3xl p-6 sm:p-8 border border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 text-cyan-400">
+          <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 text-cyan-400 shrink-0">
             <GitBranch className="w-6 h-6" />
           </div>
           <div>
@@ -230,7 +231,7 @@ export default function ProjectsRoadmap() {
           href="https://github.com/hola-mundo999"
           target="_blank"
           rel="noopener noreferrer"
-          className="whitespace-nowrap px-5 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs transition-all hover:scale-105 active:scale-95 shadow-lg shadow-white/10 cursor-pointer"
+          className="w-full sm:w-auto text-center px-5 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs transition-all hover:scale-105 active:scale-95 shadow-lg shadow-white/10 cursor-pointer"
         >
           Visit github.com/hola-mundo999
         </a>
