@@ -10,7 +10,7 @@ Club: PR Director @ Prime IT Club`,
 
   projects: `4 Featured Systems Deployed & Live:
 1. [AI CSIT Study Assistant] - PDF Chunking & Academic Exam Synthesizer
-   -> https://ai-csit-studyassistant.streamlit.app/
+   -> https://ai-csit-study-assistant.streamlit.app/
 2. [AI Hand Gesture Controller] - 21-Landmark Vision Tracking & HCI Dispatcher
    -> https://ai-gesture-controller.streamlit.app
 3. [TU CSIT Notice Hub] - IOST Scraper, MD5 Deduplication & Telegram Bot

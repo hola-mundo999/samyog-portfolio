@@ -140,7 +140,7 @@ export default function ProjectsRoadmap() {
         'An intelligent academic assistant tailored for BSc CSIT students. Ingests semester PDF lecture notes, extracts topics, and generates clear summaries along with practice exam questions using Google Gemini and Groq.',
       stack: ['Python', 'Streamlit', 'pypdf', 'Gemini / Groq LLMs'],
       architecture: 'PDF Ingestion → Semantic Chunking → Context Retrieval → Exam Question Synthesis',
-      demoUrl: 'https://ai-csit-studyassistant.streamlit.app/',
+      demoUrl: 'https://ai-csit-study-assistant.streamlit.app/',
       repoUrl: 'https://github.com/hola-mundo999/ai-csit-study-assistant',
     },
     {

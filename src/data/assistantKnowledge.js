@@ -75,7 +75,7 @@ export const assistantKnowledge = {
         "An intelligent academic study assistant for BSc CSIT students that extracts, chunks, and summarizes semester PDF lecture notes, answering complex questions and generating practice exam questions.",
       stack: ["Python", "Streamlit", "PyPDF", "Google Gemini / Groq API"],
       architecture: "PDF Chunking → Grounded Semantic Retrieval → Academic Q&A & Exam Generator",
-      liveDemo: "https://ai-csit-studyassistant.streamlit.app/",
+      liveDemo: "https://ai-csit-study-assistant.streamlit.app/",
       github: "https://github.com/hola-mundo999/ai-csit-study-assistant",
     },
     {
