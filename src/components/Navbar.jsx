@@ -95,8 +95,8 @@ export default function Navbar() {
           }}
           className={`w-full max-w-5xl rounded-2xl px-3.5 sm:px-5 py-2.5 transition-all duration-300 flex items-center justify-between ${
             scrolled
-              ? 'bg-white/90 dark:bg-[#060813]/90 border border-slate-200/90 dark:border-slate-800/90 shadow-2xl shadow-slate-950/10 dark:shadow-black/70'
-              : 'bg-white/60 dark:bg-[#060813]/60 border border-slate-200/60 dark:border-slate-800/50 shadow-xs'
+              ? 'bg-white/80 dark:bg-[#060813]/90 border border-slate-300/80 dark:border-slate-800/90 shadow-xl shadow-slate-900/5 dark:shadow-black/70'
+              : 'bg-white/65 dark:bg-[#060813]/60 border border-slate-300/60 dark:border-slate-800/50 shadow-xs'
           }`}
         >
           {/* Brand Avatar & Name */}
@@ -119,7 +119,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Navigation Links with 21st.dev Tubelight Sliding Lamp Indicator */}
-          <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50">
+          <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-slate-200/50 dark:bg-slate-900/60 border border-slate-300/60 dark:border-slate-800/50">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -137,7 +137,7 @@ export default function Navbar() {
                   {isActive && (
                     <motion.div
                       layoutId="tubelight-pill"
-                      className="absolute inset-0 bg-white dark:bg-slate-800/90 rounded-lg shadow-xs border border-slate-200/70 dark:border-transparent -z-10"
+                      className="absolute inset-0 bg-white/95 dark:bg-slate-800/90 rounded-lg shadow-xs border border-slate-200 dark:border-transparent -z-10"
                       transition={{
                         type: 'spring',
                         stiffness: 380,
@@ -145,8 +145,8 @@ export default function Navbar() {
                       }}
                     >
                       {/* Top indicator line */}
-                      <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-6 h-[2px] bg-sky-600 dark:bg-cyan-400 rounded-full shadow-none dark:shadow-[0_0_8px_#38bdf8]">
-                        <div className="hidden dark:block absolute w-8 h-2 bg-cyan-400/30 rounded-full blur-[2px] -top-1 -left-1" />
+                      <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-6 h-[2px] bg-sky-600 dark:bg-cyan-400 rounded-full shadow-[0_0_6px_rgba(2,132,199,0.5)] dark:shadow-[0_0_8px_#38bdf8]">
+                        <div className="absolute w-8 h-2 bg-sky-500/25 dark:bg-cyan-400/30 rounded-full blur-[2px] -top-1 -left-1" />
                       </div>
                     </motion.div>
                   )}

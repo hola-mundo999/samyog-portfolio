@@ -141,7 +141,7 @@ export default function Leadership() {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-3 sm:p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-left">
+              <div className="p-3 sm:p-3.5 rounded-2xl bg-slate-100/70 dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 text-left">
                 <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 block uppercase">
                   Active Status
                 </span>
@@ -185,7 +185,7 @@ export default function Leadership() {
                     className={`p-4 sm:p-6 rounded-2xl border transition-all ${
                       item.isCurrent
                         ? 'bg-sky-500/10 dark:bg-cyan-950/20 border-sky-500/30 dark:border-cyan-500/40 shadow-xs'
-                        : 'bg-slate-50/70 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                        : 'bg-slate-100/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                     }`}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
@@ -230,7 +230,7 @@ export default function Leadership() {
                 return (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex items-start gap-3.5"
+                    className="p-4 rounded-2xl bg-slate-100/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex items-start gap-3.5"
                   >
                     <div className="p-2.5 rounded-xl bg-sky-500/10 dark:bg-cyan-500/10 text-sky-600 dark:text-cyan-400 border border-sky-500/20 dark:border-cyan-500/30 shrink-0">
                       <Icon className="w-4 h-4" />

@@ -381,7 +381,7 @@ Try running 'help(samyog)' or inspect 'samyog.skills()'.`;
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.45 }}
-        className="rounded-2xl border border-slate-800 bg-[#070b16] overflow-hidden shadow-2xl shadow-slate-900/10 dark:shadow-black/80 font-mono text-xs"
+        className="rounded-2xl border border-slate-800/90 dark:border-slate-800 bg-[#070b16] overflow-hidden shadow-2xl shadow-slate-900/15 dark:shadow-black/80 font-mono text-xs"
       >
         {/* Title Bar & Quick Chips */}
         <div className="px-4 py-3 bg-[#04060d] border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-3">

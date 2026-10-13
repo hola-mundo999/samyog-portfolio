@@ -15,7 +15,7 @@ export default function ThreeBackground() {
 
     // Scene & Camera
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(isDark ? 0x060813 : 0xf8fafc, 0.002);
+    scene.fog = new THREE.FogExp2(isDark ? 0x060813 : 0xf1f5f9, 0.002);
 
     const camera = new THREE.PerspectiveCamera(
       60,
@@ -30,14 +30,14 @@ export default function ThreeBackground() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Subtle floating star constellation
+    // Dynamic 3D floating constellation (Active in both Dark and Light themes)
     const particleCount = 280;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
     const primaryColor = new THREE.Color(isDark ? '#38bdf8' : '#0284c7');
-    const secondaryColor = new THREE.Color(isDark ? '#818cf8' : '#6366f1');
+    const secondaryColor = new THREE.Color(isDark ? '#818cf8' : '#4f46e5');
     const neutralColor = new THREE.Color(isDark ? '#f8fafc' : '#64748b');
 
     for (let i = 0; i < particleCount; i++) {
@@ -59,7 +59,7 @@ export default function ThreeBackground() {
       size: isDark ? 1.6 : 1.4,
       vertexColors: true,
       transparent: true,
-      opacity: isDark ? 0.5 : 0.4,
+      opacity: isDark ? 0.6 : 0.45,
       blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
     });
 
@@ -86,18 +86,7 @@ export default function ThreeBackground() {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
-    if (!isDark) {
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('resize', handleResize);
-        if (container && renderer.domElement) {
-          container.removeChild(renderer.domElement);
-        }
-        geometry.dispose();
-        material.dispose();
-        renderer.dispose();
-      };
-    }
+    window.addEventListener('resize', handleResize);
 
     let animationFrameId;
 
@@ -139,9 +128,7 @@ export default function ThreeBackground() {
   return (
     <div
       ref={containerRef}
-      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden ${
-        theme === 'dark' ? 'opacity-70' : 'opacity-0'
-      } transition-opacity duration-500`}
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-65 dark:opacity-75 transition-opacity duration-500"
       aria-hidden="true"
     />
   );

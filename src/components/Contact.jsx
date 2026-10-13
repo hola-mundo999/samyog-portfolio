@@ -108,7 +108,7 @@ export default function Contact() {
           transition={{ duration: 0.45 }}
           className="h-full flex flex-col"
         >
-          <SpotlightCard className="h-full rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#070b16] shadow-sm dark:shadow-black/60">
+          <SpotlightCard className="h-full rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-300/80 dark:border-slate-800 bg-white/80 dark:bg-[#070b16] shadow-lg shadow-slate-900/5 dark:shadow-black/60 backdrop-blur-md">
             <div className="h-full flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-1">
@@ -125,7 +125,7 @@ export default function Contact() {
 
                 <div className="space-y-3.5">
                   {/* Email Card */}
-                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors">
+                  <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors">
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="p-2.5 rounded-lg bg-sky-500/10 dark:bg-cyan-500/10 text-sky-600 dark:text-cyan-400 shrink-0">
                         <Mail className="w-4 h-4" />
@@ -170,7 +170,7 @@ export default function Contact() {
                     href="https://www.linkedin.com/in/samyogsapkota/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors cursor-pointer"
+                    className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="p-2.5 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-sky-600 dark:text-cyan-400 shrink-0 group-hover:scale-105 transition-transform">
@@ -193,7 +193,7 @@ export default function Contact() {
                     href="https://github.com/hola-mundo999"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors cursor-pointer"
+                    className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="p-2.5 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0 group-hover:scale-105 transition-transform">
@@ -203,7 +203,7 @@ export default function Contact() {
                         <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold block uppercase">
                           Code Repositories
                         </span>
-                        <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-cyan-300 transition-colors block break-all font-mono">
+                        <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-600 dark:hover:text-cyan-300 transition-colors block break-all font-mono">
                           github.com/hola-mundo999
                         </span>
                       </div>
@@ -212,7 +212,7 @@ export default function Contact() {
                   </a>
 
                   {/* Location & Academic Base */}
-                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 flex items-center gap-3">
+                  <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex items-center gap-3">
                     <div className="p-2.5 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shrink-0">
                       <MapPin className="w-4 h-4" />
                     </div>
@@ -250,7 +250,7 @@ export default function Contact() {
           transition={{ duration: 0.45, delay: 0.1 }}
           className="h-full flex flex-col"
         >
-          <SpotlightCard className="h-full rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#070b16] shadow-sm dark:shadow-black/60">
+          <SpotlightCard className="h-full rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-300/80 dark:border-slate-800 bg-white/80 dark:bg-[#070b16] shadow-lg shadow-slate-900/5 dark:shadow-black/60 backdrop-blur-md">
             <form onSubmit={handleFormSubmit} className="h-full flex flex-col justify-between" noValidate>
               <div>
                 <div className="flex items-center justify-between mb-1">
@@ -278,10 +278,10 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="e.g. Jane Doe"
-                        className={`w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border ${
+                        className={`w-full px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
                           errors.name
                             ? 'border-red-500 focus:border-red-500'
-                            : 'border-slate-200 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400'
+                            : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
                         } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
                       />
                       {errors.name && (
@@ -302,10 +302,10 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="e.g. jane@company.com"
-                        className={`w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border ${
+                        className={`w-full px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
                           errors.email
                             ? 'border-red-500 focus:border-red-500'
-                            : 'border-slate-200 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400'
+                            : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
                         } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
                       />
                       {errors.email && (
@@ -327,11 +327,11 @@ export default function Contact() {
                       value={formData.subject}
                       onChange={handleChange}
                       placeholder="e.g. Software Collaboration / Prime IT Club / Internship"
-                      className={`w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border ${
+                      className={`w-full px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
                         errors.subject
                           ? 'border-red-500 focus:border-red-500'
-                          : 'border-slate-200 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400'
-                        } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
+                          : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
+                      } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
                     />
                     {errors.subject && (
                       <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
@@ -351,10 +351,10 @@ export default function Contact() {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Hi Samyog, I wanted to reach out regarding..."
-                      className={`w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border ${
+                      className={`w-full px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
                         errors.message
                           ? 'border-red-500 focus:border-red-500'
-                          : 'border-slate-200 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400'
+                          : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
                       } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium resize-none transition-colors`}
                     />
                     {errors.message && (

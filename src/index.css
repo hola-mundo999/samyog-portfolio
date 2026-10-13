@@ -8,17 +8,17 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
 
 :root {
-  --bg-canvas: #f8fafc;
-  --text-main: #0b0f19;
+  --bg-canvas: #f1f5f9;
+  --text-main: #0f172a;
   --text-secondary: #1e293b;
   --text-muted: #475569;
-  --card-bg: #ffffff;
-  --card-border: #e2e8f0;
-  --card-border-hover: #0284c7;
-  --card-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(203, 213, 225, 0.85);
+  --card-border-hover: rgba(2, 132, 199, 0.6);
+  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 1px 3px 0 rgba(15, 23, 42, 0.03);
   --accent-cyan: #0284c7;
   --accent-cyan-bg: rgba(2, 132, 199, 0.08);
-  --spotlight-glow: rgba(2, 132, 199, 0.06);
+  --spotlight-glow: rgba(2, 132, 199, 0.14);
 }
 
 .dark, [data-theme="dark"] {
@@ -54,7 +54,7 @@
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
     overflow-wrap: break-word;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.35s ease, color 0.35s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -118,12 +118,14 @@
   background: #334155;
 }
 
-/* Surfaces - Tuned for maximum text clarity & contrast */
+/* Surfaces - Frosted glass with subtle depth & clear contrast */
 .surface-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   box-shadow: var(--card-shadow);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
   min-width: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -210,4 +212,3 @@
 .animate-eq-2 { animation: eqBar2 0.55s ease-in-out infinite; }
 .animate-eq-3 { animation: eqBar3 0.85s ease-in-out infinite; }
 .animate-eq-4 { animation: eqBar4 0.65s ease-in-out infinite; }
-

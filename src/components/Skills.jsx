@@ -120,7 +120,7 @@ export default function Skills() {
                         className={`p-3 rounded-xl border transition-all ${
                           item.highlight
                             ? 'bg-sky-500/10 dark:bg-cyan-950/25 border-sky-500/30 dark:border-cyan-500/40 shadow-xs'
-                            : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                            : 'bg-slate-100/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                         }`}
                       >
                         <div className="flex flex-wrap items-center justify-between gap-1 sm:gap-2">

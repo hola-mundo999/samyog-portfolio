@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import { motion } from 'motion/react';
 import { useTheme } from '../../context/ThemeContext';
 
 /**
@@ -122,7 +123,8 @@ function FlickeringGridCanvas({ color, maxOpacity = 0.45, squareSize = 4, gridGa
 
 /**
  * 21st.dev MotionBackground Component
- * Combines 21st.dev Flickering Grid + Motion Animated Beams & Flowing Aurora Orbs.
+ * Combines 21st.dev Flickering Grid + Fluid Motion Animated Auroras
+ * Art-directed for both soothing, anti-glare Light Mode & deep atmospheric Dark Mode.
  */
 export default function MotionBackground() {
   const { theme } = useTheme();
@@ -130,57 +132,97 @@ export default function MotionBackground() {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-      {/* 1. Deep Atmospheric Gradient Base */}
+      {/* 1. Base Canvas - Soothing Anti-Glare Wash (Non-glaring, eye-friendly foundation) */}
       <div
-        className="absolute inset-0 transition-colors duration-500"
+        className="absolute inset-0 transition-colors duration-700 ease-out"
         style={{
           background: isDark
             ? 'radial-gradient(circle at 50% 15%, #081126 0%, #060813 60%, #03040a 100%)'
-            : 'radial-gradient(circle at 50% 10%, #ffffff 0%, #f8fafc 55%, #f1f5f9 100%)',
+            : 'radial-gradient(circle at 50% 12%, #f1f5f9 0%, #e9eef5 55%, #dfe7ef 100%)',
         }}
       />
 
-      {/* 2. 21st.dev Flickering Grid Background with Vignette Mask */}
-      <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_85%)]">
+      {/* 2. 21st.dev Flickering Grid Background with Vignette Mask (Active in both modes) */}
+      <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_45%,transparent_85%)]">
         <FlickeringGridCanvas
-          color={isDark ? '#38bdf8' : '#94a3b8'}
+          color={isDark ? '#38bdf8' : '#64748b'}
           squareSize={2.5}
-          gridGap={24}
-          maxOpacity={isDark ? 0.22 : 0.08}
-          flickerChance={0.15}
+          gridGap={22}
+          maxOpacity={isDark ? 0.24 : 0.16}
+          flickerChance={0.16}
         />
       </div>
 
-      {/* 3. Subtle Engineered Ambient Glows (Crisp, non-distracting) */}
+      {/* 3. Fluid Living Motion Auroras (Motion.div floating beams for both Dark and Light modes) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Soft Top Glow Header Sheen */}
-        <div
-          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full blur-[100px] pointer-events-none opacity-30 dark:opacity-30"
+        {/* Aurora 1: Floating Primary Sapphire / Cyan Beam */}
+        <motion.div
+          animate={{
+            x: [-20, 35, -25, -20],
+            y: [-15, 25, -20, -15],
+            scale: [1, 1.12, 0.94, 1],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute -top-24 left-1/4 w-[650px] h-[480px] rounded-full blur-[110px] pointer-events-none"
           style={{
             background: isDark
-              ? 'radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(99, 102, 241, 0.1) 60%, transparent 80%)'
-              : 'radial-gradient(circle, rgba(2, 132, 199, 0.1) 0%, rgba(99, 102, 241, 0.04) 60%, transparent 80%)',
+              ? 'radial-gradient(circle, rgba(56, 189, 248, 0.26) 0%, rgba(14, 165, 233, 0.12) 50%, transparent 75%)'
+              : 'radial-gradient(circle, rgba(2, 132, 199, 0.18) 0%, rgba(56, 189, 248, 0.09) 50%, transparent 75%)',
           }}
         />
 
-        {/* Minimal Peripheral Accent */}
-        <div
-          className="absolute top-1/2 right-0 translate-x-1/3 w-[450px] h-[450px] rounded-full blur-[120px] pointer-events-none opacity-20 dark:opacity-20"
+        {/* Aurora 2: Floating Ethereal Violet / Indigo Beam */}
+        <motion.div
+          animate={{
+            x: [25, -35, 30, 25],
+            y: [20, -25, 15, 20],
+            scale: [1, 0.92, 1.14, 1],
+          }}
+          transition={{
+            duration: 22,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute top-1/3 -right-28 w-[580px] h-[520px] rounded-full blur-[120px] pointer-events-none"
           style={{
             background: isDark
-              ? 'radial-gradient(circle, rgba(129, 140, 248, 0.25) 0%, transparent 70%)'
-              : 'radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%)',
+              ? 'radial-gradient(circle, rgba(129, 140, 248, 0.24) 0%, rgba(168, 85, 247, 0.10) 50%, transparent 75%)'
+              : 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.07) 50%, transparent 75%)',
+          }}
+        />
+
+        {/* Aurora 3: Floating Warm Sunrise Amber / Teal Accent Beam */}
+        <motion.div
+          animate={{
+            x: [-15, 25, -30, -15],
+            y: [15, -20, 25, 15],
+            scale: [0.95, 1.1, 0.96, 0.95],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute -bottom-20 left-1/3 w-[600px] h-[450px] rounded-full blur-[115px] pointer-events-none"
+          style={{
+            background: isDark
+              ? 'radial-gradient(circle, rgba(45, 212, 191, 0.16) 0%, rgba(56, 189, 248, 0.08) 50%, transparent 75%)'
+              : 'radial-gradient(circle, rgba(245, 158, 11, 0.09) 0%, rgba(2, 132, 199, 0.06) 50%, transparent 75%)',
           }}
         />
       </div>
 
-      {/* 4. Subtle Ambient Architectural Grid Texture */}
+      {/* 4. Fine Architectural Micro-Grid Texture */}
       <div
-        className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05] pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
         style={{
           backgroundImage: isDark
             ? 'linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px)'
-            : 'linear-gradient(rgba(15, 23, 42, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.3) 1px, transparent 1px)',
+            : 'linear-gradient(rgba(15, 23, 42, 0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.35) 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }}
       />

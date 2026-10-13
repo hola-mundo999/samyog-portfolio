@@ -257,10 +257,10 @@ export default function ChatAssistant() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="chat-heading"
-            className="w-[calc(100vw-24px)] sm:w-[380px] h-[480px] sm:h-[520px] max-h-[78dvh] sm:max-h-[82vh] rounded-2xl sm:rounded-3xl bg-white dark:bg-[#060a17]/95 border border-slate-200 dark:border-cyan-500/30 shadow-2xl shadow-slate-900/15 dark:shadow-black/80 flex flex-col overflow-hidden"
+            className="w-[calc(100vw-24px)] sm:w-[380px] h-[480px] sm:h-[520px] max-h-[78dvh] sm:max-h-[82vh] rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-[#060a17]/95 backdrop-blur-xl border border-slate-300/80 dark:border-cyan-500/30 shadow-2xl shadow-slate-900/15 dark:shadow-black/80 flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-950/70 flex items-center justify-between gap-3 shrink-0">
+            <div className="px-5 py-4 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-100/70 dark:bg-slate-950/70 flex items-center justify-between gap-3 shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-2xl bg-sky-500/10 dark:bg-cyan-950/80 border border-sky-500/20 dark:border-cyan-500/40 flex items-center justify-center text-sky-600 dark:text-cyan-400 shadow-xs">
                   <Bot className="w-5 h-5" />
@@ -322,7 +322,7 @@ export default function ChatAssistant() {
                     className={`max-w-[85%] rounded-2xl p-3.5 leading-relaxed text-xs ${
                       msg.sender === 'user'
                         ? 'bg-sky-600 text-white rounded-br-sm shadow-xs'
-                        : 'bg-white dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded-bl-sm shadow-xs'
+                        : 'bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 border border-slate-200/90 dark:border-slate-800 rounded-bl-sm shadow-xs'
                     }`}
                   >
                     {renderFormattedText(msg.text)}
@@ -342,7 +342,7 @@ export default function ChatAssistant() {
                   <div className="w-6 h-6 rounded-lg bg-sky-500/10 dark:bg-cyan-950/80 border border-sky-500/20 dark:border-cyan-500/30 text-sky-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
                     <Bot className="w-3.5 h-3.5" />
                   </div>
-                  <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl rounded-bl-sm px-4 py-2.5 flex items-center gap-1.5 shadow-xs">
+                  <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 rounded-2xl rounded-bl-sm px-4 py-2.5 flex items-center gap-1.5 shadow-xs">
                     <span className="w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-cyan-400 animate-bounce" />
                     <span
                       className="w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-cyan-400 animate-bounce"
@@ -368,7 +368,7 @@ export default function ChatAssistant() {
                         type="button"
                         key={idx}
                         onClick={() => sendMessage(q)}
-                        className="text-left px-3.5 py-2.5 rounded-xl bg-white hover:bg-sky-50/60 dark:bg-slate-900/70 dark:hover:bg-cyan-950/50 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 dark:hover:border-cyan-500/40 text-slate-700 hover:text-sky-700 dark:text-slate-200 dark:hover:text-cyan-300 text-xs transition-all flex items-center justify-between group cursor-pointer min-h-[42px] shadow-xs"
+                        className="text-left px-3.5 py-2.5 rounded-xl bg-white/85 hover:bg-white dark:bg-slate-900/70 dark:hover:bg-cyan-950/50 border border-slate-200/90 dark:border-slate-800 hover:border-sky-500/40 dark:hover:border-cyan-500/40 text-slate-700 hover:text-sky-700 dark:text-slate-200 dark:hover:text-cyan-300 text-xs transition-all flex items-center justify-between group cursor-pointer min-h-[42px] shadow-xs"
                       >
                         <span>{q}</span>
                         <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-sky-600 dark:group-hover:text-cyan-300 group-hover:translate-x-0.5 transition-all" />
@@ -382,7 +382,7 @@ export default function ChatAssistant() {
             </div>
 
             {/* Footer Input */}
-            <div className="p-3 border-t border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-950/80">
+            <div className="p-3 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-100/70 dark:bg-slate-950/80">
               <div className="relative flex items-center">
                 <input
                   ref={inputRef}
@@ -391,7 +391,7 @@ export default function ChatAssistant() {
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Ask about Samyog..."
-                  className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700/80 focus:border-sky-500 dark:focus:border-cyan-400 focus:outline-none text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium shadow-xs"
+                  className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/90 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/80 focus:border-sky-500 dark:focus:border-cyan-400 focus:outline-none text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium shadow-xs"
                 />
                 <button
                   type="button"

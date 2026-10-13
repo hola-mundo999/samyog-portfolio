@@ -40,7 +40,7 @@ function ProjectCard({ proj, playClick }) {
 
         <div>
           {/* Architecture Pipeline Callout */}
-          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 mb-4 min-w-0">
+          <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 mb-4 min-w-0">
             <span className="text-[10px] font-mono font-bold text-sky-600 dark:text-cyan-400 block mb-1">
               SYSTEM ARCHITECTURE
             </span>

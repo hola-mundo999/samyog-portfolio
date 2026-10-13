@@ -83,7 +83,7 @@ export default function Hero() {
         {/* Top Lively Pills: Status + Kathmandu Local Time */}
         <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-2.5 mb-6 sm:mb-7">
           {/* Availability Beacon: Open for internships only */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-medium shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-medium shadow-xs backdrop-blur-xs">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -93,7 +93,7 @@ export default function Hero() {
 
           {/* Live Kathmandu Location & Time */}
           {localTime && (
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-medium shadow-xs">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/85 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-medium shadow-xs backdrop-blur-xs">
               <MapPin className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
               <span>Kathmandu</span>
               <span className="text-slate-300 dark:text-slate-700">·</span>
@@ -141,7 +141,7 @@ export default function Hero() {
             whileTap={{ scale: 0.975 }}
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             href="#contact"
-            className="w-full sm:w-auto min-h-[48px] flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-900 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-700/80 dark:text-white font-medium text-sm transition-colors shadow-sm cursor-pointer text-center"
+            className="w-full sm:w-auto min-h-[48px] flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-900 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-700/80 dark:text-white font-medium text-sm transition-colors shadow-xs cursor-pointer text-center backdrop-blur-xs"
           >
             <Mail className="w-4 h-4 text-sky-600 dark:text-cyan-400" />
             <span>Contact Me</span>
@@ -157,7 +157,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-950 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-slate-950 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs"
             title="GitHub (@hola-mundo999)"
           >
             <GithubIcon className="w-4 h-4" />
@@ -170,7 +170,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs"
             title="LinkedIn Profile"
           >
             <LinkedinIcon className="w-4 h-4" />
@@ -181,7 +181,7 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
             href="mailto:samyog.sapkota1@gmail.com"
             aria-label="Direct Email"
-            className="p-3 sm:p-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs"
             title="Email (samyog.sapkota1@gmail.com)"
           >
             <Mail className="w-4 h-4" />
