@@ -21,6 +21,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
+  const [animationDone, setAnimationDone] = useState(false);
 
   // Scroll background state
   useEffect(() => {
@@ -83,20 +84,26 @@ export default function Navbar() {
         Skip to main content
       </a>
 
-      <header className="fixed top-0 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 py-2.5 sm:py-4 transition-all duration-300">
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 py-2.5 sm:py-3.5 transition-all duration-300 ${
+          scrolled ? 'backdrop-blur-xs bg-slate-900/[0.03] dark:bg-black/25' : ''
+        }`}
+      >
         <motion.nav
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          onAnimationComplete={() => setAnimationDone(true)}
           aria-label="Main Navigation"
           style={{
-            backdropFilter: scrolled ? 'blur(28px)' : 'blur(16px)',
-            WebkitBackdropFilter: scrolled ? 'blur(28px)' : 'blur(16px)',
+            transform: animationDone ? 'none' : undefined,
+            backdropFilter: scrolled ? 'blur(40px) saturate(190%)' : 'blur(20px)',
+            WebkitBackdropFilter: scrolled ? 'blur(40px) saturate(190%)' : 'blur(20px)',
           }}
           className={`w-full max-w-5xl rounded-2xl px-3.5 sm:px-5 py-2.5 transition-all duration-300 flex items-center justify-between ${
             scrolled
-              ? 'bg-white/80 dark:bg-[#060813]/90 border border-slate-300/80 dark:border-slate-800/90 shadow-xl shadow-slate-900/5 dark:shadow-black/70'
-              : 'bg-white/65 dark:bg-[#060813]/60 border border-slate-300/60 dark:border-slate-800/50 shadow-xs'
+              ? 'bg-white/95 dark:bg-[#060813]/96 backdrop-blur-3xl border border-slate-300/90 dark:border-slate-800/90 shadow-2xl shadow-slate-900/10 dark:shadow-black/80'
+              : 'bg-white/75 dark:bg-[#060813]/75 backdrop-blur-xl border border-slate-300/60 dark:border-slate-800/50 shadow-xs'
           }`}
         >
           {/* Brand Avatar & Name */}
@@ -119,7 +126,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Navigation Links with 21st.dev Tubelight Sliding Lamp Indicator */}
-          <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-slate-200/50 dark:bg-slate-900/60 border border-slate-300/60 dark:border-slate-800/50">
+          <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-slate-200/70 dark:bg-slate-900/80 border border-slate-300/70 dark:border-slate-800/70 backdrop-blur-sm">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
               return (
