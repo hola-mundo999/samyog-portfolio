@@ -53,6 +53,8 @@ export default function Contact() {
     return errs;
   };
 
+  const [submitError, setSubmitError] = useState('');
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
@@ -62,35 +64,31 @@ export default function Contact() {
     }
 
     setErrors({});
+    setSubmitError('');
     setIsSubmitting(true);
 
-    // Store message in Supabase
     try {
-      await supabase.from('messages').insert({
+      const { error: dbError } = await supabase.from('messages').insert({
         name: formData.name.trim(),
         email: formData.email.trim(),
         subject: formData.subject.trim(),
         message: formData.message.trim(),
+        is_read: false,
       });
-    } catch (err) {
-      console.warn('Supabase insert error:', err);
-    }
 
-    // Also open mailto as fallback notification
-    try {
-      const encodedSubject = encodeURIComponent(`[Portfolio] ${formData.subject}`);
-      const encodedBody = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-      );
-      window.location.href = `mailto:${targetEmail}?subject=${encodedSubject}&body=${encodedBody}`;
-    } catch (err) {
-      console.warn('Mail client launch error:', err);
-    }
+      if (dbError) {
+        throw dbError;
+      }
 
-    playSuccess();
-    setFormSent(true);
-    setIsSubmitting(false);
-    setFormData({ name: '', email: '', subject: '', message: '' });
+      playSuccess();
+      setFormSent(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      console.error('Message submission error:', err);
+      setSubmitError('Something went wrong. Please try again or email me directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -423,17 +421,32 @@ export default function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       id="contact-success-banner"
-                      className="mt-3 p-3 rounded-xl bg-sky-500/10 dark:bg-cyan-500/10 border border-sky-500/30 dark:border-cyan-500/40 text-sky-800 dark:text-cyan-200 text-xs flex items-start gap-2.5 shadow-xs"
+                      className="mt-3 p-3 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/10 border border-emerald-500/30 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-200 text-xs flex items-start gap-2.5 shadow-xs"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-sky-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                       <div>
                         <div className="font-bold text-slate-900 dark:text-white text-xs">
-                          Email Client Triggered
+                          Message Sent!
                         </div>
                         <p className="mt-0.5 text-slate-600 dark:text-slate-300 text-[11px]">
-                          Your default mail client has prepared your message for{' '}
-                          <strong className="text-slate-900 dark:text-white">{targetEmail}</strong>.
+                          Your message has been saved. I'll get back to you soon at{' '}
+                          <strong className="text-slate-900 dark:text-white">{formData.email || 'your email'}</strong>.
                         </p>
+                      </div>
+                    </motion.div>
+                  )}
+                  {submitError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="mt-3 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-800 dark:text-red-300 text-xs flex items-start gap-2.5"
+                      role="alert"
+                    >
+                      <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-bold text-xs">Submission Failed</div>
+                        <p className="mt-0.5 text-[11px]">{submitError}</p>
                       </div>
                     </motion.div>
                   )}

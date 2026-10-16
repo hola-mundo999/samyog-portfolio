@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import { MessageSquare, Star, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { MessageSquare, Star, Send, CheckCircle2, AlertCircle, Tag } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSound } from '../context/SoundContext';
 import SpotlightCard from './ui/SpotlightCard';
 import { supabase } from '../lib/supabase';
+
+const CATEGORIES = [
+  { value: 'general', label: 'General Feedback' },
+  { value: 'feature', label: 'Feature Request' },
+  { value: 'ui_ux', label: 'UI/UX Improvement' },
+  { value: 'bug', label: 'Bug Report' },
+  { value: 'other', label: 'Other' },
+];
 
 export default function Feedback() {
   const { playSuccess } = useSound();
@@ -11,10 +19,12 @@ export default function Feedback() {
     name: '',
     email: '',
     message: '',
+    category: 'general',
   });
   const [rating, setRating] = useState(0);
   const [hoveredStar, setHoveredStar] = useState(0);
   const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -31,6 +41,12 @@ export default function Feedback() {
     if (!formData.message.trim() || formData.message.trim().length < 5) {
       errs.message = 'Please write at least 5 characters.';
     }
+    if (formData.email.trim()) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email.trim())) {
+        errs.email = 'Please enter a valid email address.';
+      }
+    }
     return errs;
   };
 
@@ -43,28 +59,39 @@ export default function Feedback() {
     }
 
     setErrors({});
+    setSubmitError('');
     setIsSubmitting(true);
 
     try {
-      await supabase.from('feedback').insert({
+      const { error: dbError } = await supabase.from('feedback').insert({
         name: formData.name.trim() || null,
         email: formData.email.trim() || null,
         message: formData.message.trim(),
         rating: rating || null,
+        category: formData.category,
+        status: 'new',
+        is_read: false,
       });
-    } catch (err) {
-      console.warn('Supabase feedback insert error:', err);
-    }
 
-    playSuccess();
-    setSubmitted(true);
-    setIsSubmitting(false);
+      if (dbError) {
+        throw dbError;
+      }
+
+      playSuccess();
+      setSubmitted(true);
+    } catch (err) {
+      console.error('Feedback submission error:', err);
+      setSubmitError('Could not save your feedback. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: '', email: '', message: '', category: 'general' });
     setRating(0);
     setSubmitted(false);
+    setSubmitError('');
   };
 
   return (
@@ -117,7 +144,7 @@ export default function Feedback() {
                     <MessageSquare className="w-4 h-4" />
                   </div>
                   <h3 className="text-xl font-bold text-stone-900 dark:text-white">
-                    Feedback & Suggestions
+                    Feedback &amp; Suggestions
                   </h3>
                 </div>
                 <p className="text-xs text-stone-500 dark:text-slate-400 mb-6 ml-[44px] font-mono">
@@ -125,6 +152,29 @@ export default function Feedback() {
                 </p>
 
                 <div className="space-y-4">
+                  {/* Category */}
+                  <div>
+                    <label className="text-[10px] font-mono font-bold text-stone-600 dark:text-slate-400 block mb-1.5 uppercase tracking-wider">
+                      Category
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {CATEGORIES.map((cat) => (
+                        <button
+                          key={cat.value}
+                          type="button"
+                          onClick={() => setFormData((prev) => ({ ...prev, category: cat.value }))}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+                            formData.category === cat.value
+                              ? 'bg-amber-500/15 border-amber-500/40 text-amber-700 dark:text-amber-400'
+                              : 'bg-stone-100/70 dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-600 dark:text-slate-400 hover:border-amber-500/30'
+                          }`}
+                        >
+                          {cat.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
                   {/* Star Rating */}
                   <div>
                     <label className="text-[10px] font-mono font-bold text-stone-600 dark:text-slate-400 block mb-2 uppercase tracking-wider">
@@ -174,7 +224,7 @@ export default function Feedback() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Anonymous"
-                        className="w-full px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400 focus:outline-none text-xs text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 font-medium transition-colors"
+                        className="w-full px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400 focus:outline-none text-base sm:text-xs text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 font-medium transition-colors"
                       />
                     </div>
                     <div>
@@ -187,8 +237,18 @@ export default function Feedback() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="your@email.com"
-                        className="w-full px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400 focus:outline-none text-xs text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 font-medium transition-colors"
+                        className={`w-full px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border ${
+                          errors.email
+                            ? 'border-red-500 focus:border-red-500'
+                            : 'border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400'
+                        } focus:outline-none text-base sm:text-xs text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 font-medium transition-colors`}
                       />
+                      {errors.email && (
+                        <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.email}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -207,7 +267,7 @@ export default function Feedback() {
                         errors.message
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400'
-                      } focus:outline-none text-xs text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 font-medium resize-none transition-colors`}
+                      } focus:outline-none text-base sm:text-xs text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 font-medium resize-none transition-colors`}
                     />
                     {errors.message && (
                       <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
@@ -219,7 +279,7 @@ export default function Feedback() {
                 </div>
 
                 {/* Submit */}
-                <div className="mt-5">
+                <div className="mt-5 space-y-2">
                   <motion.button
                     whileHover={{ scale: isSubmitting ? 1 : 1.015 }}
                     whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
@@ -246,6 +306,21 @@ export default function Feedback() {
                       </>
                     )}
                   </motion.button>
+
+                  <AnimatePresence>
+                    {submitError && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-800 dark:text-red-300 text-xs flex items-start gap-2"
+                        role="alert"
+                      >
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-red-500" />
+                        <span>{submitError}</span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </motion.form>
             )}
