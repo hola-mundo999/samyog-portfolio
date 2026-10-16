@@ -21,7 +21,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
-  const [animationDone, setAnimationDone] = useState(false);
 
   // Scroll background state
   useEffect(() => {
@@ -84,27 +83,48 @@ export default function Navbar() {
         Skip to main content
       </a>
 
-      <header
-        className={`fixed top-0 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 py-2.5 sm:py-3.5 transition-all duration-300 ${
-          scrolled ? 'backdrop-blur-xs bg-slate-900/[0.03] dark:bg-black/25' : ''
-        }`}
-      >
-        <motion.nav
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          onAnimationComplete={() => setAnimationDone(true)}
-          aria-label="Main Navigation"
+      {/* Fixed header wrapper — NOT animated so backdrop-filter always works */}
+      <header className="fixed top-0 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 py-2.5 sm:py-3.5">
+
+        {/*
+          FROSTED GLASS BACKGROUND — separate static div, never touched by Framer Motion.
+          Putting backdrop-filter on a motion element that also has a y-transform causes
+          Chromium to create a new compositing layer and silently break the blur.
+          This div has NO transform, so backdrop-filter works reliably.
+        */}
+        <div
+          aria-hidden="true"
+          className={`
+            absolute inset-0 transition-all duration-500 pointer-events-none
+            ${scrolled
+              ? 'opacity-100'
+              : 'opacity-0'
+            }
+          `}
           style={{
-            transform: animationDone ? 'none' : undefined,
-            backdropFilter: scrolled ? 'blur(40px) saturate(190%)' : 'blur(20px)',
-            WebkitBackdropFilter: scrolled ? 'blur(40px) saturate(190%)' : 'blur(20px)',
+            backdropFilter: 'blur(24px) saturate(200%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(200%)',
           }}
-          className={`w-full max-w-5xl rounded-2xl px-3.5 sm:px-5 py-2.5 transition-all duration-300 flex items-center justify-between ${
-            scrolled
-              ? 'bg-white/95 dark:bg-[#060813]/96 backdrop-blur-3xl border border-slate-300/90 dark:border-slate-800/90 shadow-2xl shadow-slate-900/10 dark:shadow-black/80'
-              : 'bg-white/75 dark:bg-[#060813]/75 backdrop-blur-xl border border-slate-300/60 dark:border-slate-800/50 shadow-xs'
-          }`}
+        />
+
+        {/* Nav pill — animate opacity only (no y/transform) to avoid breaking backdrop-filter */}
+        <motion.nav
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          aria-label="Main Navigation"
+          className={`
+            relative w-full max-w-5xl rounded-2xl px-3.5 sm:px-5 py-2.5
+            transition-all duration-300 flex items-center justify-between
+            ${scrolled
+              ? 'bg-white/90 dark:bg-[#060813]/95 border border-slate-300/80 dark:border-slate-700/80 shadow-xl shadow-slate-900/8 dark:shadow-black/60'
+              : 'bg-white/65 dark:bg-[#060813]/65 border border-slate-200/60 dark:border-slate-800/50 shadow-sm'
+            }
+          `}
+          style={{
+            backdropFilter: scrolled ? 'blur(32px) saturate(200%)' : 'blur(12px)',
+            WebkitBackdropFilter: scrolled ? 'blur(32px) saturate(200%)' : 'blur(12px)',
+          }}
         >
           {/* Brand Avatar & Name */}
           <a
@@ -125,8 +145,8 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Desktop Navigation Links with 21st.dev Tubelight Sliding Lamp Indicator */}
-          <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-slate-200/70 dark:bg-slate-900/80 border border-slate-300/70 dark:border-slate-800/70 backdrop-blur-sm">
+          {/* Desktop Navigation Links — centered with mx-auto + explicit horizontal margin */}
+          <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-slate-200/70 dark:bg-slate-900/80 border border-slate-300/70 dark:border-slate-800/70 mx-8">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -261,11 +281,16 @@ export default function Navbar() {
               />
               <motion.div
                 id="mobile-nav"
-                initial={{ opacity: 0, y: -10, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="md:hidden absolute top-16 sm:top-20 inset-x-3 sm:inset-x-4 bg-white/95 dark:bg-[#060813]/95 backdrop-blur-2xl rounded-2xl p-4 sm:p-5 flex flex-col gap-1 shadow-2xl border border-slate-200 dark:border-slate-800 z-50 text-slate-900 dark:text-slate-100"
+                className="md:hidden absolute top-16 sm:top-20 inset-x-3 sm:inset-x-4 rounded-2xl p-4 sm:p-5 flex flex-col gap-1 shadow-2xl border border-slate-200 dark:border-slate-800 z-50 text-slate-900 dark:text-slate-100"
+                style={{
+                  background: theme === 'dark' ? 'rgba(6, 8, 19, 0.97)' : 'rgba(255,255,255,0.97)',
+                  backdropFilter: 'blur(32px) saturate(200%)',
+                  WebkitBackdropFilter: 'blur(32px) saturate(200%)',
+                }}
               >
                 {NAV_LINKS.map((link) => (
                   <a
