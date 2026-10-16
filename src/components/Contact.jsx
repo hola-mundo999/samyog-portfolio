@@ -279,9 +279,7 @@ export default function Contact() {
                     Instant Dispatch
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 font-mono">
-                  Direct dispatch to <span className="text-sky-700 dark:text-cyan-400 font-semibold">{targetEmail}</span>.
-                </p>
+
 
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
