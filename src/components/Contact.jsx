@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { LinkedinIcon, GithubIcon } from './SocialIcons';
 import { useSound } from '../context/SoundContext';
 import SpotlightCard from './ui/SpotlightCard';
+import { supabase } from '../lib/supabase';
 
 export default function Contact() {
   const { playChime, playSuccess } = useSound();
@@ -16,6 +17,7 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [copied, setCopied] = useState(false);
   const [formSent, setFormSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const targetEmail = 'samyog.sapkota1@gmail.com';
 
   const handleCopyEmail = () => {
@@ -51,7 +53,7 @@ export default function Contact() {
     return errs;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -60,18 +62,35 @@ export default function Contact() {
     }
 
     setErrors({});
-    const encodedSubject = encodeURIComponent(`[Portfolio] ${formData.subject}`);
-    const encodedBody = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
+    setIsSubmitting(true);
 
+    // Store message in Supabase
     try {
+      await supabase.from('messages').insert({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+      });
+    } catch (err) {
+      console.warn('Supabase insert error:', err);
+    }
+
+    // Also open mailto as fallback notification
+    try {
+      const encodedSubject = encodeURIComponent(`[Portfolio] ${formData.subject}`);
+      const encodedBody = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      );
       window.location.href = `mailto:${targetEmail}?subject=${encodedSubject}&body=${encodedBody}`;
     } catch (err) {
       console.warn('Mail client launch error:', err);
     }
+
     playSuccess();
     setFormSent(true);
+    setIsSubmitting(false);
+    setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
@@ -370,13 +389,30 @@ export default function Contact() {
               {/* Bottom Action Area (Exact baseline alignment with Left Column badge) */}
               <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800/80 flex flex-col justify-center min-h-[48px]">
                 <motion.button
-                  whileHover={{ scale: 1.015 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.015 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 dark:bg-cyan-400 dark:hover:bg-cyan-300 text-white dark:text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors shadow-md shadow-sky-600/20 dark:shadow-cyan-400/20 cursor-pointer min-h-[44px]"
+                  disabled={isSubmitting}
+                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow-md cursor-pointer min-h-[44px] ${
+                    isSubmitting
+                      ? 'bg-sky-400 dark:bg-cyan-300 opacity-70 cursor-wait'
+                      : 'bg-sky-600 hover:bg-sky-500 dark:bg-cyan-400 dark:hover:bg-cyan-300 text-white dark:text-slate-950 shadow-sky-600/20 dark:shadow-cyan-400/20'
+                  }`}
                 >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Send Message</span>
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                      </svg>
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Send Message</span>
+                    </>
+                  )}
                 </motion.button>
 
                 {/* Feedback confirmation banner */}

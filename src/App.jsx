@@ -10,6 +10,7 @@ import Skills from './components/Skills';
 import Leadership from './components/Leadership';
 import Education from './components/Education';
 import Contact from './components/Contact';
+import Feedback from './components/Feedback';
 import Footer from './components/Footer';
 import ChatAssistant from './components/ChatAssistant';
 import TerminalConsole from './components/TerminalConsole';
@@ -38,6 +39,7 @@ function AppLayout() {
           <Leadership />
           <Education />
           <Contact />
+          <Feedback />
         </main>
         <Footer />
       </div>
