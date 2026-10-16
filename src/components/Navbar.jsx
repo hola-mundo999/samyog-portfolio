@@ -114,7 +114,7 @@ export default function Navbar() {
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           aria-label="Main Navigation"
           className={`
-            relative w-full max-w-5xl rounded-2xl px-3.5 sm:px-5 py-2.5
+            relative w-full max-w-6xl rounded-2xl px-3.5 sm:px-5 py-2.5
             transition-all duration-300 flex items-center justify-between
             ${scrolled
               ? 'bg-white/90 dark:bg-[#060813]/95 border border-slate-300/80 dark:border-slate-700/80 shadow-xl shadow-slate-900/8 dark:shadow-black/60'
@@ -146,7 +146,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Navigation Links — centered with mx-auto + explicit horizontal margin */}
-          <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-slate-200/70 dark:bg-slate-900/80 border border-slate-300/70 dark:border-slate-800/70 mx-8">
+          <div className="hidden md:flex items-center gap-0.5 p-1 rounded-xl bg-slate-200/70 dark:bg-slate-900/80 border border-slate-300/70 dark:border-slate-800/70 mx-4">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -154,7 +154,7 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => handleLinkClick(link.id)}
-                  className={`relative text-xs font-semibold px-3.5 py-1.5 rounded-lg transition-colors duration-200 ${
+                  className={`relative text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-colors duration-200 whitespace-nowrap ${
                     isActive
                       ? 'text-slate-950 dark:text-white'
                       : 'text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200'
