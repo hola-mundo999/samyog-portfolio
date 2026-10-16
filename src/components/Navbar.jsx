@@ -84,46 +84,25 @@ export default function Navbar() {
       </a>
 
       {/* Fixed header wrapper — NOT animated so backdrop-filter always works */}
-      <header className="fixed top-0 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 py-2.5 sm:py-3.5">
+      <header className="fixed top-0 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 py-2.5 sm:py-3.5 pointer-events-none">
 
-        {/*
-          FROSTED GLASS BACKGROUND — separate static div, never touched by Framer Motion.
-          Putting backdrop-filter on a motion element that also has a y-transform causes
-          Chromium to create a new compositing layer and silently break the blur.
-          This div has NO transform, so backdrop-filter works reliably.
-        */}
-        <div
-          aria-hidden="true"
-          className={`
-            absolute inset-0 transition-all duration-500 pointer-events-none
-            ${scrolled
-              ? 'opacity-100'
-              : 'opacity-0'
-            }
-          `}
-          style={{
-            backdropFilter: 'blur(24px) saturate(200%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(200%)',
-          }}
-        />
-
-        {/* Nav pill — animate opacity only (no y/transform) to avoid breaking backdrop-filter */}
+        {/* Nav pill — frosted glass lives here, not on header */}
         <motion.nav
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           aria-label="Main Navigation"
           className={`
-            relative w-full max-w-6xl rounded-2xl px-3.5 sm:px-5 py-2.5
-            transition-all duration-300 flex items-center justify-between
+            pointer-events-auto relative w-full max-w-6xl rounded-2xl px-3.5 sm:px-5 py-2.5
+            transition-all duration-500 flex items-center justify-between
             ${scrolled
-              ? 'bg-white/90 dark:bg-[#060813]/95 border border-slate-300/80 dark:border-slate-700/80 shadow-xl shadow-slate-900/8 dark:shadow-black/60'
-              : 'bg-white/65 dark:bg-[#060813]/65 border border-slate-200/60 dark:border-slate-800/50 shadow-sm'
+              ? 'bg-white/80 dark:bg-[#0a0d1a]/85 border border-slate-200/70 dark:border-slate-700/60 shadow-lg shadow-slate-900/5 dark:shadow-black/40'
+              : 'bg-white/60 dark:bg-[#060813]/60 border border-slate-200/40 dark:border-slate-800/40 shadow-sm'
             }
           `}
           style={{
-            backdropFilter: scrolled ? 'blur(32px) saturate(200%)' : 'blur(12px)',
-            WebkitBackdropFilter: scrolled ? 'blur(32px) saturate(200%)' : 'blur(12px)',
+            backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'blur(12px) saturate(150%)',
+            WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'blur(12px) saturate(150%)',
           }}
         >
           {/* Brand Avatar & Name */}
