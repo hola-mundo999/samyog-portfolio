@@ -96,8 +96,8 @@ export default function Navbar() {
             pointer-events-auto relative w-full max-w-6xl rounded-2xl px-3.5 sm:px-5 py-2.5
             transition-all duration-500 flex items-center justify-between
             ${scrolled
-              ? 'bg-white/80 dark:bg-[#0a0d1a]/85 border border-slate-200/70 dark:border-slate-700/60 shadow-lg shadow-slate-900/5 dark:shadow-black/40'
-              : 'bg-white/60 dark:bg-[#060813]/60 border border-slate-200/40 dark:border-slate-800/40 shadow-sm'
+              ? 'bg-white/88 dark:bg-[#0a0d1a]/85 border border-stone-200/70 dark:border-slate-700/60 shadow-lg shadow-stone-900/5 dark:shadow-black/40'
+              : 'bg-white/55 dark:bg-[#060813]/60 border border-stone-200/40 dark:border-slate-800/40 shadow-sm'
             }
           `}
           style={{
@@ -125,7 +125,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Navigation Links — centered with mx-auto + explicit horizontal margin */}
-          <div className="hidden md:flex items-center gap-0.5 p-1 rounded-xl bg-slate-200/70 dark:bg-slate-900/80 border border-slate-300/70 dark:border-slate-800/70 mx-4">
+          <div className="hidden md:flex items-center gap-0.5 p-1 rounded-xl bg-stone-100/80 dark:bg-slate-900/80 border border-stone-200/70 dark:border-slate-800/70 mx-4">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -170,7 +170,7 @@ export default function Navbar() {
               type="button"
               onClick={toggleSound}
               aria-label={isSoundEnabled ? 'Mute sound effects' : 'Unmute sound effects'}
-              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs"
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700/80 text-stone-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs"
               title={isSoundEnabled ? 'Mute sound effects' : 'Unmute sound effects'}
             >
               {isSoundEnabled ? (
@@ -186,7 +186,7 @@ export default function Navbar() {
               type="button"
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs"
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700/80 text-stone-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs"
               title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
             >
               {theme === 'dark' ? (

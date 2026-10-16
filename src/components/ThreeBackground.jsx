@@ -15,7 +15,7 @@ export default function ThreeBackground() {
 
     // Scene & Camera
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(isDark ? 0x060813 : 0xf1f5f9, 0.002);
+    scene.fog = new THREE.FogExp2(isDark ? 0x060813 : 0xf5f5f3, 0.002);
 
     const camera = new THREE.PerspectiveCamera(
       60,
@@ -36,9 +36,9 @@ export default function ThreeBackground() {
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    const primaryColor = new THREE.Color(isDark ? '#38bdf8' : '#0284c7');
-    const secondaryColor = new THREE.Color(isDark ? '#818cf8' : '#4f46e5');
-    const neutralColor = new THREE.Color(isDark ? '#f8fafc' : '#64748b');
+    const primaryColor = new THREE.Color(isDark ? '#38bdf8' : '#a8a29e');
+    const secondaryColor = new THREE.Color(isDark ? '#818cf8' : '#78716c');
+    const neutralColor = new THREE.Color(isDark ? '#f8fafc' : '#d6d3d1');
 
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 180;
@@ -59,7 +59,7 @@ export default function ThreeBackground() {
       size: isDark ? 1.6 : 1.4,
       vertexColors: true,
       transparent: true,
-      opacity: isDark ? 0.6 : 0.45,
+      opacity: isDark ? 0.6 : 0.3,
       blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
     });
 
@@ -128,7 +128,7 @@ export default function ThreeBackground() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-65 dark:opacity-75 transition-opacity duration-500"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40 dark:opacity-75 transition-opacity duration-500"
       aria-hidden="true"
     />
   );

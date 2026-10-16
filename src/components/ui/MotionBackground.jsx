@@ -138,17 +138,17 @@ export default function MotionBackground() {
         style={{
           background: isDark
             ? 'radial-gradient(circle at 50% 15%, #081126 0%, #060813 60%, #03040a 100%)'
-            : 'radial-gradient(circle at 50% 12%, #f1f5f9 0%, #e9eef5 55%, #dfe7ef 100%)',
+            : 'radial-gradient(circle at 50% 0%, #f5f5f3 0%, #f0efed 40%, #eae9e6 100%)',
         }}
       />
 
       {/* 2. 21st.dev Flickering Grid Background with Vignette Mask (Active in both modes) */}
       <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_45%,transparent_85%)]">
         <FlickeringGridCanvas
-          color={isDark ? '#38bdf8' : '#64748b'}
+          color={isDark ? '#38bdf8' : '#a8a29e'}
           squareSize={2.5}
           gridGap={22}
-          maxOpacity={isDark ? 0.24 : 0.16}
+          maxOpacity={isDark ? 0.24 : 0.10}
           flickerChance={0.16}
         />
       </div>
@@ -171,7 +171,7 @@ export default function MotionBackground() {
           style={{
             background: isDark
               ? 'radial-gradient(circle, rgba(56, 189, 248, 0.26) 0%, rgba(14, 165, 233, 0.12) 50%, transparent 75%)'
-              : 'radial-gradient(circle, rgba(2, 132, 199, 0.18) 0%, rgba(56, 189, 248, 0.09) 50%, transparent 75%)',
+              : 'radial-gradient(circle, rgba(168, 162, 158, 0.12) 0%, rgba(120, 113, 108, 0.06) 50%, transparent 75%)',
           }}
         />
 
@@ -191,7 +191,7 @@ export default function MotionBackground() {
           style={{
             background: isDark
               ? 'radial-gradient(circle, rgba(129, 140, 248, 0.24) 0%, rgba(168, 85, 247, 0.10) 50%, transparent 75%)'
-              : 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.07) 50%, transparent 75%)',
+              : 'radial-gradient(circle, rgba(214, 211, 209, 0.15) 0%, rgba(168, 162, 158, 0.07) 50%, transparent 75%)',
           }}
         />
 
@@ -211,14 +211,14 @@ export default function MotionBackground() {
           style={{
             background: isDark
               ? 'radial-gradient(circle, rgba(45, 212, 191, 0.16) 0%, rgba(56, 189, 248, 0.08) 50%, transparent 75%)'
-              : 'radial-gradient(circle, rgba(245, 158, 11, 0.09) 0%, rgba(2, 132, 199, 0.06) 50%, transparent 75%)',
+              : 'radial-gradient(circle, rgba(245, 245, 244, 0.20) 0%, rgba(214, 211, 209, 0.10) 50%, transparent 75%)',
           }}
         />
       </div>
 
       {/* 4. Fine Architectural Micro-Grid Texture */}
       <div
-        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
+        className="absolute inset-0 opacity-[0.015] dark:opacity-[0.05] pointer-events-none"
         style={{
           backgroundImage: isDark
             ? 'linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px)'
