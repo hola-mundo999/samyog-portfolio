@@ -268,7 +268,8 @@ export default function Contact() {
           className="h-full flex flex-col"
         >
           <SpotlightCard className="h-full rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-300/80 dark:border-slate-800 bg-white/80 dark:bg-[#070b16] shadow-lg shadow-slate-900/5 dark:shadow-black/60 backdrop-blur-md">
-            <form onSubmit={handleFormSubmit} className="h-full flex flex-col justify-between" noValidate>
+            <form onSubmit={handleFormSubmit} className="flex flex-col gap-5" noValidate>
+
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -382,8 +383,9 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Bottom Action Area (Exact baseline alignment with Left Column badge) */}
-              <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800/80 flex flex-col justify-center min-h-[48px]">
+              {/* Action area */}
+              <div className="pt-2">
+
                 <motion.button
                   whileHover={{ scale: isSubmitting ? 1 : 1.015 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
