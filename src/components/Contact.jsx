@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import { Mail, Copy, Check, Send, CheckCircle2, ArrowUpRight, AlertCircle, MapPin, Sparkles } from 'lucide-react';
+import { Mail, Copy, Check, Send, CheckCircle2, ArrowUpRight, AlertCircle, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LinkedinIcon, GithubIcon } from './SocialIcons';
 import { useSound } from '../context/SoundContext';
 import SpotlightCard from './ui/SpotlightCard';
 import { supabase } from '../lib/supabase';
+
+const LIMITS = {
+  name: 100,
+  email: 254,
+  subject: 200,
+  message: 5000,
+};
+
+const SUBMIT_COOLDOWN_MS = 30000;
 
 export default function Contact() {
   const { playChime, playSuccess } = useSound();
@@ -13,11 +22,14 @@ export default function Contact() {
     email: '',
     subject: '',
     message: '',
+    company: '',
   });
   const [errors, setErrors] = useState({});
   const [copied, setCopied] = useState(false);
   const [formSent, setFormSent] = useState(false);
+  const [sentEmail, setSentEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const targetEmail = 'samyog.sapkota1@gmail.com';
 
   const handleCopyEmail = () => {
@@ -29,7 +41,9 @@ export default function Contact() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const max = LIMITS[name];
+    const next = max ? value.slice(0, max) : value;
+    setFormData((prev) => ({ ...prev, [name]: next }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -53,8 +67,6 @@ export default function Contact() {
     return errs;
   };
 
-  const [submitError, setSubmitError] = useState('');
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
@@ -68,32 +80,55 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
+      if (formData.company.trim()) {
+        playSuccess();
+        setSentEmail(formData.email.trim());
+        setFormSent(true);
+        setFormData({ name: '', email: '', subject: '', message: '', company: '' });
+        return;
+      }
+
+      const lastSubmit = Number(sessionStorage.getItem('contact-last-submit') || 0);
+      if (Date.now() - lastSubmit < SUBMIT_COOLDOWN_MS) {
+        setSubmitError('Please wait a moment before sending another message.');
+        return;
+      }
+
       const { error: dbError } = await supabase.from('messages').insert({
         name: formData.name.trim(),
         email: formData.email.trim(),
         subject: formData.subject.trim(),
         message: formData.message.trim(),
-        is_read: false,
       });
 
       if (dbError) {
         throw dbError;
       }
 
+      sessionStorage.setItem('contact-last-submit', String(Date.now()));
       playSuccess();
+      setSentEmail(formData.email.trim());
       setFormSent(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (err) {
-      console.error('Message submission error:', err);
+      setFormData({ name: '', email: '', subject: '', message: '', company: '' });
+    } catch {
       setSubmitError('Something went wrong. Please try again or email me directly.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const fieldClass = (hasError) =>
+    `w-full min-w-0 px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
+      hasError
+        ? 'border-red-500 focus:border-red-500'
+        : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
+    } focus:outline-none text-sm text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`;
+
+  const channelClass =
+    'flex-1 min-h-[4.75rem] min-w-0 p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-3';
+
   return (
     <section id="contact" className="py-24 px-4 max-w-5xl mx-auto scroll-mt-20">
-      {/* Section Header */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -111,281 +146,267 @@ export default function Contact() {
           Let's Connect & Collaborate
         </h2>
         <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
-          Whether you want to discuss software engineering, Python backends, computer vision, coordinate an event with Prime IT Club, or discuss engineering internships—my inbox is always open.
+          Have a question, an idea to share, or an opportunity to discuss? Feel free to reach out. I'm always happy to connect and explore meaningful conversations.
         </p>
       </motion.div>
 
-      {/* Symmetrical Two-Column Grid (Identical Heights & Baseline Alignment) */}
-      <div className="grid lg:grid-cols-2 gap-8 items-stretch">
-        {/* Left Column: Direct Inquiries & Identity */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 lg:items-stretch">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.45 }}
-          className="h-full flex flex-col"
+          className="min-w-0 h-full"
         >
-          <SpotlightCard className="h-full rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-300/80 dark:border-slate-800 bg-white/80 dark:bg-[#070b16] shadow-lg shadow-slate-900/5 dark:shadow-black/60 backdrop-blur-md">
-            <div className="h-full flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+          <SpotlightCard className="surface-card-flush h-full lg:min-h-[38rem] rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-slate-300/80 dark:border-slate-800 bg-white/80 dark:bg-[#070b16] shadow-lg shadow-slate-900/5 dark:shadow-black/60 backdrop-blur-md">
+            <div className="h-full min-h-0 flex flex-col gap-5">
+              <div className="shrink-0 flex flex-col justify-center gap-2 min-w-0">
+                <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
                     Direct Endpoints
                   </h3>
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold">
+                  <span className="shrink-0 text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold whitespace-nowrap">
                     Fast Response &lt; 24h
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 font-mono">
-                  Verified communication channels for recruiters and collaborators.
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                  Verified communication channels.
                 </p>
+              </div>
 
-                <div className="space-y-3.5">
-                  {/* Email Card */}
-                  <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="p-2.5 rounded-lg bg-sky-500/10 dark:bg-cyan-500/10 text-sky-600 dark:text-cyan-400 shrink-0">
-                        <Mail className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold block uppercase">
-                          Email Transmission
-                        </span>
-                        <a
-                          href={`mailto:${targetEmail}`}
-                          className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-cyan-300 transition-colors block break-all font-mono"
-                        >
-                          {targetEmail}
-                        </a>
-                      </div>
+              <div className="flex-1 flex flex-col gap-3 min-h-0 min-w-0">
+                <div className={`${channelClass} group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors`}>
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="p-2.5 rounded-lg bg-sky-500/10 dark:bg-cyan-500/10 text-sky-600 dark:text-cyan-400 shrink-0">
+                      <Mail className="w-4 h-4" />
                     </div>
-
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.95 }}
-                      type="button"
-                      onClick={handleCopyEmail}
-                      className="self-stretch sm:self-auto justify-center py-2 px-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-cyan-300 transition-all shrink-0 flex items-center gap-1.5 text-xs font-mono font-medium cursor-pointer min-h-[36px]"
-                      title="Copy email to clipboard"
-                    >
-                      {copied ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
-                          <span className="text-emerald-600 dark:text-emerald-400">Copied</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5 text-slate-400" />
-                          <span>Copy</span>
-                        </>
-                      )}
-                    </motion.button>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold block uppercase">
+                        Email
+                      </span>
+                      <a
+                        href={`mailto:${targetEmail}`}
+                        className="text-sm font-semibold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-cyan-300 transition-colors block font-mono break-all"
+                      >
+                        {targetEmail}
+                      </a>
+                    </div>
                   </div>
 
-                  {/* LinkedIn Card */}
-                  <a
-                    href="https://www.linkedin.com/in/samyogsapkota/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors cursor-pointer"
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.95 }}
+                    type="button"
+                    onClick={handleCopyEmail}
+                    className="shrink-0 py-2 px-2.5 sm:px-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-cyan-300 transition-all flex items-center gap-1.5 text-xs font-mono font-medium cursor-pointer min-h-[36px]"
+                    title="Copy email to clipboard"
+                    aria-label={copied ? 'Email copied' : 'Copy email to clipboard'}
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="p-2.5 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-sky-600 dark:text-cyan-400 shrink-0 group-hover:scale-105 transition-transform">
-                        <LinkedinIcon className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold block uppercase">
-                          Professional Network
-                        </span>
-                        <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-cyan-300 transition-colors block break-all font-mono">
-                          linkedin.com/in/samyogsapkota
-                        </span>
-                      </div>
-                    </div>
-                    <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 dark:group-hover:text-cyan-400 transition-colors shrink-0" />
-                  </a>
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
+                        <span className="text-emerald-600 dark:text-emerald-400 hidden sm:inline">Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5 text-slate-400" />
+                        <span className="hidden sm:inline">Copy</span>
+                      </>
+                    )}
+                  </motion.button>
+                </div>
 
-                  {/* GitHub Card */}
-                  <a
-                    href="https://github.com/hola-mundo999"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-3 group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="p-2.5 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0 group-hover:scale-105 transition-transform">
-                        <GithubIcon className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold block uppercase">
-                          Code Repositories
-                        </span>
-                        <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-600 dark:hover:text-cyan-300 transition-colors block break-all font-mono">
-                          github.com/hola-mundo999
-                        </span>
-                      </div>
+                <a
+                  href="https://www.linkedin.com/in/samyogsapkota/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${channelClass} group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors cursor-pointer`}
+                >
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="p-2.5 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-sky-600 dark:text-cyan-400 shrink-0 group-hover:scale-105 transition-transform">
+                      <LinkedinIcon className="w-4 h-4" />
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 dark:group-hover:text-cyan-400 transition-colors shrink-0" />
-                  </a>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold block uppercase">
+                        LinkedIn
+                      </span>
+                      <span className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-cyan-300 transition-colors block font-mono break-all">
+                        linkedin.com/in/samyogsapkota
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 dark:group-hover:text-cyan-400 transition-colors shrink-0" />
+                </a>
 
-                  {/* Location & Academic Base */}
-                  <div className="p-3.5 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 flex items-center gap-3">
+                <a
+                  href="https://github.com/hola-mundo999"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${channelClass} group hover:border-sky-500/40 dark:hover:border-cyan-500/40 transition-colors cursor-pointer`}
+                >
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="p-2.5 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0 group-hover:scale-105 transition-transform">
+                      <GithubIcon className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold block uppercase">
+                        GitHub
+                      </span>
+                      <span className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-cyan-300 transition-colors block font-mono break-all">
+                        github.com/hola-mundo999
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 dark:group-hover:text-cyan-400 transition-colors shrink-0" />
+                </a>
+
+                <div className={channelClass}>
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
                     <div className="p-2.5 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shrink-0">
                       <MapPin className="w-4 h-4" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-bold block uppercase">
-                        Physical Base
+                        Location
                       </span>
-                      <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white block font-mono">
+                      <span className="text-sm font-semibold text-slate-900 dark:text-white block font-mono break-words">
                         Kathmandu, Nepal (UTC+5:45)
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* Bottom Availability Status Badge */}
-              <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800/80 flex items-center gap-2.5 min-h-[48px]">
-                <span className="relative flex h-2.5 w-2.5 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-                </span>
-                <span className="text-xs font-mono text-slate-700 dark:text-slate-300 font-medium">
-                  Open for Software & Applied AI Internship Opportunities
-                </span>
-              </div>
             </div>
           </SpotlightCard>
         </motion.div>
 
-        {/* Right Column: Direct Dispatch Form */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.45, delay: 0.1 }}
-          className="h-full flex flex-col"
+          className="min-w-0 h-full"
         >
-          <SpotlightCard className="h-full rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-300/80 dark:border-slate-800 bg-white/80 dark:bg-[#070b16] shadow-lg shadow-slate-900/5 dark:shadow-black/60 backdrop-blur-md">
-            <form onSubmit={handleFormSubmit} className="flex flex-col gap-5" noValidate>
+          <SpotlightCard className="surface-card-flush h-full lg:min-h-[38rem] rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-slate-300/80 dark:border-slate-800 bg-white/80 dark:bg-[#070b16] shadow-lg shadow-slate-900/5 dark:shadow-black/60 backdrop-blur-md">
+            <form onSubmit={handleFormSubmit} className="relative h-full min-h-0 flex flex-col gap-5" noValidate>
+              <div className="shrink-0 flex flex-col justify-center gap-2 min-w-0">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                  Send a Message
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                  I usually reply within a day.
+                </p>
+              </div>
 
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                    Send a Message
-                  </h3>
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-sky-500/10 dark:bg-cyan-500/10 text-sky-700 dark:text-cyan-400 border border-sky-500/20 dark:border-cyan-500/20 font-semibold flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
-                    Instant Dispatch
-                  </span>
-                </div>
+              <div
+                className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+                aria-hidden="true"
+              >
+                <label htmlFor="contact-company">Company</label>
+                <input
+                  id="contact-company"
+                  name="company"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.company}
+                  onChange={handleChange}
+                />
+              </div>
 
-
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 block mb-1 uppercase tracking-wider">
-                        Your Name *
-                      </label>
-                      <input
-                        name="name"
-                        type="text"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="e.g. Jane Doe"
-                        className={`w-full px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
-                          errors.name
-                            ? 'border-red-500 focus:border-red-500'
-                            : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
-                        } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
-                      />
-                      {errors.name && (
-                        <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
-                          <AlertCircle className="w-3 h-3" />
-                          {errors.name}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 block mb-1 uppercase tracking-wider">
-                        Your Email *
-                      </label>
-                      <input
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="e.g. jane@company.com"
-                        className={`w-full px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
-                          errors.email
-                            ? 'border-red-500 focus:border-red-500'
-                            : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
-                        } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
-                      />
-                      {errors.email && (
-                        <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
-                          <AlertCircle className="w-3 h-3" />
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 block mb-1 uppercase tracking-wider">
-                      Subject *
+              <div className="flex-1 flex flex-col gap-4 min-h-0">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="min-w-0">
+                    <label htmlFor="contact-name" className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 block mb-1 uppercase tracking-wider">
+                      Your Name *
                     </label>
                     <input
-                      name="subject"
+                      id="contact-name"
+                      name="name"
                       type="text"
-                      value={formData.subject}
+                      maxLength={LIMITS.name}
+                      value={formData.name}
                       onChange={handleChange}
-                      placeholder="e.g. Software Collaboration / Prime IT Club / Internship"
-                      className={`w-full px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
-                        errors.subject
-                          ? 'border-red-500 focus:border-red-500'
-                          : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
-                      } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium transition-colors`}
+                      placeholder="e.g. Jane Doe"
+                      className={fieldClass(Boolean(errors.name))}
                     />
-                    {errors.subject && (
+                    {errors.name && (
                       <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
                         <AlertCircle className="w-3 h-3" />
-                        {errors.subject}
+                        {errors.name}
                       </p>
                     )}
                   </div>
 
-                  <div>
-                    <label className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 block mb-1 uppercase tracking-wider">
-                      Message Content *
+                  <div className="min-w-0">
+                    <label htmlFor="contact-email" className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 block mb-1 uppercase tracking-wider">
+                      Your Email *
                     </label>
-                    <textarea
-                      name="message"
-                      rows={4}
-                      value={formData.message}
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      maxLength={LIMITS.email}
+                      value={formData.email}
                       onChange={handleChange}
-                      placeholder="Hi Samyog, I wanted to reach out regarding..."
-                      className={`w-full px-4 py-2.5 rounded-xl bg-slate-100/70 dark:bg-slate-900 border ${
-                        errors.message
-                          ? 'border-red-500 focus:border-red-500'
-                          : 'border-slate-300/80 dark:border-slate-800 focus:border-sky-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-900'
-                      } focus:outline-none text-xs text-slate-900 dark:text-white placeholder-slate-400 font-medium resize-none transition-colors`}
+                      placeholder="e.g. jane@company.com"
+                      className={fieldClass(Boolean(errors.email))}
                     />
-                    {errors.message && (
+                    {errors.email && (
                       <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
                         <AlertCircle className="w-3 h-3" />
-                        {errors.message}
+                        {errors.email}
                       </p>
                     )}
                   </div>
+                </div>
+
+                <div className="min-w-0">
+                  <label htmlFor="contact-subject" className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 block mb-1 uppercase tracking-wider">
+                    Subject *
+                  </label>
+                  <input
+                    id="contact-subject"
+                    name="subject"
+                    type="text"
+                    maxLength={LIMITS.subject}
+                    value={formData.subject}
+                    onChange={handleChange}
+                    placeholder="e.g. Collaboration or internship inquiry"
+                    className={fieldClass(Boolean(errors.subject))}
+                  />
+                  {errors.subject && (
+                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.subject}
+                    </p>
+                  )}
+                </div>
+
+                <div className="min-w-0 flex-1 flex flex-col">
+                  <label htmlFor="contact-message" className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 block mb-1 uppercase tracking-wider">
+                    Message *
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={5}
+                    maxLength={LIMITS.message}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Hi Samyog, I wanted to reach out regarding..."
+                    className={`${fieldClass(Boolean(errors.message))} resize-none flex-1 min-h-[8.5rem]`}
+                  />
+                  {errors.message && (
+                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1 font-medium">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              {/* Action area */}
-              <div className="pt-2">
-
+              <div className="mt-auto pt-1">
                 <motion.button
                   whileHover={{ scale: isSubmitting ? 1 : 1.015 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
@@ -413,7 +434,6 @@ export default function Contact() {
                   )}
                 </motion.button>
 
-                {/* Feedback confirmation banner */}
                 <AnimatePresence>
                   {formSent && (
                     <motion.div
@@ -421,7 +441,7 @@ export default function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       id="contact-success-banner"
-                      className="mt-3 p-3 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/10 border border-emerald-500/30 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-200 text-xs flex items-start gap-2.5 shadow-xs"
+                      className="mt-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-200 text-xs flex items-start gap-2.5"
                     >
                       <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                       <div>
@@ -430,7 +450,7 @@ export default function Contact() {
                         </div>
                         <p className="mt-0.5 text-slate-600 dark:text-slate-300 text-[11px]">
                           Your message has been saved. I'll get back to you soon at{' '}
-                          <strong className="text-slate-900 dark:text-white">{formData.email || 'your email'}</strong>.
+                          <strong className="text-slate-900 dark:text-white">{sentEmail || 'your email'}</strong>.
                         </p>
                       </div>
                     </motion.div>

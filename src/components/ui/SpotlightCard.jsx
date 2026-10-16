@@ -42,7 +42,7 @@ export default function SpotlightCard({
       onPointerMove={handlePointerMove}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
-      className={`relative overflow-hidden surface-card ${className}`}
+      className={`relative overflow-hidden min-w-0 surface-card ${className}`}
       {...props}
     >
       {/* 21st.dev Cursor-Tracking Radial Spotlight */}
@@ -56,8 +56,8 @@ export default function SpotlightCard({
         }}
         aria-hidden="true"
       />
-      {/* Content wrapper */}
-      <div className="relative z-10 w-full h-full">
+      {/* Content wrapper — min-w-0 so long URLs wrap instead of escaping the card */}
+      <div className="relative z-10 w-full h-full min-w-0 min-h-0">
         {children}
       </div>
     </Component>

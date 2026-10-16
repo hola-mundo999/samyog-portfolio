@@ -125,7 +125,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Navigation Links — centered with mx-auto + explicit horizontal margin */}
-          <div className="hidden md:flex items-center gap-0.5 p-1 rounded-xl bg-stone-100/80 dark:bg-slate-900/80 border border-stone-200/70 dark:border-slate-800/70 mx-4">
+          <div className="hidden lg:flex items-center gap-0.5 p-1 rounded-xl bg-stone-100/80 dark:bg-slate-900/80 border border-stone-200/70 dark:border-slate-800/70 mx-4">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -235,7 +235,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white focus:outline-none cursor-pointer"
+              className="lg:hidden p-2 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav"
@@ -254,7 +254,7 @@ export default function Navbar() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 md:hidden"
+                className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 lg:hidden"
                 onClick={() => setMobileMenuOpen(false)}
                 aria-hidden="true"
               />
@@ -264,7 +264,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="md:hidden absolute top-16 sm:top-20 inset-x-3 sm:inset-x-4 rounded-2xl p-4 sm:p-5 flex flex-col gap-1 shadow-2xl border border-slate-200 dark:border-slate-800 z-50 text-slate-900 dark:text-slate-100"
+                className="lg:hidden absolute top-16 sm:top-20 inset-x-3 sm:inset-x-4 rounded-2xl p-4 sm:p-5 flex flex-col gap-1 shadow-2xl border border-slate-200 dark:border-slate-800 z-50 text-slate-900 dark:text-slate-100"
                 style={{
                   background: theme === 'dark' ? 'rgba(6, 8, 19, 0.97)' : 'rgba(255,255,255,0.97)',
                   backdropFilter: 'blur(32px) saturate(200%)',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, Star, Send, CheckCircle2, AlertCircle, Tag } from 'lucide-react';
+import { MessageSquare, Star, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSound } from '../context/SoundContext';
 import SpotlightCard from './ui/SpotlightCard';
@@ -20,6 +20,7 @@ export default function Feedback() {
     email: '',
     message: '',
     category: 'general',
+    website: '',
   });
   const [rating, setRating] = useState(0);
   const [hoveredStar, setHoveredStar] = useState(0);
@@ -28,9 +29,13 @@ export default function Feedback() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const LIMITS = { name: 100, email: 254, message: 4000 };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const max = LIMITS[name];
+    const next = max ? value.slice(0, max) : value;
+    setFormData((prev) => ({ ...prev, [name]: next }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -63,24 +68,34 @@ export default function Feedback() {
     setIsSubmitting(true);
 
     try {
+      if (formData.website.trim()) {
+        playSuccess();
+        setSubmitted(true);
+        return;
+      }
+
+      const lastSubmit = Number(sessionStorage.getItem('feedback-last-submit') || 0);
+      if (Date.now() - lastSubmit < 30000) {
+        setSubmitError('Please wait a moment before sending more feedback.');
+        return;
+      }
+
       const { error: dbError } = await supabase.from('feedback').insert({
         name: formData.name.trim() || null,
         email: formData.email.trim() || null,
-        message: formData.message.trim(),
+        message: formData.message.trim().slice(0, 4000),
         rating: rating || null,
         category: formData.category,
-        status: 'new',
-        is_read: false,
       });
 
       if (dbError) {
         throw dbError;
       }
 
+      sessionStorage.setItem('feedback-last-submit', String(Date.now()));
       playSuccess();
       setSubmitted(true);
-    } catch (err) {
-      console.error('Feedback submission error:', err);
+    } catch {
       setSubmitError('Could not save your feedback. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -88,7 +103,7 @@ export default function Feedback() {
   };
 
   const handleReset = () => {
-    setFormData({ name: '', email: '', message: '', category: 'general' });
+    setFormData({ name: '', email: '', message: '', category: 'general', website: '' });
     setRating(0);
     setSubmitted(false);
     setSubmitError('');
@@ -152,6 +167,18 @@ export default function Feedback() {
                 </p>
 
                 <div className="space-y-4">
+                  <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+                    <label htmlFor="feedback-website">Website</label>
+                    <input
+                      id="feedback-website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.website}
+                      onChange={handleChange}
+                    />
+                  </div>
                   {/* Category */}
                   <div>
                     <label className="text-[10px] font-mono font-bold text-stone-600 dark:text-slate-400 block mb-1.5 uppercase tracking-wider">
@@ -224,7 +251,8 @@ export default function Feedback() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Anonymous"
-                        className="w-full px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400 focus:outline-none text-base sm:text-xs text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 font-medium transition-colors"
+                        maxLength={100}
+                        className="w-full min-w-0 px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400 focus:outline-none text-sm text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-slate-500 font-medium transition-colors"
                       />
                     </div>
                     <div>
@@ -237,7 +265,8 @@ export default function Feedback() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="your@email.com"
-                        className={`w-full px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border ${
+                        maxLength={254}
+                        className={`w-full min-w-0 px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border ${
                           errors.email
                             ? 'border-red-500 focus:border-red-500'
                             : 'border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400'
@@ -263,7 +292,8 @@ export default function Feedback() {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="What did you like? What could be better? Any suggestions?"
-                      className={`w-full px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border ${
+                      maxLength={4000}
+                      className={`w-full min-w-0 px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-900 border ${
                         errors.message
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-stone-200 dark:border-slate-800 focus:border-amber-500 dark:focus:border-amber-400'

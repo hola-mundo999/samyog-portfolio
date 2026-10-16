@@ -29,26 +29,7 @@ CREATE TABLE IF NOT EXISTS feedback (
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE feedback ENABLE ROW LEVEL SECURITY;
 
--- 4. Allow anonymous inserts (portfolio visitors can submit)
-CREATE POLICY "Allow anonymous insert on messages"
-  ON messages FOR INSERT
-  TO anon
-  WITH CHECK (true);
-
-CREATE POLICY "Allow anonymous insert on feedback"
-  ON feedback FOR INSERT
-  TO anon
-  WITH CHECK (true);
-
--- 5. Allow authenticated users (admin) to read/update/delete
-CREATE POLICY "Allow authenticated full access on messages"
-  ON messages FOR ALL
-  TO authenticated
-  USING (true)
-  WITH CHECK (true);
-
-CREATE POLICY "Allow authenticated full access on feedback"
-  ON feedback FOR ALL
-  TO authenticated
-  USING (true)
-  WITH CHECK (true);
+-- 4. Apply admin-only policies, grants, and is_admin() from:
+--    samyog-admin/supabase-security.sql
+-- Do not add "authenticated USING (true)" policies. They allow any
+-- signed-in user to read private submissions.

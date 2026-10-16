@@ -136,6 +136,10 @@
   transform: translateY(-2px);
 }
 
+.surface-card.surface-card-flush:hover {
+  transform: none;
+}
+
 .surface-card-interactive {
   background: var(--card-bg);
   border: 1px solid var(--card-border);

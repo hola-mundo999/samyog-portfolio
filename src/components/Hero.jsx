@@ -62,8 +62,9 @@ export default function Hero() {
       >
         {/* Profile Avatar Badge */}
         <motion.div variants={itemVariants} className="relative mb-5 group">
-          <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-[3px] bg-gradient-to-tr from-sky-500 via-indigo-500 to-cyan-400 dark:from-cyan-400 dark:via-sky-400 dark:to-indigo-500 shadow-xl shadow-sky-500/10 dark:shadow-cyan-500/20">
-            <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-900 border-2 border-white dark:border-[#060813]">
+          <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-[3px] bg-gradient-to-tr from-sky-500 via-indigo-500 to-cyan-400 dark:from-cyan-400 dark:via-sky-400 dark:to-indigo-500 shadow-xl shadow-sky-500/20 dark:shadow-cyan-400/30">
+            <span className="absolute -inset-1 rounded-full bg-sky-400/20 dark:bg-cyan-400/15 blur-md animate-pulse" aria-hidden="true" />
+            <div className="relative z-10 w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-900 border-2 border-white dark:border-[#060813]">
               <img
                 src="/samyog.jpg"
                 alt="Samyog Sapkota"
@@ -73,26 +74,15 @@ export default function Hero() {
             {/* Live active status indicator dot on avatar */}
             <span
               className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#060813] flex items-center justify-center shadow-xs"
-              title="Available for internships"
+              title="Online"
             >
               <span className="w-2 h-2 rounded-full bg-white dark:bg-slate-950" />
             </span>
           </div>
         </motion.div>
 
-        {/* Top Lively Pills: Status + Kathmandu Local Time */}
-        <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-2.5 mb-6 sm:mb-7">
-          {/* Availability Beacon: Open for internships only */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-medium shadow-xs backdrop-blur-xs">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span>Open for internships</span>
-          </div>
-
-          {/* Live Kathmandu Location & Time */}
-          {localTime && (
+        {localTime && (
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-2.5 mb-6 sm:mb-7">
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/85 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-medium shadow-xs backdrop-blur-xs">
               <MapPin className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
               <span>Kathmandu</span>
@@ -100,8 +90,8 @@ export default function Hero() {
               <Clock className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
               <span>{localTime} NPT</span>
             </div>
-          )}
-        </motion.div>
+          </motion.div>
+        )}
 
         {/* Main Headline */}
         <motion.h1

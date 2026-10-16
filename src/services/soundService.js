@@ -154,7 +154,7 @@ export function fallbackSpeechSynthesis(onStart, onEnd) {
 
     try {
       window.speechSynthesis.cancel();
-      const text = 'Hello, I am Samyog Sapkota.';
+      const text = 'Welcome to the portfolio of Samyog Sapkota.';
       const utterance = new SpeechSynthesisUtterance(text);
 
       const pickVoice = () => {
