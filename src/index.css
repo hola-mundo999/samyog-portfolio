@@ -10,37 +10,37 @@
 :root {
   color-scheme: light;
 
-  /* Lively light theme - inspired by motion.dev & dribbble light UI */
-  --bg-canvas: #fafaf9;
-  --bg-elevated: #ffffff;
-  --bg-surface: #f5f5f4;
-  --bg-hover: #ededed;
-  --text-main: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --text-inverse: #fafaf9;
+  /* Warm, calm, premium light theme (Linear/Vercel inspired) */
+  --bg-canvas: #F5F3EE;
+  --bg-elevated: #FFFFFF;
+  --bg-surface: #EBE8E1;
+  --bg-hover: #E6E3DC;
+  --text-main: #252A35;
+  --text-secondary: #626977;
+  --text-muted: #7A808D;
+  --text-inverse: #F5F3EE;
 
-  --card-bg: #ffffff;
-  --card-border: #e2e8f0;
-  --card-border-hover: #cbd5e1;
-  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 4px 6px -1px rgba(0, 0, 0, 0.04);
-  --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --card-bg: #FFFFFF;
+  --card-border: #DEDCD5;
+  --card-border-hover: #D2CEC5;
+  --card-shadow: 0 1px 2px 0 rgba(37, 42, 53, 0.02), 0 1px 3px 0 rgba(37, 42, 53, 0.03), 0 2px 6px -1px rgba(37, 42, 53, 0.02);
+  --card-shadow-hover: 0 4px 12px -2px rgba(37, 42, 53, 0.05), 0 8px 24px -4px rgba(37, 42, 53, 0.04);
 
-  --accent-cyan: #0891b2;
-  --accent-cyan-bg: #e0f2fe;
-  --accent-cyan-text: #0c4a6e;
-  --accent-emerald: #059669;
-  --accent-emerald-bg: #d1fae5;
-  --accent-emerald-text: #065f46;
-  --accent-amber: #d97706;
-  --accent-amber-bg: #fef3c7;
-  --accent-amber-text: #78350f;
-  --accent-rose: #e11d48;
-  --accent-rose-bg: #ffe4e6;
-  --accent-rose-text: #9f1b30;
+  --accent-cyan: #557C63;
+  --accent-cyan-bg: #DCE9DD;
+  --accent-cyan-text: #324F3D;
+  --accent-emerald: #557C63;
+  --accent-emerald-bg: #DCE9DD;
+  --accent-emerald-text: #324F3D;
+  --accent-amber: #C89A2B;
+  --accent-amber-bg: #F0E6CC;
+  --accent-amber-text: #7C5C18;
+  --accent-rose: #B4534D;
+  --accent-rose-bg: #F0DAD8;
+  --accent-rose-text: #7C3330;
 
-  --spotlight-glow: rgba(8, 145, 178, 0.10);
-  --warm-glow: rgba(217, 119, 6, 0.06);
+  --spotlight-glow: rgba(85, 124, 99, 0.08);
+  --warm-glow: rgba(200, 154, 43, 0.06);
   --radius: 0.75rem;
 }
 
