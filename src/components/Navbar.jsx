@@ -186,13 +186,13 @@ export default function Navbar() {
               type="button"
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700/80 text-stone-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs"
+              className="p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700/80 text-stone-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-sm min-w-10 min-h-10"
               title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
             >
               {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-amber-400 transition-transform hover:rotate-45" />
+                <Sun className="w-5 h-5 text-amber-400 transition-transform hover:rotate-45" />
               ) : (
-                <Moon className="w-4 h-4 text-sky-600 transition-transform hover:-rotate-12" />
+                <Moon className="w-5 h-5 text-sky-600 transition-transform hover:-rotate-12" />
               )}
             </motion.button>
 
