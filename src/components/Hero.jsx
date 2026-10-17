@@ -73,7 +73,7 @@ export default function Hero() {
             </div>
             {/* Live active status indicator dot on avatar */}
             <span
-              className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#060813] flex items-center justify-center shadow-xs"
+              className="absolute top-1 right-1 z-50 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#060813] flex items-center justify-center shadow-xs"
               title="Online"
             >
               <span className="w-2 h-2 rounded-full bg-white dark:bg-slate-950" />

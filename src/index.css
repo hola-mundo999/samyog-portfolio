@@ -10,7 +10,8 @@
 :root {
   color-scheme: light;
 
-  --bg-canvas: #fafafa;
+  /* Lively light mode - warm off-white canvas, not plain white */
+  --bg-canvas: #fcfaf7;
   --bg-elevated: #ffffff;
   --text-main: #0f172a;
   --text-secondary: #334155;
@@ -25,7 +26,11 @@
   --accent-cyan: #0891b2;
   --accent-cyan-bg: #e0f2fe;
   --accent-cyan-text: #0c4a6e;
+  --accent-amber: #d97706;
+  --accent-amber-bg: #fef3c7;
+  --accent-amber-text: #78350f;
   --spotlight-glow: rgba(8, 145, 178, 0.10);
+  --warm-glow: rgba(217, 119, 6, 0.06);
 }
 
 .dark,
