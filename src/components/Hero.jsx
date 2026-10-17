@@ -53,7 +53,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-[85vh] flex flex-col justify-center items-center pt-28 sm:pt-32 pb-16 px-4 max-w-4xl mx-auto text-center">
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center items-center pt-20 sm:pt-28 pb-10 px-4 max-w-4xl mx-auto text-center">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -102,11 +102,15 @@ export default function Hero() {
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-indigo-600 to-cyan-500 dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-300">
             Samyog Sapkota
           </span>
-          .<br />
-          <span className="text-xl sm:text-3xl md:text-4xl font-semibold text-slate-700 dark:text-slate-200 block mt-2 sm:mt-2.5 tracking-tight">
-            Software Developer & CS Student
-          </span>
+          .
         </motion.h1>
+
+        <motion.p
+          variants={itemVariants}
+          className="text-xl sm:text-3xl md:text-4xl font-semibold text-slate-700 dark:text-slate-200 mb-8 sm:mb-10 tracking-tight"
+        >
+          Software Developer & CS Student
+        </motion.p>
 
         {/* Clear, Natural Subtitle */}
         <motion.p
