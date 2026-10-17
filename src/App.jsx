@@ -20,7 +20,7 @@ import MotionBackground from './components/ui/MotionBackground';
 function AppLayout() {
 
   return (
-    <div className="relative min-h-screen transition-colors duration-300 overflow-x-hidden selection:bg-cyan-500/25 selection:text-cyan-600 dark:selection:text-cyan-200">
+    <div className="relative min-h-screen transition-colors duration-300 overflow-x-clip selection:bg-cyan-500/25 selection:text-cyan-600 dark:selection:text-cyan-200" style={{ maxWidth: '100vw' }}>
       {/* 21st.dev Animated Motion Background (Flickering Grid + Glowing Aurora Beams) */}
       <MotionBackground />
 

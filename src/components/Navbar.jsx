@@ -170,7 +170,7 @@ export default function Navbar() {
               type="button"
               onClick={toggleSound}
               aria-label={isSoundEnabled ? 'Mute sound effects' : 'Unmute sound effects'}
-              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700/80 text-stone-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs"
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700/80 text-stone-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs min-w-10 min-h-10 hover-lift"
               title={isSoundEnabled ? 'Mute sound effects' : 'Unmute sound effects'}
             >
               {isSoundEnabled ? (
@@ -186,7 +186,7 @@ export default function Navbar() {
               type="button"
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700/80 text-stone-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs min-w-10 min-h-10"
+              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-200 dark:border-slate-700/80 text-stone-700 dark:text-slate-200 transition-colors cursor-pointer flex items-center justify-center shadow-xs min-w-10 min-h-10 hover-lift"
               title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
             >
               {theme === 'dark' ? (
@@ -203,7 +203,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub Profile"
-                className="p-2 text-slate-500 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 rounded-xl transition-all"
+                className="p-2 text-slate-500 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 rounded-xl transition-all hover-lift"
                 title="GitHub (@hola-mundo999)"
               >
                 <GithubIcon className="w-4 h-4" />
@@ -213,7 +213,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
-                className="p-2 text-slate-500 hover:text-sky-600 dark:text-slate-400 dark:hover:text-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 rounded-xl transition-all"
+                className="p-2 text-slate-500 hover:text-sky-600 dark:text-slate-400 dark:hover:text-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 rounded-xl transition-all hover-lift"
                 title="LinkedIn Profile"
               >
                 <LinkedinIcon className="w-4 h-4" />
@@ -226,7 +226,7 @@ export default function Navbar() {
               whileTap={{ scale: 0.96 }}
               href="#contact"
               onClick={() => handleLinkClick('contact')}
-              className="hidden sm:inline-flex text-xs font-semibold px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-cyan-500 dark:hover:bg-cyan-400 dark:text-slate-950 transition-colors shadow-xs"
+              className="hidden sm:inline-flex text-xs font-semibold px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-cyan-500 dark:hover:bg-cyan-400 dark:text-slate-950 transition-colors shadow-xs hover-lift"
             >
               Contact Me
             </motion.a>

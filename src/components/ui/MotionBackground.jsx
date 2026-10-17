@@ -154,7 +154,7 @@ export default function MotionBackground() {
       </div>
 
       {/* 3. Fluid Living Motion Auroras (Motion.div floating beams for both Dark and Light modes) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_85%)]">
         {/* Aurora 1: Floating Primary Sapphire / Cyan Beam */}
         <motion.div
           animate={{

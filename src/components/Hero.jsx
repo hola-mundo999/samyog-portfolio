@@ -71,9 +71,9 @@ export default function Hero() {
                 className="w-full h-full object-cover object-[center_18%] group-hover:scale-105 transition-transform duration-300"
               />
             </div>
-            {/* Live active status indicator dot on avatar */}
+            {/* Live active status indicator dot over photo (bottom-right) */}
             <span
-              className="absolute top-1 right-1 z-50 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#060813] flex items-center justify-center shadow-xs"
+              className="absolute bottom-1 right-1 z-50 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#060813] flex items-center justify-center shadow-xs animate-pulse"
               title="Online"
             >
               <span className="w-2 h-2 rounded-full bg-white dark:bg-slate-950" />
@@ -99,7 +99,7 @@ export default function Hero() {
           className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6 leading-[1.18] sm:leading-[1.15]"
         >
           Hi, I'm{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-indigo-600 to-cyan-500 dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-300">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 dark:from-cyan-300 dark:via-sky-300 dark:to-violet-400 font-extrabold tracking-tight drop-shadow-[0_0_20px_rgba(34,211,238,0.25)] dark:drop-shadow-[0_0_20px_rgba(34,211,238,0.35)]">
             Samyog Sapkota
           </span>
           .
@@ -125,7 +125,7 @@ export default function Hero() {
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full max-w-xs sm:max-w-none mx-auto mb-6 sm:mb-7"
         >
-          <ShimmerButton href="#projects" className="w-full sm:w-auto min-h-[48px]">
+          <ShimmerButton href="#projects" className="w-full sm:w-auto min-h-[48px] shimmer-cta hover-lift">
             <span>View Projects</span>
             <ArrowRight className="w-4 h-4" />
           </ShimmerButton>
@@ -135,7 +135,7 @@ export default function Hero() {
             whileTap={{ scale: 0.975 }}
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             href="#contact"
-            className="w-full sm:w-auto min-h-[48px] flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-900 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-700/80 dark:text-white font-medium text-sm transition-colors shadow-xs cursor-pointer text-center backdrop-blur-xs"
+            className="w-full sm:w-auto min-h-[48px] flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-900 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-700/80 dark:text-white font-medium text-sm transition-colors shadow-xs cursor-pointer text-center backdrop-blur-xs hover-lift"
           >
             <Mail className="w-4 h-4 text-sky-600 dark:text-cyan-400" />
             <span>Contact Me</span>
@@ -151,7 +151,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-slate-950 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs"
+            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-slate-950 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs hover-lift"
             title="GitHub (@hola-mundo999)"
           >
             <GithubIcon className="w-4 h-4" />
@@ -164,7 +164,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs"
+            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs hover-lift"
             title="LinkedIn Profile"
           >
             <LinkedinIcon className="w-4 h-4" />
@@ -175,7 +175,7 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
             href="mailto:samyog.sapkota1@gmail.com"
             aria-label="Direct Email"
-            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs"
+            className="p-3 sm:p-3.5 rounded-xl bg-white/85 hover:bg-white border border-slate-300/80 text-slate-700 hover:text-sky-600 dark:bg-slate-900/90 dark:hover:bg-slate-800 dark:border-slate-800 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors shadow-xs cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center backdrop-blur-xs hover-lift"
             title="Email (samyog.sapkota1@gmail.com)"
           >
             <Mail className="w-4 h-4" />
